@@ -36,6 +36,7 @@ public class DemoController extends BaseController {
 		User u = new User();
 		u.setPhone(userName);
 		u.setPasswordHash(pwd);
+		u.setValid(1);
 		demoService.addUser(u);
 		return u.getId();
 	}

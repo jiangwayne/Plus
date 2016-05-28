@@ -2,6 +2,9 @@ package com.plus.server.dal;
 
 import com.plus.server.model.Message;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface MessageDAO {
     int deleteByPrimaryKey(Long id);
 

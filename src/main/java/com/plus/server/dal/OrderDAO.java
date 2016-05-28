@@ -2,6 +2,9 @@ package com.plus.server.dal;
 
 import com.plus.server.model.Order;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface OrderDAO {
     int deleteByPrimaryKey(Long id);
 

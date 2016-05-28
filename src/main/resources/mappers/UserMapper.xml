@@ -127,6 +127,51 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByUser" parameterType="com.plus.server.model.User" >
+    select <include refid="Base_Column_List" /> from t_user
+    <where >
+      <if test="id != null" >
+        and id = #{id},
+      </if>
+      <if test="phone != null" >
+        and phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        and email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordHash != null" >
+        and password_hash = #{passwordHash,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null" >
+        and password_salt = #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        and user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="wxUniqueCode != null" >
+        and wx_unique_code = #{wxUniqueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wxGender != null" >
+        and wx_gender = #{wxGender,jdbcType=INTEGER},
+      </if>
+      <if test="wxRegion != null" >
+        and wx_region = #{wxRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        and point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        and valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </where>
+    where id = #{id,jdbcType=BIGINT}
+  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.User" >
     update t_user
     <set >

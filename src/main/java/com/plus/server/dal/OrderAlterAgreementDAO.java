@@ -2,6 +2,9 @@ package com.plus.server.dal;
 
 import com.plus.server.model.OrderAlterAgreement;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface OrderAlterAgreementDAO {
     int deleteByPrimaryKey(Long id);
 

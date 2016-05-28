@@ -74,4 +74,7 @@
 
     <!-- 容器默认DefaultServletHandler处理所有静态内容和无RequestMapping处理的URL -->
     <mvc:default-servlet-handler />
+    
+    <import resource="classpath*:spring/plus-datasource.xml"/>
+<!--     <import resource="classpath*:spring/applicationContext-*.xml" /> -->
 </beans>

@@ -4,7 +4,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.plus.server.dal.UserDAO;
@@ -15,7 +17,8 @@ import com.plus.server.model.User;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
-	UserDAO userDao;
+	@Autowired
+	private UserDAO userDao;
 
 	public boolean register(String phone, String email, String password) {
 		User user = new User();
@@ -64,4 +67,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return strResult.substring(0, 66);
 	}
+
 }

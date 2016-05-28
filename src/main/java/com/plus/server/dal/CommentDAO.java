@@ -1,7 +1,9 @@
 package com.plus.server.dal;
 
 import com.plus.server.model.Comment;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CommentDAO {
     int deleteByPrimaryKey(Long id);
 

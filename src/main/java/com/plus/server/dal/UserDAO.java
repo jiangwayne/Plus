@@ -1,7 +1,14 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.plus.server.model.User;
 
+@Repository
+@Component
 public interface UserDAO {
     int deleteByPrimaryKey(Long id);
 
@@ -10,6 +17,7 @@ public interface UserDAO {
     int insertSelective(User record);
 
     User selectByPrimaryKey(Long id);
+    List<User> selectByUser(User record);
 
     int updateByPrimaryKeySelective(User record);
 

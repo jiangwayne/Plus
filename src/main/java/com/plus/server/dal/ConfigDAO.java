@@ -2,6 +2,9 @@ package com.plus.server.dal;
 
 import com.plus.server.model.Config;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface ConfigDAO {
     int deleteByPrimaryKey(Long id);
 

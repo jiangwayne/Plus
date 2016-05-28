@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plus.server.dal.ProductSpecDAO" >
+  <resultMap id="BaseResultMap" type="com.plus.server.model.ProductSpec" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description_simple" property="descriptionSimple" jdbcType="VARCHAR" />
+    <result column="price_original" property="priceOriginal" jdbcType="INTEGER" />
+    <result column="price_current" property="priceCurrent" jdbcType="INTEGER" />
+    <result column="count_max" property="countMax" jdbcType="INTEGER" />
+    <result column="count_sale" property="countSale" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_id, start_date, name, description_simple, price_original, price_current, 
+    count_max, count_sale, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_spec
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product_spec
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.plus.server.model.ProductSpec" >
+    insert into t_product_spec (id, product_id, start_date, 
+      name, description_simple, price_original, 
+      price_current, count_max, count_sale, 
+      valid, gmt_create, gmt_modify
+      )
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{descriptionSimple,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER}, 
+      #{priceCurrent,jdbcType=INTEGER}, #{countMax,jdbcType=INTEGER}, #{countSale,jdbcType=INTEGER}, 
+      #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.plus.server.model.ProductSpec" >
+    insert into t_product_spec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="descriptionSimple != null" >
+        description_simple,
+      </if>
+      <if test="priceOriginal != null" >
+        price_original,
+      </if>
+      <if test="priceCurrent != null" >
+        price_current,
+      </if>
+      <if test="countMax != null" >
+        count_max,
+      </if>
+      <if test="countSale != null" >
+        count_sale,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimple != null" >
+        #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="priceOriginal != null" >
+        #{priceOriginal,jdbcType=INTEGER},
+      </if>
+      <if test="priceCurrent != null" >
+        #{priceCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="countMax != null" >
+        #{countMax,jdbcType=INTEGER},
+      </if>
+      <if test="countSale != null" >
+        #{countSale,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.ProductSpec" >
+    update t_product_spec
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimple != null" >
+        description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="priceOriginal != null" >
+        price_original = #{priceOriginal,jdbcType=INTEGER},
+      </if>
+      <if test="priceCurrent != null" >
+        price_current = #{priceCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="countMax != null" >
+        count_max = #{countMax,jdbcType=INTEGER},
+      </if>
+      <if test="countSale != null" >
+        count_sale = #{countSale,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.ProductSpec" >
+    update t_product_spec
+    set product_id = #{productId,jdbcType=BIGINT},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      price_original = #{priceOriginal,jdbcType=INTEGER},
+      price_current = #{priceCurrent,jdbcType=INTEGER},
+      count_max = #{countMax,jdbcType=INTEGER},
+      count_sale = #{countSale,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

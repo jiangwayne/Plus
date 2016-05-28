@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.plus.server</groupId>
-    <artifactId>PlusService</artifactId>
+    <artifactId>Plus</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <!-- Spring配套 -->

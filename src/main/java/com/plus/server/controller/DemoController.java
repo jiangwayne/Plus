@@ -24,6 +24,7 @@ public class DemoController extends BaseController {
 	@RequestMapping(value = "/demo/listAllUser", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> listAllUser() {
+		System.out.println("into listAllUser");
 		List<User> list = demoService.queryAllUser();
 		return list;
 	}
@@ -31,6 +32,7 @@ public class DemoController extends BaseController {
 	@RequestMapping(value = "/demo/addUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Long addUser(String userName, String pwd) {
+		System.out.println("into addUser");
 		User u = new User();
 		u.setPhone(userName);
 		u.setPasswordHash(pwd);

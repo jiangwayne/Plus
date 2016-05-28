@@ -2,15 +2,147 @@ package com.plus.server.model;
 
 import java.util.Date;
 
-/**
- * Created by jiangwulin on 16/5/22.
- */
-//订单
 public class Order {
-    private int id;                 //订单id（主键,自增）
+    /**  */
+    private Long id;
 
+    /** 用户id */
+    private Long userId;
 
-    private int valid;              //逻辑删除（1:有效数据,-1:已删除）
-    private Date gmt_create;        //创建时间
-    private Date gmt_modify;        //修改时间
+    /** 产品id */
+    private Long productId;
+
+    /** 产品规格id */
+    private Long productSpecId;
+
+    /** 数量 */
+    private Integer count;
+
+    /** 单价 */
+    private Integer priceEach;
+
+    /** 总价 */
+    private Integer priceTotal;
+
+    /** 语言（1:中文,2:英文） */
+    private Integer languageType;
+
+    /** 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消） */
+    private Integer status;
+
+    /** 类型（1-支付，2-询价） */
+    private Integer type;
+
+    /** 逻辑删除（1:有效数据,-1:已删除） */
+    private Integer valid;
+
+    /** 创建时间 */
+    private Date gmtCreate;
+
+    /** 修改时间 */
+    private Date gmtModify;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getProductSpecId() {
+        return productSpecId;
+    }
+
+    public void setProductSpecId(Long productSpecId) {
+        this.productSpecId = productSpecId;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getPriceEach() {
+        return priceEach;
+    }
+
+    public void setPriceEach(Integer priceEach) {
+        this.priceEach = priceEach;
+    }
+
+    public Integer getPriceTotal() {
+        return priceTotal;
+    }
+
+    public void setPriceTotal(Integer priceTotal) {
+        this.priceTotal = priceTotal;
+    }
+
+    public Integer getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(Integer languageType) {
+        this.languageType = languageType;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getValid() {
+        return valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModify() {
+        return gmtModify;
+    }
+
+    public void setGmtModify(Date gmtModify) {
+        this.gmtModify = gmtModify;
+    }
 }

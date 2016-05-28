@@ -2,24 +2,18 @@ package com.plus.server.model;
 
 import java.util.Date;
 
-public class Comment {
+public class Message {
     /**  */
     private Long id;
 
     /** 用户id */
     private Long userId;
 
-    /** 产品id */
-    private Long productId;
+    /** 消息类型（1:行程,2:询价,3:提醒,4:促销） */
+    private Integer messageType;
 
-    /** 订单id */
-    private Long orderId;
-
-    /** 内容 */
-    private Integer content;
-
-    /** 状态（10-待审核，20-已审核） */
-    private Integer status;
+    /** 消息类容 */
+    private String content;
 
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
@@ -46,36 +40,20 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Integer getMessageType() {
+        return messageType;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setMessageType(Integer messageType) {
+        this.messageType = messageType;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
-        this.content = content;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Integer getValid() {

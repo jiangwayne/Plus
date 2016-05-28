@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plus.server.dal.ProductDAO" >
+  <resultMap id="BaseResultMap" type="com.plus.server.model.Product" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description_simple" property="descriptionSimple" jdbcType="VARCHAR" />
+    <result column="description_detail" property="descriptionDetail" jdbcType="VARCHAR" />
+    <result column="price_original" property="priceOriginal" jdbcType="INTEGER" />
+    <result column="price_current" property="priceCurrent" jdbcType="INTEGER" />
+    <result column="address_start" property="addressStart" jdbcType="VARCHAR" />
+    <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="order_alter_agreement_id" property="orderAlterAgreementId" jdbcType="INTEGER" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="long_lat" property="longLat" jdbcType="VARCHAR" />
+    <result column="long_lat_address" property="longLatAddress" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, name, description_simple, description_detail, price_original, price_current, 
+    address_start, sale_count, icon, order_alter_agreement_id, comment_count, long_lat, 
+    long_lat_address, pay_type, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.plus.server.model.Product" >
+    insert into t_product (id, type, name, 
+      description_simple, description_detail, price_original, 
+      price_current, address_start, sale_count, 
+      icon, order_alter_agreement_id, comment_count, 
+      long_lat, long_lat_address, pay_type, 
+      valid, gmt_create, gmt_modify
+      )
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{descriptionSimple,jdbcType=VARCHAR}, #{descriptionDetail,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER}, 
+      #{priceCurrent,jdbcType=INTEGER}, #{addressStart,jdbcType=VARCHAR}, #{saleCount,jdbcType=INTEGER}, 
+      #{icon,jdbcType=VARCHAR}, #{orderAlterAgreementId,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
+      #{longLat,jdbcType=VARCHAR}, #{longLatAddress,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER}, 
+      #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.plus.server.model.Product" >
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="descriptionSimple != null" >
+        description_simple,
+      </if>
+      <if test="descriptionDetail != null" >
+        description_detail,
+      </if>
+      <if test="priceOriginal != null" >
+        price_original,
+      </if>
+      <if test="priceCurrent != null" >
+        price_current,
+      </if>
+      <if test="addressStart != null" >
+        address_start,
+      </if>
+      <if test="saleCount != null" >
+        sale_count,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="orderAlterAgreementId != null" >
+        order_alter_agreement_id,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="longLat != null" >
+        long_lat,
+      </if>
+      <if test="longLatAddress != null" >
+        long_lat_address,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimple != null" >
+        #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionDetail != null" >
+        #{descriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="priceOriginal != null" >
+        #{priceOriginal,jdbcType=INTEGER},
+      </if>
+      <if test="priceCurrent != null" >
+        #{priceCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="addressStart != null" >
+        #{addressStart,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCount != null" >
+        #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAlterAgreementId != null" >
+        #{orderAlterAgreementId,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="longLat != null" >
+        #{longLat,jdbcType=VARCHAR},
+      </if>
+      <if test="longLatAddress != null" >
+        #{longLatAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Product" >
+    update t_product
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimple != null" >
+        description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionDetail != null" >
+        description_detail = #{descriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="priceOriginal != null" >
+        price_original = #{priceOriginal,jdbcType=INTEGER},
+      </if>
+      <if test="priceCurrent != null" >
+        price_current = #{priceCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="addressStart != null" >
+        address_start = #{addressStart,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCount != null" >
+        sale_count = #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAlterAgreementId != null" >
+        order_alter_agreement_id = #{orderAlterAgreementId,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="longLat != null" >
+        long_lat = #{longLat,jdbcType=VARCHAR},
+      </if>
+      <if test="longLatAddress != null" >
+        long_lat_address = #{longLatAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Product" >
+    update t_product
+    set type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      description_detail = #{descriptionDetail,jdbcType=VARCHAR},
+      price_original = #{priceOriginal,jdbcType=INTEGER},
+      price_current = #{priceCurrent,jdbcType=INTEGER},
+      address_start = #{addressStart,jdbcType=VARCHAR},
+      sale_count = #{saleCount,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      order_alter_agreement_id = #{orderAlterAgreementId,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      long_lat = #{longLat,jdbcType=VARCHAR},
+      long_lat_address = #{longLatAddress,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

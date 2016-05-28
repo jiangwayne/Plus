@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plus.server.dal.UserSettingDAO" >
+  <resultMap id="BaseResultMap" type="com.plus.server.model.UserSetting" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="language_type" property="languageType" jdbcType="INTEGER" />
+    <result column="timezone" property="timezone" jdbcType="INTEGER" />
+    <result column="currency" property="currency" jdbcType="INTEGER" />
+    <result column="travel_date_type" property="travelDateType" jdbcType="INTEGER" />
+    <result column="allow_stop" property="allowStop" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, language_type, timezone, currency, travel_date_type, allow_stop, valid, 
+    gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_setting
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user_setting
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.plus.server.model.UserSetting" >
+    insert into t_user_setting (id, user_id, language_type, 
+      timezone, currency, travel_date_type, 
+      allow_stop, valid, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{languageType,jdbcType=INTEGER}, 
+      #{timezone,jdbcType=INTEGER}, #{currency,jdbcType=INTEGER}, #{travelDateType,jdbcType=INTEGER}, 
+      #{allowStop,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.plus.server.model.UserSetting" >
+    insert into t_user_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="languageType != null" >
+        language_type,
+      </if>
+      <if test="timezone != null" >
+        timezone,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="travelDateType != null" >
+        travel_date_type,
+      </if>
+      <if test="allowStop != null" >
+        allow_stop,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="languageType != null" >
+        #{languageType,jdbcType=INTEGER},
+      </if>
+      <if test="timezone != null" >
+        #{timezone,jdbcType=INTEGER},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=INTEGER},
+      </if>
+      <if test="travelDateType != null" >
+        #{travelDateType,jdbcType=INTEGER},
+      </if>
+      <if test="allowStop != null" >
+        #{allowStop,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.UserSetting" >
+    update t_user_setting
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="languageType != null" >
+        language_type = #{languageType,jdbcType=INTEGER},
+      </if>
+      <if test="timezone != null" >
+        timezone = #{timezone,jdbcType=INTEGER},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=INTEGER},
+      </if>
+      <if test="travelDateType != null" >
+        travel_date_type = #{travelDateType,jdbcType=INTEGER},
+      </if>
+      <if test="allowStop != null" >
+        allow_stop = #{allowStop,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.UserSetting" >
+    update t_user_setting
+    set user_id = #{userId,jdbcType=BIGINT},
+      language_type = #{languageType,jdbcType=INTEGER},
+      timezone = #{timezone,jdbcType=INTEGER},
+      currency = #{currency,jdbcType=INTEGER},
+      travel_date_type = #{travelDateType,jdbcType=INTEGER},
+      allow_stop = #{allowStop,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -14,8 +14,9 @@ public class BaseController {
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
 
 	@Autowired
-	private HttpServletRequest httpRequest;
-
+	protected HttpServletRequest httpRequest;
+	@Autowired
+	protected HttpSession httpSession;
 	@Autowired
 	protected HttpServletResponse httpResponse;
 

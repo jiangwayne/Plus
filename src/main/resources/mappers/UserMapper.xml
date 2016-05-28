@@ -30,7 +30,8 @@
     delete from t_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.plus.server.model.User" >
+  <insert id="insert" parameterType="com.plus.server.model.User" 
+  	useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into t_user (id, phone, email, 
       password_hash, password_salt, user_type, 
       wx_unique_code, wx_gender, wx_region, 

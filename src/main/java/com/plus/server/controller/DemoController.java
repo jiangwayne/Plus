@@ -40,4 +40,19 @@ public class DemoController extends BaseController {
 		demoService.addUser(u);
 		return u.getId();
 	}
+	@RequestMapping(value = "/demo/login", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean login(String userName, String pwd) {
+		User u = new User();
+		u.setPhone(userName);
+		u.setPasswordHash(pwd);
+		this.httpSession.setAttribute("user", u);
+		return true;
+	}
+	@RequestMapping(value = "/demo/logout", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean logout() {
+		this.httpSession.removeAttribute("user");
+		return true;
+	}
 }

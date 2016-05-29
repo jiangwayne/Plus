@@ -25,13 +25,12 @@ public class SessionFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
-		System.out.println("into sessionFilter...");
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String url = httpRequest.getRequestURL().toString();
 		if (!url.matches("^.*/login.*$") && !url.matches("^.*/index.*$")) {
 			if (httpRequest.getSession().getAttribute("user") == null) {
-				httpResponse.setStatus(401);
+				//httpResponse.setStatus(401);
 			}
 		}
 		if (httpResponse.getStatus() == 200) {

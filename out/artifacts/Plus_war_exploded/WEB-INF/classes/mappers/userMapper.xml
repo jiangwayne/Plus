@@ -1,8 +1,233 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.plus.server.dal.user">
-    <insert id="insertUser" parameterType="com.plus.server.model.User">
-        insert into user(phone,email,password_hash,password_salt,valid,now(),now())
-        values (#{phone},#{email},#{password_hash},#{password_salt},#{valid})
-    </insert>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plus.server.dal.UserDAO" >
+  <resultMap id="BaseResultMap" type="com.plus.server.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password_hash" property="passwordHash" jdbcType="VARCHAR" />
+    <result column="password_salt" property="passwordSalt" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="wx_unique_code" property="wxUniqueCode" jdbcType="VARCHAR" />
+    <result column="wx_gender" property="wxGender" jdbcType="INTEGER" />
+    <result column="wx_region" property="wxRegion" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, phone, email, password_hash, password_salt, user_type, wx_unique_code, wx_gender, 
+    wx_region, point, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.plus.server.model.User" 
+  	useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into t_user (id, phone, email, 
+      password_hash, password_salt, user_type, 
+      wx_unique_code, wx_gender, wx_region, 
+      point, valid, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{passwordHash,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{wxUniqueCode,jdbcType=VARCHAR}, #{wxGender,jdbcType=INTEGER}, #{wxRegion,jdbcType=VARCHAR}, 
+      #{point,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.plus.server.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="passwordHash != null" >
+        password_hash,
+      </if>
+      <if test="passwordSalt != null" >
+        password_salt,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="wxUniqueCode != null" >
+        wx_unique_code,
+      </if>
+      <if test="wxGender != null" >
+        wx_gender,
+      </if>
+      <if test="wxRegion != null" >
+        wx_region,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordHash != null" >
+        #{passwordHash,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null" >
+        #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="wxUniqueCode != null" >
+        #{wxUniqueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wxGender != null" >
+        #{wxGender,jdbcType=INTEGER},
+      </if>
+      <if test="wxRegion != null" >
+        #{wxRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.plus.server.model.User" >
+    select <include refid="Base_Column_List" /> from t_user
+    <where >
+      <if test="id != null" >
+        and id = #{id}
+      </if>
+      <if test="phone != null" >
+        and phone = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null" >
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="passwordHash != null" >
+        and password_hash = #{passwordHash,jdbcType=VARCHAR}
+      </if>
+      <if test="passwordSalt != null" >
+        and password_salt = #{passwordSalt,jdbcType=VARCHAR}
+      </if>
+      <if test="userType != null" >
+        and user_type = #{userType,jdbcType=INTEGER}
+      </if>
+      <if test="wxUniqueCode != null" >
+        and wx_unique_code = #{wxUniqueCode,jdbcType=VARCHAR}
+      </if>
+      <if test="wxGender != null" >
+        and wx_gender = #{wxGender,jdbcType=INTEGER}
+      </if>
+      <if test="wxRegion != null" >
+        and wx_region = #{wxRegion,jdbcType=VARCHAR}
+      </if>
+      <if test="point != null" >
+        and point = #{point,jdbcType=INTEGER}
+      </if>
+      <if test="valid != null" >
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null" >
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null" >
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.User" >
+    update t_user
+    <set >
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordHash != null" >
+        password_hash = #{passwordHash,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSalt != null" >
+        password_salt = #{passwordSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="wxUniqueCode != null" >
+        wx_unique_code = #{wxUniqueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wxGender != null" >
+        wx_gender = #{wxGender,jdbcType=INTEGER},
+      </if>
+      <if test="wxRegion != null" >
+        wx_region = #{wxRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.User" >
+    update t_user
+    set phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password_hash = #{passwordHash,jdbcType=VARCHAR},
+      password_salt = #{passwordSalt,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      wx_unique_code = #{wxUniqueCode,jdbcType=VARCHAR},
+      wx_gender = #{wxGender,jdbcType=INTEGER},
+      wx_region = #{wxRegion,jdbcType=VARCHAR},
+      point = #{point,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

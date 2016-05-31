@@ -23,9 +23,29 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.1.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:4.1.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.6.RELEASE" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.5.3" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.5.3" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.5.3" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.3" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.3" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.16" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.7" />
+          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.6.0" module-name="Plus" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.1.0" />
+          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:0.9.4" />
+          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:4.1.1" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:15.0" />
+          <element id="library" level="project" name="Maven: com.mangofactory:swagger-models:1.0.2" />
+          <element id="library" level="project" name="Maven: com.mangofactory:swagger-springmvc:1.0.2" />
+          <element id="library" level="project" name="Maven: com.wordnik:swagger-annotations:1.3.11" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.5" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
+          <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.6.8" />
+          <element id="library" level="project" name="Maven: org.mybatis.caches:mybatis-ehcache:1.0.3" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.3" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.3.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="Plus/web/Web" />

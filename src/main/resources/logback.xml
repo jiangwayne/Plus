@@ -11,7 +11,7 @@
 -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<!-- 定义日志文件位置 -->
-	<property name="log_dir" value="/logs/hualeuser/hualeuser-provider" />
+	<property name="log_dir" value="/Users/jiangwulin/logs/plus" />
 	<!-- 日志最大历史30天 -->
 	<property name="maxHistory" value="30" />
 

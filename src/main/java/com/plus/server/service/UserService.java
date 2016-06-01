@@ -13,4 +13,5 @@ public interface UserService {
     MessageVo getUserMessage(int userId);
     WishVo getUserWish(int userId);
     boolean commitUserWish(WishVo wishVo);
+    boolean getValidateCode(String phone);
 }

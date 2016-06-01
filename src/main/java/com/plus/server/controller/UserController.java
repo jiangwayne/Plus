@@ -28,6 +28,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(value = "/getValidateCode", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "获取手机验证码")
+    public boolean getValidateCode(@ApiParam(required = true, value = "手机") @RequestParam(required = true, value = "phone") String phone)
+    {
+        return userService.getValidateCode(phone);
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "用户注册")

@@ -117,4 +117,10 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	public boolean getValidateCode(String phone)
+	{
+		//TODO:调用短信通道接口给用phone发送验证码
+		return true;
+	}
+
 }

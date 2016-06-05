@@ -2,7 +2,8 @@
 SQLyog v10.2 
 MySQL - 5.7.12-log : Database - plus
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -85,6 +86,7 @@ CREATE TABLE `t_order` (
   `language_type` int(11) DEFAULT NULL COMMENT '语言（1:中文,2:英文）',
   `status` int(11) DEFAULT NULL COMMENT '状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）',
   `type` int(11) DEFAULT NULL COMMENT '类型（1-支付，2-询价）',
+  `boarding_ids` VARCHAR(512) COMMENT '登机人id，逗号分隔',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -160,6 +162,7 @@ DROP TABLE IF EXISTS `t_product_spec`;
 CREATE TABLE `t_product_spec` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `product_id` bigint(20) DEFAULT NULL COMMENT '产品id',
+  `merchant_id` bigint(20) DEFAULT NULL COMMENT '商家id',
   `start_date` datetime DEFAULT NULL COMMENT '开始日期',
   `name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
   `description_simple` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '简介',
@@ -238,6 +241,32 @@ CREATE TABLE `t_wish` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Data for the table `t_wish` */
+
+/*Table structure for table `t_user_boarding` */
+
+DROP TABLE IF EXISTS `t_user_boarding`;
+
+CREATE TABLE `t_user_boarding` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `full_name` varchar(64) DEFAULT NULL COMMENT '全名',
+  `first_name` varchar(32) DEFAULT NULL COMMENT '姓',
+  `last_name` varchar(32) DEFAULT NULL COMMENT '名',
+  `nationality` varchar(32) DEFAULT NULL COMMENT '国籍',
+  `credential_type` int(11) DEFAULT NULL COMMENT '证件类型',
+  `credential_number` int(32) DEFAULT NULL COMMENT '证件号码',
+  `birthday` datetime DEFAULT NULL COMMENT '生日',
+  `phone` varchar(32) DEFAULT NULL COMMENT '联系电话',
+  `address` varchar(512) DEFAULT NULL COMMENT '地址',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_user_boarding` */
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

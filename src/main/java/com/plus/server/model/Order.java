@@ -24,14 +24,8 @@ public class Order {
     /** 总价 */
     private Integer priceTotal;
 
-    /** 语言（1:中文,2:英文） */
-    private Integer languageType;
-
     /** 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消） */
     private Integer status;
-
-    /** 类型（1-支付，2-询价） */
-    private Integer type;
 
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
@@ -98,28 +92,12 @@ public class Order {
         this.priceTotal = priceTotal;
     }
 
-    public Integer getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(Integer languageType) {
-        this.languageType = languageType;
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Integer getValid() {

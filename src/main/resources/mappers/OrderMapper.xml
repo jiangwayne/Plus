@@ -9,16 +9,14 @@
     <result column="count" property="count" jdbcType="INTEGER" />
     <result column="price_each" property="priceEach" jdbcType="INTEGER" />
     <result column="price_total" property="priceTotal" jdbcType="INTEGER" />
-    <result column="language_type" property="languageType" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, product_id, product_spec_id, count, price_each, price_total, language_type, 
-    status, type, valid, gmt_create, gmt_modify
+    id, user_id, product_id, product_spec_id, count, price_each, price_total,
+    status, valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -33,13 +31,13 @@
   <insert id="insert" parameterType="com.plus.server.model.Order" >
     insert into t_order (id, user_id, product_id, 
       product_spec_id, count, price_each, 
-      price_total, language_type, status, 
-      type, valid, gmt_create, 
+      price_total, status,
+      valid, gmt_create,
       gmt_modify)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
       #{productSpecId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{priceEach,jdbcType=INTEGER}, 
-      #{priceTotal,jdbcType=INTEGER}, #{languageType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{type,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{priceTotal,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.Order" >
@@ -66,14 +64,8 @@
       <if test="priceTotal != null" >
         price_total,
       </if>
-      <if test="languageType != null" >
-        language_type,
-      </if>
       <if test="status != null" >
         status,
-      </if>
-      <if test="type != null" >
-        type,
       </if>
       <if test="valid != null" >
         valid,
@@ -107,14 +99,8 @@
       <if test="priceTotal != null" >
         #{priceTotal,jdbcType=INTEGER},
       </if>
-      <if test="languageType != null" >
-        #{languageType,jdbcType=INTEGER},
-      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
       </if>
       <if test="valid != null" >
         #{valid,jdbcType=INTEGER},
@@ -148,14 +134,8 @@
       <if test="priceTotal != null" >
         price_total = #{priceTotal,jdbcType=INTEGER},
       </if>
-      <if test="languageType != null" >
-        language_type = #{languageType,jdbcType=INTEGER},
-      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="valid != null" >
         valid = #{valid,jdbcType=INTEGER},
@@ -177,9 +157,7 @@
       count = #{count,jdbcType=INTEGER},
       price_each = #{priceEach,jdbcType=INTEGER},
       price_total = #{priceTotal,jdbcType=INTEGER},
-      language_type = #{languageType,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}

@@ -15,7 +15,7 @@ import com.wordnik.swagger.annotations.Api;
 public class OrderController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
-	@Autowired
+	//@Autowired
 	private OrderService orderService;
 	
 	

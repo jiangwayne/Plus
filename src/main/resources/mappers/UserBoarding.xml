@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plus.server.dal.UserBoardingDAO" >
+    <resultMap id="BaseResultMap" type="com.plus.server.model.UserBoarding" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+        <result column="first_name" property="firstName" jdbcType="VARCHAR" />
+        <result column="last_name" property="lastName" jdbcType="VARCHAR" />
+        <result column="nationality" property="nationality" jdbcType="VARCHAR" />
+        <result column="credential_type" property="credentialType" jdbcType="INTEGER" />
+        <result column="credential_number" property="credentialNumber" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="valid" property="valid" jdbcType="INTEGER" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, user_id, full_name, first_name, last_name, nationality, credential_type, credential_number,
+        birthday, phone, address, valid, gmt_create, gmt_modify
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from t_user_boarding
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from t_user_boarding
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.plus.server.model.UserBoarding" >
+        insert into t_user_boarding (id, user_id, full_name, first_name, last_name, nationality, credential_type, credential_number,
+        birthday, phone, address, valid, gmt_create,
+        gmt_modify)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{fullName,jdbcType=VARCHAR},
+        #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{nationality,jdbcType=VARCHAR},
+        #{credentialType,jdbcType=INTEGER}, #{credentialNumber,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+        #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{gmtModify,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.plus.server.model.UserBoarding" >
+        insert into t_user_boarding
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="full_name != null" >
+                full_name,
+            </if>
+            <if test="first_name != null" >
+                first_name,
+            </if>
+            <if test="last_name != null" >
+                last_name,
+            </if>
+            <if test="nationality != null" >
+                nationality,
+            </if>
+            <if test="credential_type != null" >
+                credential_type,
+            </if>
+            <if test="credential_number != null" >
+                credential_number,
+            </if>
+            <if test="birthday != null" >
+                birthday,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="valid != null" >
+                valid,
+            </if>
+            <if test="gmtCreate != null" >
+                gmt_create,
+            </if>
+            <if test="gmtModify != null" >
+                gmt_modify,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null" >
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productSpecId != null" >
+                #{productSpecId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null" >
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="priceEach != null" >
+                #{priceEach,jdbcType=INTEGER},
+            </if>
+            <if test="priceTotal != null" >
+                #{priceTotal,jdbcType=INTEGER},
+            </if>
+            <if test="languageType != null" >
+                #{languageType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="valid != null" >
+                #{valid,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null" >
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModify != null" >
+                #{gmtModify,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.UserBoarding" >
+        update t_user_boarding
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="full_name != null" >
+                full_name = #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="first_name != null" >
+                first_name = #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="last_name != null" >
+                last_name = #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="nationality != null" >
+                nationality = #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="credential_type != null" >
+                credential_type = #{credentialType,jdbcType=INTEGER},
+            </if>
+            <if test="credential_number != null" >
+                credential_number = #{credentialNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null" >
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address}
+            </if>
+            <if test="valid != null" >
+                valid = #{valid,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null" >
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModify != null" >
+                gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.plus.server.model.UserBoarding" >
+        update t_user_boarding
+        set user_id = #{userId,jdbcType=BIGINT},
+        full_name = #{fullName,jdbcType=VARCHAR},
+        first_name = #{firstName,jdbcType=VARCHAR},
+        last_name = #{lastName,jdbcType=VARCHAR},
+        nationality = #{nationality,jdbcType=VARCHAR},
+        credential_type = #{credentialType,jdbcType=INTEGER},
+        credential_number = #{credentialNumber,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+        phone = #{phone,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        valid = #{valid,jdbcType=INTEGER},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

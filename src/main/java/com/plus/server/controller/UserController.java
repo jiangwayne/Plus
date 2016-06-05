@@ -1,21 +1,20 @@
 package com.plus.server.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.plus.server.common.vo.MessageVo;
 import com.plus.server.common.vo.UserSettingVo;
-import com.plus.server.common.vo.UserVO;
 import com.plus.server.common.vo.WishVo;
-import com.plus.server.model.User;
-import com.plus.server.model.UserSetting;
 import com.plus.server.service.UserService;
-import com.sun.deploy.net.HttpRequest;
 import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * Created by jiangwulin on 16/5/22.

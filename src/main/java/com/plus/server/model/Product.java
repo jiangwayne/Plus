@@ -12,11 +12,21 @@ public class Product {
     /** 产品名称 */
     private String name;
 
+    /** 产品名称(英文) */
+    private String nameEn;
+
+    /** 素材url */
+    private String fileUrl;
+
     /** 产品简介 */
     private String descriptionSimple;
 
+    private String descriptionSimpleEn;
+
     /** 产品详细描述 */
     private String descriptionDetail;
+
+    private String descriptionDetailEn;
 
     /** 原价 */
     private Integer priceOriginal;
@@ -26,6 +36,8 @@ public class Product {
 
     /** 出发地点 */
     private String addressStart;
+
+    private String addressStartEn;
 
     /** 销量 */
     private Integer saleCount;
@@ -44,6 +56,8 @@ public class Product {
 
     /** 位置描述 */
     private String longLatAddress;
+
+    private String longLatAddressEn;
 
     /** 支付类型（1-直接支付，2-不直接支付（生成的是待确认订单）） */
     private Integer payType;
@@ -199,5 +213,45 @@ public class Product {
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public String getAddressStartEn() {
+        return addressStartEn;
+    }
+
+    public void setAddressStartEn(String addressStartEn) {
+        this.addressStartEn = addressStartEn;
+    }
+
+    public String getDescriptionDetailEn() {
+        return descriptionDetailEn;
+    }
+
+    public void setDescriptionDetailEn(String descriptionDetailEn) {
+        this.descriptionDetailEn = descriptionDetailEn;
+    }
+
+    public String getDescriptionSimpleEn() {
+        return descriptionSimpleEn;
+    }
+
+    public void setDescriptionSimpleEn(String descriptionSimpleEn) {
+        this.descriptionSimpleEn = descriptionSimpleEn;
+    }
+
+    public String getLongLatAddressEn() {
+        return longLatAddressEn;
+    }
+
+    public void setLongLatAddressEn(String longLatAddressEn) {
+        this.longLatAddressEn = longLatAddressEn;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 }

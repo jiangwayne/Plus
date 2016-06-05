@@ -15,8 +15,12 @@ public class ProductSpec {
     /** 名称 */
     private String name;
 
+    private String nameEn;
+
     /** 简介 */
     private String descriptionSimple;
+
+    private String descriptionSimpleEn;
 
     /** 原价 */
     private Integer priceOriginal;
@@ -133,5 +137,21 @@ public class ProductSpec {
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public String getDescriptionSimpleEn() {
+        return descriptionSimpleEn;
+    }
+
+    public void setDescriptionSimpleEn(String descriptionSimpleEn) {
+        this.descriptionSimpleEn = descriptionSimpleEn;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 }

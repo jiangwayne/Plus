@@ -6,7 +6,9 @@
     <result column="product_id" property="productId" jdbcType="BIGINT" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="name_en" property="nameEn" jdbcType="VARCHAR" />
     <result column="description_simple" property="descriptionSimple" jdbcType="VARCHAR" />
+    <result column="description_simple_en" property="descriptionSimpleEn" jdbcType="VARCHAR" />
     <result column="price_original" property="priceOriginal" jdbcType="INTEGER" />
     <result column="price_current" property="priceCurrent" jdbcType="INTEGER" />
     <result column="count_max" property="countMax" jdbcType="INTEGER" />
@@ -16,7 +18,7 @@
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, product_id, start_date, name, description_simple, price_original, price_current, 
+    id, product_id, start_date, name, name_en, description_simple, description_simple_en, price_original, price_current,
     count_max, count_sale, valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -31,12 +33,13 @@
   </delete>
   <insert id="insert" parameterType="com.plus.server.model.ProductSpec" >
     insert into t_product_spec (id, product_id, start_date, 
-      name, description_simple, price_original, 
+      name, name_en, description_simple, description_simple_en, price_original,
       price_current, count_max, count_sale, 
       valid, gmt_create, gmt_modify
       )
     values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{startDate,jdbcType=TIMESTAMP}, 
-      #{name,jdbcType=VARCHAR}, #{descriptionSimple,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{descriptionSimple,jdbcType=VARCHAR},
+      #{descriptionSimpleEn,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER},
       #{priceCurrent,jdbcType=INTEGER}, #{countMax,jdbcType=INTEGER}, #{countSale,jdbcType=INTEGER}, 
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
       )
@@ -56,8 +59,14 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="nameEn != null" >
+        name_en,
+      </if>
       <if test="descriptionSimple != null" >
         description_simple,
+      </if>
+      <if test="descriptionSimpleEn != null" >
+        description_simple_en,
       </if>
       <if test="priceOriginal != null" >
         price_original,
@@ -94,8 +103,14 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="nameEn != null" >
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
       <if test="descriptionSimple != null" >
         #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimpleEn != null" >
+        #{descriptionSimpleEn,jdbcType=VARCHAR},
       </if>
       <if test="priceOriginal != null" >
         #{priceOriginal,jdbcType=INTEGER},
@@ -132,8 +147,14 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="nameEn != null" >
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
       <if test="descriptionSimple != null" >
         description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimpleEn != null" >
+        description_simple_en = #{descriptionSimpleEn,jdbcType=VARCHAR},
       </if>
       <if test="priceOriginal != null" >
         price_original = #{priceOriginal,jdbcType=INTEGER},
@@ -164,7 +185,9 @@
     set product_id = #{productId,jdbcType=BIGINT},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
       description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      description_simple_en = #{descriptionSimpleEn,jdbcType=VARCHAR},
       price_original = #{priceOriginal,jdbcType=INTEGER},
       price_current = #{priceCurrent,jdbcType=INTEGER},
       count_max = #{countMax,jdbcType=INTEGER},

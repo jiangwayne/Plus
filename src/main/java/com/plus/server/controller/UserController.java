@@ -27,35 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/getValidateCode", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "获取手机验证码")
-    public boolean getValidateCode(@ApiParam(required = true, value = "手机") @RequestParam(required = true, value = "phone") String phone)
-    {
-        return userService.getValidateCode(phone);
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "用户注册")
-    public boolean register(@ApiParam(required = true, value = "手机") @RequestParam(required = true, value = "phone") String phone,
-                            @ApiParam(required = true, value = "邮箱") @RequestParam(required = true, value ="email") String email,
-                            @ApiParam(required = true, value = "密码") @RequestParam(required = true, value ="pwd") String password,
-                            @ApiParam(required = true, value = "短信验证码") @RequestParam(required = true, value ="validateCode") String validateCode)
-    {
-        return userService.register(phone, email, password, validateCode);
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "用户登录")
-    public boolean login(@ApiParam(required = true, value = "手机或邮箱") @RequestParam(required = true, value = "loginString") String loginString,
-                         @ApiParam(required = true, value = "密码") @RequestParam(required = true, value ="pwd") String password)
-    {
-
-        return userService.login(loginString, password);
-    }
-
     @RequestMapping(value = "/getUserSetting", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户设置")

@@ -23,11 +23,7 @@ public class UserService {
 	@Autowired
 	private UserDAO userDao;
 
-	public boolean register(String phone, String email, String password, String validateCode) {
-		if(!validateCode(validateCode))
-		{
-			return false;
-		}
+	public void register(String phone, String email, String password) {
 		User user = new User();
 		user.setValid(1);
 		String password_salt = generateSalt(5);
@@ -35,9 +31,7 @@ public class UserService {
 		user.setPasswordSalt(password_salt);
 		user.setPasswordHash(password_hash);
 
-		//TODO:insert
-		//userDao.insert(user);
-		return true;
+		userDao.insert(user);
 	}
 
 	public boolean login(String loginString, String password) {
@@ -76,12 +70,6 @@ public class UserService {
 			// TODO:log
 		}
 		return strResult.substring(0, 66);
-	}
-
-	private static boolean validateCode(String validateCode)
-	{
-		//TODO:手机短信验证
-		return true;
 	}
 
 	public UserSettingVo getUserSetting(int userId)

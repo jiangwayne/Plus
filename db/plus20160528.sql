@@ -254,7 +254,7 @@ CREATE TABLE `t_user_boarding` (
   `last_name` varchar(32) DEFAULT NULL COMMENT '名',
   `nationality` varchar(32) DEFAULT NULL COMMENT '国籍',
   `credential_type` int(11) DEFAULT NULL COMMENT '证件类型',
-  `credential_number` int(32) DEFAULT NULL COMMENT '证件号码',
+  `credential_number` varchar(32) DEFAULT NULL COMMENT '证件号码',
   `birthday` datetime DEFAULT NULL COMMENT '生日',
   `phone` varchar(32) DEFAULT NULL COMMENT '联系电话',
   `address` varchar(512) DEFAULT NULL COMMENT '地址',

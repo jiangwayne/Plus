@@ -28,7 +28,7 @@ public class UserBoarding {
     private Integer credentialType;
 
     /** 证件号码 */
-    private Integer credential_number;
+    private String credential_number;
 
     /** 生日 */
     private Date birthday;
@@ -104,11 +104,11 @@ public class UserBoarding {
         this.credentialType = credentialType;
     }
 
-    public Integer getCredential_number() {
+    public String getCredential_number() {
         return credential_number;
     }
 
-    public void setCredential_number(Integer credential_number) {
+    public void setCredential_number(String credential_number) {
         this.credential_number = credential_number;
     }
 

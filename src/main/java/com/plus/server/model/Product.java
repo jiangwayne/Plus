@@ -39,6 +39,43 @@ public class Product {
 
     private String addressStartEn;
 
+    /** 目的地 */
+    private String addressEnd;
+
+    public String getAddressEnd() {
+        return addressEnd;
+    }
+
+    public void setAddressEnd(String addressEnd) {
+        this.addressEnd = addressEnd;
+    }
+
+    public String getAddressEndEn() {
+        return addressEndEn;
+    }
+
+    public void setAddressEndEn(String addressEndEn) {
+        this.addressEndEn = addressEndEn;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Integer mileage) {
+        this.mileage = mileage;
+    }
+
+    private String addressEndEn;
+
     /** 销量 */
     private Integer saleCount;
 
@@ -61,6 +98,20 @@ public class Product {
 
     /** 支付类型（1-直接支付，2-不直接支付（生成的是待确认订单）） */
     private Integer payType;
+
+    /** 里程数(单位km) */
+    private Integer mileage;
+
+    /** 飞行时长(单位分钟) */
+    private Integer flyTime;
+
+    public Integer getFlyTime() {
+        return flyTime;
+    }
+
+    public void setFlyTime(Integer flyTime) {
+        this.flyTime = flyTime;
+    }
 
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;

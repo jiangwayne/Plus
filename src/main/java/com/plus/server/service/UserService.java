@@ -72,7 +72,7 @@ public class UserService {
 		return strResult.substring(0, 66);
 	}
 
-	public UserSettingVo getUserSetting(int userId)
+	public UserSettingVo getUserSetting(Long userId)
 	{
 		//TODO:获取用户设置
 		UserSettingVo userSettingVo = new UserSettingVo();
@@ -85,14 +85,14 @@ public class UserService {
 		return true;
 	}
 
-	public MessageVo getUserMessage(int userId)
+	public MessageVo getUserMessage(Long userId)
 	{
 		//TODO:获取用户消息提醒
 		MessageVo messageVo = new MessageVo();
 		return messageVo;
 	}
 
-	public WishVo getUserWish(int userId)
+	public WishVo getUserWish(Long userId)
 	{
 		//TODO:获取用户心愿单
 		WishVo wishVo = new WishVo();

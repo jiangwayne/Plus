@@ -33,6 +33,20 @@ public class User {
     /** 积分 */
     private Integer point;
 
+    /** 里程数(单位km) */
+    private Integer mileage;
+
+    /** 飞行时长(单位分钟) */
+    private Integer flyTime;
+
+    public Integer getFlyTime() {
+        return flyTime;
+    }
+
+    public void setFlyTime(Integer flyTime) {
+        this.flyTime = flyTime;
+    }
+
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
 
@@ -120,6 +134,15 @@ public class User {
 
     public void setPoint(Integer point) {
         this.point = point;
+    }
+
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Integer mileage) {
+        this.mileage = mileage;
     }
 
     public Integer getValid() {

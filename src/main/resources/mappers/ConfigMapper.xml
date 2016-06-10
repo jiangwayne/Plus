@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.plus.server.model.Config" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="value" property="value" jdbcType="INTEGER" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
@@ -27,7 +27,7 @@
     insert into t_config (id, code, value, 
       remark, valid, gmt_create, 
       gmt_modify)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{value,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR},
       #{remark,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
@@ -64,7 +64,7 @@
         #{code,jdbcType=VARCHAR},
       </if>
       <if test="value != null" >
-        #{value,jdbcType=INTEGER},
+        #{value,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -87,7 +87,7 @@
         code = #{code,jdbcType=VARCHAR},
       </if>
       <if test="value != null" >
-        value = #{value,jdbcType=INTEGER},
+        value = #{value,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -107,7 +107,7 @@
   <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Config" >
     update t_config
     set code = #{code,jdbcType=VARCHAR},
-      value = #{value,jdbcType=INTEGER},
+      value = #{value,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},

@@ -14,6 +14,8 @@
     <result column="price_current" property="priceCurrent" jdbcType="INTEGER" />
     <result column="address_start" property="addressStart" jdbcType="VARCHAR" />
     <result column="address_start_en" property="addressStartEn" jdbcType="VARCHAR" />
+    <result column="address_end" property="addressEnd" jdbcType="VARCHAR" />
+    <result column="address_end_en" property="addressEndEn" jdbcType="VARCHAR" />
     <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="order_alter_agreement_id" property="orderAlterAgreementId" jdbcType="INTEGER" />
@@ -23,13 +25,15 @@
     <result column="long_lat_address_en" property="longLatAddressEn" jdbcType="VARCHAR" />
     <result column="pay_type" property="payType" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="mileage" property="mileage" jdbcType="INTEGER" />
+    <result column="fly_time" property="flyTime" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, type, name, name_en, description_simple, description_simple_en, description_detail, description_detail_en, price_original, price_current,
-    address_start, address_start_en, sale_count, icon, order_alter_agreement_id, comment_count, long_lat,
-    long_lat_address, long_lat_address_en, pay_type, valid, gmt_create, gmt_modify
+    address_start, address_start_en, address_end, address_end_en, sale_count, icon, order_alter_agreement_id, comment_count, long_lat,
+    long_lat_address, long_lat_address_en, pay_type, mileage, fly_time, valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -44,17 +48,19 @@
   <insert id="insert" parameterType="com.plus.server.model.Product" >
     insert into t_product (id, type, name, name_en,
       description_simple, description_simple_en, description_detail, description_detail_en, price_original,
-      price_current, address_start, address_start_en, sale_count,
+      price_current, address_start, address_start_en, address_start, address_start_en, sale_count,
       icon, order_alter_agreement_id, comment_count, 
-      long_lat, long_lat_address, long_lat_address_en, pay_type,
+      long_lat, long_lat_address, long_lat_address_en, pay_type, mileage, fly_time,
       valid, gmt_create, gmt_modify
       )
     values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR},
       #{descriptionSimple,jdbcType=VARCHAR}, #{descriptionSimpleEn,jdbcType=VARCHAR}, #{descriptionDetail,jdbcType=VARCHAR},
       #{descriptionDetailEn,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER},
-      #{priceCurrent,jdbcType=INTEGER}, #{addressStart,jdbcType=VARCHAR}, #{addressStartEn,jdbcType=VARCHAR}, #{saleCount,jdbcType=INTEGER},
+      #{priceCurrent,jdbcType=INTEGER}, #{addressStart,jdbcType=VARCHAR}, #{addressStartEn,jdbcType=VARCHAR},
+      #{addressEnd,jdbcType=VARCHAR}, #{addressEndEn,jdbcType=VARCHAR},#{saleCount,jdbcType=INTEGER},
       #{icon,jdbcType=VARCHAR}, #{orderAlterAgreementId,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
       #{longLat,jdbcType=VARCHAR}, #{longLatAddress,jdbcType=VARCHAR}, #{longLatAddressEn,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER},
+      #{mileage,jdbcType=INTEGER},#{flyTime,jdbcType=INTEGER},
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -97,6 +103,12 @@
       <if test="addressStartEn != null" >
         address_start_en,
       </if>
+      <if test="addressEnd != null" >
+        address_end,
+      </if>
+      <if test="addressEndEn != null" >
+        address_end_en,
+      </if>
       <if test="saleCount != null" >
         sale_count,
       </if>
@@ -120,6 +132,12 @@
       </if>
       <if test="payType != null" >
         pay_type,
+      </if>
+      <if test="mileage != null" >
+        mileage,
+      </if>
+      <if test="flyTime != null" >
+        fly_time,
       </if>
       <if test="valid != null" >
         valid,
@@ -168,6 +186,12 @@
       <if test="addressStartEn != null" >
         #{addressStartEn,jdbcType=VARCHAR},
       </if>
+      <if test="addressEnd != null" >
+        #{addressEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEndEn != null" >
+        #{addressEndEn,jdbcType=VARCHAR},
+      </if>
       <if test="saleCount != null" >
         #{saleCount,jdbcType=INTEGER},
       </if>
@@ -191,6 +215,12 @@
       </if>
       <if test="payType != null" >
         #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="mileage != null" >
+        #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        #{flyTime,jdbcType=INTEGER},
       </if>
       <if test="valid != null" >
         #{valid,jdbcType=INTEGER},
@@ -234,7 +264,16 @@
         price_current = #{priceCurrent,jdbcType=INTEGER},
       </if>
       <if test="addressStart != null" >
-        address_start = #{addressStart,jdbcType=VARCHAR},
+      address_start = #{addressStart,jdbcType=VARCHAR},
+      </if>
+      <if test="addressStartEn != null" >
+        address_start_en = #{addressStartEn,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEnd != null" >
+        address_end = #{addressEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEndEn != null" >
+        address_end_en = #{addressEndEn,jdbcType=VARCHAR},
       </if>
       <if test="saleCount != null" >
         sale_count = #{saleCount,jdbcType=INTEGER},
@@ -259,6 +298,12 @@
       </if>
       <if test="payType != null" >
         pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="mileage != null" >
+        mileage = #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        fly_time = #{flyTime,jdbcType=INTEGER},
       </if>
       <if test="valid != null" >
         valid = #{valid,jdbcType=INTEGER},
@@ -285,6 +330,8 @@
       price_current = #{priceCurrent,jdbcType=INTEGER},
       address_start = #{addressStart,jdbcType=VARCHAR},
       address_start_en = #{addressStartEn,jdbcType=VARCHAR},
+      address_end = #{addressStart,jdbcType=VARCHAR},
+      address_end_en = #{addressStartEn,jdbcType=VARCHAR},
       sale_count = #{saleCount,jdbcType=INTEGER},
       icon = #{icon,jdbcType=VARCHAR},
       order_alter_agreement_id = #{orderAlterAgreementId,jdbcType=INTEGER},
@@ -293,6 +340,8 @@
       long_lat_address = #{longLatAddress,jdbcType=VARCHAR},
       long_lat_address_en = #{longLatAddressEn,jdbcType=VARCHAR},
       pay_type = #{payType,jdbcType=INTEGER},
+      mileage = #{mileage,jdbcType=INTEGER},
+      fly_time = #{flyTime,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}

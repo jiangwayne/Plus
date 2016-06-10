@@ -2,6 +2,7 @@ package com.plus.server.controller;
 
 import com.plus.server.common.util.MsgUtil;
 import com.plus.server.common.vo.resp.BaseResp;
+import com.plus.server.common.vo.resp.MessageResp;
 import com.plus.server.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by jiangwulin on 16/5/22.
@@ -29,7 +31,7 @@ import java.util.Random;
 
 @RestController
 @Api("用户")
-@RequestMapping(value = "plus/user")
+@RequestMapping
 public class UserController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -39,20 +41,24 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "登录")
-    public BaseResp login(@ApiParam(required = true, value = "用户名") @RequestParam(required = true) String userName,
+    public BaseResp login(@ApiParam(required = true, value = "邮箱或手机号") @RequestParam(required = true) String userName,
                           @ApiParam(required = true, value = "密码") @RequestParam(required = true) String pwd) {
         log.info("登录---userName={},pwd={}", userName, pwd);
         BaseResp r = new BaseResp();
-        User u = new User();
-        u.setPhone(userName);
-        u.setPasswordHash(pwd);
-        this.httpSession.setAttribute("user", u);
-
-        r.setSuccess(true);
+        if(userService.login(userName, pwd)) {
+            User u = new User();
+            u.setPhone(userName);
+            u.setPasswordHash(pwd);
+            this.httpSession.setAttribute("user", u);
+            r.setSuccess(true);
+        }
+        else {
+            r.setSuccess(false);
+        }
         return r;
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "plus/user/logout", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "登出")
     public BaseResp logout() {
@@ -107,15 +113,16 @@ public class UserController extends BaseController {
         return r;
     }
 
-    @RequestMapping(value = "/getUserSetting", method = RequestMethod.GET)
+    @RequestMapping(value = "plus/user/getUserSetting", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户设置")
-    public UserSettingVo getUserSetting(@ApiParam(required = true, value = "用户id") @RequestParam(required = true, value = "userId") String userId)
+    public UserSettingVo getUserSetting()
     {
-        return userService.getUserSetting(Integer.parseInt(userId));
+        User u = (User) this.httpSession.getAttribute("user");
+        return userService.getUserSetting(u.getId());
     }
 
-    @RequestMapping(value = "/setUserSetting", method = RequestMethod.POST)
+    @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "更新用户设置")
     public boolean setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
@@ -123,23 +130,42 @@ public class UserController extends BaseController {
         return userService.setUserSetting(userSettingVo);
     }
 
-    @RequestMapping(value = "/getUserMessage", method = RequestMethod.GET)
+    @RequestMapping(value = "plus/user/getUserMessage", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户消息提醒")
-    public MessageVo getUserMessage(@ApiParam(required = true, value = "用户id") @RequestParam(required = true, value = "userId") String userId)
+    public MessageResp getUserMessage()
     {
-        return userService.getUserMessage(Integer.parseInt(userId));
+        User u = (User) this.httpSession.getAttribute("user");
+        MessageResp messageResp = new MessageResp();
+        if(u != null) {
+            try {
+                messageResp.setMessageVo(userService.getUserMessage(u.getId()));
+                messageResp.setSuccess(true);
+            }
+            catch (Exception e){
+                log.error("", e);
+                messageResp.setSuccess(false);
+                messageResp.setMsg(e.getMessage());
+            }
+        }
+        else {
+            messageResp.setSuccess(false);
+            messageResp.setMsg("未登录");
+        }
+
+        return messageResp;
     }
 
-    @RequestMapping(value = "/getUserWish", method = RequestMethod.GET)
+    @RequestMapping(value = "plus/user/getUserWish", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户心愿单")
-    public WishVo getUserWish(@ApiParam(required = true, value = "用户id") @RequestParam(required = true, value = "userId") String userId)
+    public WishVo getUserWish()
     {
-        return userService.getUserWish(Integer.parseInt(userId));
+        User u = (User) this.httpSession.getAttribute("user");
+        return userService.getUserWish(u.getId());
     }
 
-    @RequestMapping(value = "/commitUserWish", method = RequestMethod.POST)
+    @RequestMapping(value = "plus/user/commitUserWish", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "提交用户心愿单")
     public boolean commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)

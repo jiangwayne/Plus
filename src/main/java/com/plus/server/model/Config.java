@@ -10,7 +10,7 @@ public class Config {
     private String code;
 
     /** 配置项的值 */
-    private Integer value;
+    private String value;
 
     /** 配置项描述 */
     private String remark;
@@ -40,11 +40,11 @@ public class Config {
         this.code = code == null ? null : code.trim();
     }
 
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

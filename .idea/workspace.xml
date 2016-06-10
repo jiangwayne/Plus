@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7ec93bc-31de-457e-b89f-b7df17ce7f51" name="Default" comment="">
+    <list default="true" id="e7ec93bc-31de-457e-b89f-b7df17ce7f51" name="Default" comment="update userService">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/plus/server/common/vo/UserVO.java" afterPath="$PROJECT_DIR$/src/main/java/com/plus/server/common/vo/UserVO.java" />
     </list>
     <ignored path="Plus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -145,8 +144,8 @@
       <file leaf-file-name="UserVo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/plus/server/common/vo/UserVo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35598704">
-              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.403452">
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1502,7 +1501,7 @@
       <workItem from="1464710466436" duration="7955000" />
       <workItem from="1464791737204" duration="1765000" />
       <workItem from="1465109407879" duration="13402000" />
-      <workItem from="1465523785925" duration="21165000" />
+      <workItem from="1465523785925" duration="21223000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1464718460266</created>
@@ -1564,11 +1563,17 @@
       <option name="project" value="LOCAL" />
       <updated>1465555826549</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="update userService">
+      <created>1465556020234</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1465556020234</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87811000" />
+    <option name="totallyTimeSpent" value="87869000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="352" y="61" width="2128" height="1291" extended-state="0" />
@@ -2155,8 +2160,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/plus/server/common/vo/UserVo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35598704">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.403452">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>

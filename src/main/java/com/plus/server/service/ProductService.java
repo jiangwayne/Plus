@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
@@ -15,7 +16,7 @@ import com.plus.server.dal.ProductDAO;
 import com.plus.server.dal.ProductSpecDAO;
 import com.plus.server.model.Product;
 import com.plus.server.model.ProductSpec;
-
+@Service
 public class ProductService {
 	private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 	@Autowired

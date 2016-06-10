@@ -1,9 +1,6 @@
 package com.plus.server.common.vo;
 
-public class UserVO {
-	/**  */
-    private Long id;
-
+public class UserVo {
     /** 手机号（app注册） */
     private String phone;
 
@@ -24,14 +21,6 @@ public class UserVO {
 
     /** 积分 */
     private Integer point;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getPhone() {
 		return phone;

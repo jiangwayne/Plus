@@ -347,4 +347,95 @@
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <update id="updateCommentCountByPrimaryKey" parameterType="com.plus.server.model.Product" >
+    update t_product
+    set comment_count = comment_count + #{commentCount}
+    where id = #{id}
+  </update>
+  <select id="selectByModel" parameterType="com.plus.server.model.Product" >
+     select 
+    <include refid="Base_Column_List" />
+    from t_product
+    <where >
+      <if test="type != null" >
+        and type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null" >
+        and name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimple != null" >
+        and description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionSimpleEn != null" >
+        and description_simple_en = #{descriptionSimpleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionDetail != null" >
+        and description_detail = #{descriptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionDetailEn != null" >
+        and description_detail_en = #{descriptionDetailEn,jdbcType=VARCHAR},
+      </if>
+      <if test="priceOriginal != null" >
+        and price_original = #{priceOriginal,jdbcType=INTEGER},
+      </if>
+      <if test="priceCurrent != null" >
+        and price_current = #{priceCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="addressStart != null" >
+      	and address_start = #{addressStart,jdbcType=VARCHAR},
+      </if>
+      <if test="addressStartEn != null" >
+        and address_start_en = #{addressStartEn,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEnd != null" >
+        and address_end = #{addressEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEndEn != null" >
+        and address_end_en = #{addressEndEn,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCount != null" >
+        and sale_count = #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        and icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAlterAgreementId != null" >
+        and order_alter_agreement_id = #{orderAlterAgreementId,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        and comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="longLat != null" >
+        and long_lat = #{longLat,jdbcType=VARCHAR},
+      </if>
+      <if test="longLatAddress != null" >
+        and long_lat_address = #{longLatAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longLatAddressEn != null" >
+        and long_lat_address_en = #{longLatAddressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        and pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="mileage != null" >
+        and mileage = #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        and fly_time = #{flyTime,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        and valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null" >
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </where>
+  </select>
 </mapper>

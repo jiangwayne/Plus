@@ -24,7 +24,7 @@ CREATE TABLE `t_comment` (
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
   `product_id` bigint(20) DEFAULT NULL COMMENT '产品id',
   `order_id` bigint(20) DEFAULT NULL COMMENT '订单id',
-  `content` int(11) DEFAULT NULL COMMENT '内容',
+  `content` varchar(2048) DEFAULT NULL COMMENT '内容',
   `status` int(11) DEFAULT NULL COMMENT '状态（10-待审核，20-已审核）',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',

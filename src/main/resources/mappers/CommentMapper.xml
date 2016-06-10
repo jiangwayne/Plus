@@ -6,7 +6,7 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="product_id" property="productId" jdbcType="BIGINT" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
-    <result column="content" property="content" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
@@ -31,7 +31,7 @@
       valid, gmt_create, gmt_modify
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
-      #{orderId,jdbcType=BIGINT}, #{content,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{orderId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -80,7 +80,7 @@
         #{orderId,jdbcType=BIGINT},
       </if>
       <if test="content != null" >
-        #{content,jdbcType=INTEGER},
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -109,7 +109,7 @@
         order_id = #{orderId,jdbcType=BIGINT},
       </if>
       <if test="content != null" >
-        content = #{content,jdbcType=INTEGER},
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -131,7 +131,7 @@
     set user_id = #{userId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT},
       order_id = #{orderId,jdbcType=BIGINT},
-      content = #{content,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},

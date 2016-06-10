@@ -3,6 +3,7 @@ package com.plus.server.controller;
 import com.plus.server.common.util.MsgUtil;
 import com.plus.server.common.vo.resp.BaseResp;
 import com.plus.server.common.vo.resp.MessageResp;
+import com.plus.server.common.vo.resp.UserSettingResp;
 import com.plus.server.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,10 +117,27 @@ public class UserController extends BaseController {
     @RequestMapping(value = "plus/user/getUserSetting", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户设置")
-    public UserSettingVo getUserSetting()
+    public UserSettingResp getUserSetting()
     {
         User u = (User) this.httpSession.getAttribute("user");
-        return userService.getUserSetting(u.getId());
+        UserSettingResp userSettingResp = new UserSettingResp();
+        if(u != null) {
+            try{
+                userSettingResp.setUserSettingVo(userService.getUserSetting(u.getId()));
+                userSettingResp.setSuccess(true);
+            }
+            catch (Exception e){
+                log.error("",e);
+                userSettingResp.setSuccess(false);
+                userSettingResp.setMsg(e.getMessage());
+            }
+        }
+        else
+        {
+            userSettingResp.setSuccess(false);
+            userSettingResp.setMsg("未登录");
+        }
+        return userSettingResp;
     }
 
     @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.POST)

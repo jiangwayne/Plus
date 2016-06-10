@@ -3,16 +3,16 @@ package com.plus.server.service;
 import java.util.Date;
 import java.util.List;
 
-import javax.smartcardio.Card;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plus.server.common.PageDefault;
+import com.plus.server.dal.CommentDAO;
 import com.plus.server.dal.OrderDAO;
 import com.plus.server.dal.ProductDAO;
 import com.plus.server.dal.ProductSpecDAO;
@@ -20,9 +20,6 @@ import com.plus.server.model.Order;
 import com.plus.server.model.Product;
 import com.plus.server.model.ProductSpec;
 
-/**
- * Created by jiangwulin on 16/5/22.
- */
 @Service
 public class OrderService {
 	private static final Logger log = LoggerFactory.getLogger(OrderService.class);
@@ -32,6 +29,8 @@ public class OrderService {
 	private ProductSpecDAO productSpecDAO;
 	@Autowired
 	private ProductDAO productDAO;
+	@Autowired
+	private CommentDAO commentDAO;
 
 	/**
 	 * 创建订单
@@ -76,13 +75,9 @@ public class OrderService {
 	 * @param status
 	 * @return
 	 */
-	public PageInfo<Order> list(Long userId, Integer status, int page, int pageSize) {
-		log.info("订单查询，userId={},status={}", userId, status);
+	public PageInfo<Order> selectByModel(Order order, int page, int pageSize) {
+		log.info("订单查询，order={},page={},pageSize={}", JSON.toJSONString(order), page, pageSize);
 
-		Order param = new Order();
-		param.setUserId(userId);
-		param.setStatus(status);
-		param.setValid(1);
 		if (page <= 0) {
 			page = PageDefault.PAGE_NUM_DEFAULT;
 		}
@@ -90,9 +85,13 @@ public class OrderService {
 			pageSize = PageDefault.PAGE_SIZE_DEFAULT;
 		}
 		PageHelper.startPage(page, pageSize);
-		List<Order> orderList = orderDAO.selectByModel(param);
+		List<Order> orderList = orderDAO.selectByModel(order);
 		PageInfo<Order> pageInfo = new PageInfo<Order>(orderList);
 		return pageInfo;
+	}
+
+	public Order selectById(Long id) {
+		return this.orderDAO.selectByPrimaryKey(id);
 	}
 
 }

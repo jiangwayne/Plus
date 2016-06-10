@@ -16,9 +16,12 @@ import com.github.pagehelper.PageInfo;
 import com.plus.server.common.PageDefault;
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.OrderVo;
+import com.plus.server.common.vo.ProductVo;
 import com.plus.server.common.vo.resp.BaseResp;
 import com.plus.server.common.vo.resp.OrderListResp;
+import com.plus.server.common.vo.resp.OrderResp;
 import com.plus.server.model.Order;
+import com.plus.server.service.CommentService;
 import com.plus.server.service.OrderService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -29,9 +32,11 @@ import com.wordnik.swagger.annotations.ApiParam;
 @RequestMapping(value = "plus/order")
 public class OrderController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(OrderController.class);
-
+	
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private CommentService commentService;
 
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
 	@ResponseBody
@@ -53,7 +58,7 @@ public class OrderController extends BaseController {
 		return r;
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "订单查询")
 	public OrderListResp list(@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId,
@@ -62,7 +67,6 @@ public class OrderController extends BaseController {
 			@RequestParam(required = false) @ApiParam(required = false, value = "每页记录数") Integer pageSize) {
 		log.info("订单查询---productId={},status={}", productId, status);
 		OrderListResp r = new OrderListResp();
-		r.setSuccess(true);
 		Long userId = this.getCurrentUser().getId();
 		if (page == null || page <= 0) {
 			page = PageDefault.PAGE_NUM_DEFAULT;
@@ -70,16 +74,39 @@ public class OrderController extends BaseController {
 		if (pageSize == null || pageSize <= 0) {
 			pageSize = PageDefault.PAGE_SIZE_DEFAULT;
 		}
-		PageInfo<Order> pageInfo = orderService.list(userId,status,page,pageSize);
+		Order param = new Order();
+		param.setUserId(userId);
+		param.setStatus(status);
+		param.setValid(1);
+		PageInfo<Order> pageInfo = orderService.selectByModel(param,page,pageSize);
 		List<OrderVo> orderList = BeanMapper.mapList(pageInfo.getList(), OrderVo.class);
-		SimpleDateFormat f = new SimpleDateFormat();
 		for(OrderVo vo : orderList){
-			if(vo.getGmtCreate() != null){
-				vo.setGmtCreateStr(f.format(vo.getGmtCreate()));
-			}
+			fillDateStr(vo);
 		}
 		r.setOrderList(orderList);
 		r.setSuccess(true);
 		return r;
 	}
+	private void fillDateStr(OrderVo vo){
+		SimpleDateFormat f = new SimpleDateFormat();
+		if(vo.getGmtCreate() != null){
+			vo.setGmtCreateStr(f.format(vo.getGmtCreate()));
+		}
+	}
+	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "订单查询")
+	public OrderResp queryById(@ApiParam(required = true, value = "订单id") @RequestParam(required = true) Long orderId) {
+		log.info("订单查询---orderId={}", orderId);
+		OrderResp r = new OrderResp();
+		Order order = orderService.selectById(orderId);
+		if(order != null){
+			OrderVo vo = BeanMapper.copy(order, new OrderVo());
+			fillDateStr(vo);
+			r.setOrder(vo);
+		}
+		r.setSuccess(true);
+		return r;
+	}
+	
 }

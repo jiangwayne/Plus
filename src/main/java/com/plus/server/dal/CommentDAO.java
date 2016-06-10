@@ -1,6 +1,9 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
 import com.plus.server.model.Comment;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +19,6 @@ public interface CommentDAO {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+	List<Comment> selectByModel(Comment comment);
 }

@@ -1,5 +1,7 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
 import com.plus.server.model.ProductSpec;
 
 public interface ProductSpecDAO {
@@ -14,4 +16,6 @@ public interface ProductSpecDAO {
     int updateByPrimaryKeySelective(ProductSpec record);
 
     int updateByPrimaryKey(ProductSpec record);
+
+	List<ProductSpec> selectByModel(ProductSpec productSpec);
 }

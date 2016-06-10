@@ -1,5 +1,7 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
 import com.plus.server.model.Product;
 
 public interface ProductDAO {
@@ -14,4 +16,10 @@ public interface ProductDAO {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+    /**
+     * 增加评论数
+     */
+    int updateCommentCountByPrimaryKey(Product record);
+
+	List<Product> selectByModel(Product product);
 }

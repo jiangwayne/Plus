@@ -6,7 +6,7 @@ import com.plus.server.common.vo.MessageVo;
  * Created by jiangwulin on 16/6/10.
  */
 public class MessageResp extends BaseResp {
-    public MessageVo messageVo;
+    private MessageVo messageVo;
 
     public MessageVo getMessageVo()
     {

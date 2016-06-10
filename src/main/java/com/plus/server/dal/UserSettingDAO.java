@@ -11,6 +11,8 @@ public interface UserSettingDAO {
 
     UserSetting selectByPrimaryKey(Long id);
 
+    UserSetting selectByUserId(Long id);
+
     int updateByPrimaryKeySelective(UserSetting record);
 
     int updateByPrimaryKey(UserSetting record);

@@ -1,10 +1,16 @@
 package com.plus.server.controller;
 
+import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.util.MsgUtil;
+import com.plus.server.common.vo.MessageVo;
 import com.plus.server.common.vo.resp.BaseResp;
-import com.plus.server.common.vo.resp.MessageResp;
+import com.plus.server.common.vo.resp.MessageListResp;
 import com.plus.server.common.vo.resp.UserSettingResp;
+import com.plus.server.common.vo.resp.WishListResp;
+import com.plus.server.model.Message;
 import com.plus.server.model.User;
+import com.plus.server.model.UserSetting;
+import com.plus.server.model.Wish;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.plus.server.common.vo.MessageVo;
 import com.plus.server.common.vo.UserSettingVo;
 import com.plus.server.common.vo.WishVo;
 import com.plus.server.service.UserService;
@@ -23,8 +28,8 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
+import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by jiangwulin on 16/5/22.
@@ -49,12 +54,8 @@ public class UserController extends BaseController {
         if(userService.login(userName, pwd)) {
             User u = new User();
             u.setPhone(userName);
-            u.setPasswordHash(pwd);
             this.httpSession.setAttribute("user", u);
             r.setSuccess(true);
-        }
-        else {
-            r.setSuccess(false);
         }
         return r;
     }
@@ -105,12 +106,41 @@ public class UserController extends BaseController {
         }
         try {
             userService.register(phone, email, password);
+            r.setSuccess(true);
         } catch (Exception e) {
             log.error("", e);
             r.setMsg("注册失败");
+        }
+        return r;
+    }
+
+    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "找回密码")
+    public BaseResp modifyPassword(@ApiParam(required = true, value = "邮箱或手机号") @RequestParam(required = true) String userName,
+                                   @ApiParam(required = true, value = "新密码") @RequestParam(required = true) String password,
+                                   @ApiParam(required = true, value = "确认新密码") @RequestParam(required = true) String confirmpassword,
+                                   @ApiParam(required = true, value = "验证码") @RequestParam(required = true) String validateCode){
+        log.info("找回密码，userName={}, password={}，confirmpassword={}，validateCode={}", userName, password, confirmpassword, validateCode);
+        BaseResp r = new BaseResp();
+        Object o = this.httpSession.getAttribute("validateCode");
+        if(o == null || !validateCode.equals(o)){
+            r.setMsg("验证码错误");
             return r;
         }
-        r.setSuccess(true);
+        if(password != confirmpassword){
+            r.setMsg("两次输入密码不一致");
+            return r;
+        }
+
+        try{
+            userService.modifyPassword(userName, password);
+            r.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            r.setMsg("重置密码失败");
+        }
         return r;
     }
 
@@ -121,74 +151,98 @@ public class UserController extends BaseController {
     {
         User u = (User) this.httpSession.getAttribute("user");
         UserSettingResp userSettingResp = new UserSettingResp();
-        if(u != null) {
-            try{
-                userSettingResp.setUserSettingVo(userService.getUserSetting(u.getId()));
-                userSettingResp.setSuccess(true);
-            }
-            catch (Exception e){
-                log.error("",e);
-                userSettingResp.setSuccess(false);
-                userSettingResp.setMsg(e.getMessage());
-            }
+        try{
+            UserSetting userSetting = userService.getUserSetting(u.getId());
+            userSettingResp.setUserSettingVo(BeanMapper.map(userSetting, UserSettingVo.class));
+            userSettingResp.setSuccess(true);
         }
-        else
-        {
-            userSettingResp.setSuccess(false);
-            userSettingResp.setMsg("未登录");
+        catch (Exception e){
+            log.error("",e);
+            userSettingResp.setMsg(e.getMessage());
         }
+
         return userSettingResp;
     }
 
     @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "更新用户设置")
-    public boolean setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
+    public BaseResp setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
     {
-        return userService.setUserSetting(userSettingVo);
+        User u = (User) this.httpSession.getAttribute("user");
+        BaseResp r = new BaseResp();
+        try{
+            UserSetting userSetting = BeanMapper.map(userSettingVo, UserSetting.class);
+            userSetting.setUserId(u.getId());
+            userService.setUserSetting(userSetting);
+            r.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            r.setMsg(e.getMessage());
+        }
+        return r;
     }
 
     @RequestMapping(value = "plus/user/getUserMessage", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户消息提醒")
-    public MessageResp getUserMessage()
+    public MessageListResp getUserMessage()
     {
         User u = (User) this.httpSession.getAttribute("user");
-        MessageResp messageResp = new MessageResp();
-        if(u != null) {
-            try {
-                messageResp.setMessageVo(userService.getUserMessage(u.getId()));
-                messageResp.setSuccess(true);
-            }
-            catch (Exception e){
-                log.error("", e);
-                messageResp.setSuccess(false);
-                messageResp.setMsg(e.getMessage());
-            }
+        MessageListResp messageResp = new MessageListResp();
+        try {
+            List<Message> messages = userService.getUserMessage(u.getId());
+            List<MessageVo> messageVoList = BeanMapper.mapList(messages,MessageVo.class);
+            messageResp.setMessageVoList(messageVoList);
+            messageResp.setSuccess(true);
         }
-        else {
-            messageResp.setSuccess(false);
-            messageResp.setMsg("未登录");
+        catch (Exception e){
+            log.error("", e);
+            messageResp.setMsg(e.getMessage());
         }
 
         return messageResp;
     }
 
+
     @RequestMapping(value = "plus/user/getUserWish", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户心愿单")
-    public WishVo getUserWish()
+    public WishListResp getUserWish()
     {
         User u = (User) this.httpSession.getAttribute("user");
-        return userService.getUserWish(u.getId());
+        WishListResp wishListResp = new WishListResp();
+        try{
+            List<Wish> wishList = userService.getUserWish(u.getId());
+            List<WishVo> wishVoList = BeanMapper.mapList(wishList,WishVo.class);
+            wishListResp.setWishVoList(wishVoList);
+            wishListResp.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            wishListResp.setMsg(e.getMessage());
+        }
+        return wishListResp;
     }
 
     @RequestMapping(value = "plus/user/commitUserWish", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "提交用户心愿单")
-    public boolean commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
+    public BaseResp commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
     {
-        return userService.commitUserWish(wishVo);
+        User u = (User) this.httpSession.getAttribute("user");
+        BaseResp r = new BaseResp();
+        try{
+            Wish wish = BeanMapper.map(wishVo, Wish.class);
+            wish.setUserId(u.getId());
+            userService.commitUserWish(wish);
+            r.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            r.setMsg(e.getMessage());
+        }
+        return r;
     }
-
 }

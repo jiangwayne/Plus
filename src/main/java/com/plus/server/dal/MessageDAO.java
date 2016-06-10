@@ -4,6 +4,8 @@ import com.plus.server.model.Message;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MessageDAO {
     int deleteByPrimaryKey(Long id);
@@ -17,4 +19,6 @@ public interface MessageDAO {
     int updateByPrimaryKeySelective(Message record);
 
     int updateByPrimaryKey(Message record);
+
+    List<Message> selectByUserId(Long userId);
 }

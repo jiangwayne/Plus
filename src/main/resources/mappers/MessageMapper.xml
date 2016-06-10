@@ -19,6 +19,12 @@
     from t_message
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_message
+    where user_id = #{userId,jdbcType=BIGINT} and valid = 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_message
     where id = #{id,jdbcType=BIGINT}

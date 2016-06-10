@@ -6,9 +6,6 @@ import java.util.Date;
  * Created by jiangwulin on 16/6/1.
  */
 public class WishVo {
-    /** 用户id */
-    private Long userId;
-
     /** 出行日期 */
     private Date travelDate;
 
@@ -26,14 +23,6 @@ public class WishVo {
 
     /** 处理状态（1:未回复,2:已回复） */
     private Integer processState;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Date getTravelDate() {
         return travelDate;

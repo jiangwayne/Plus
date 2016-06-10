@@ -4,9 +4,6 @@ package com.plus.server.common.vo;
  * Created by jiangwulin on 16/6/1.
  */
 public class UserSettingVo {
-    /** 用户id */
-    private Long userId;
-
     /** 语言（1:中文,2:英文） */
     private Integer languageType;
 
@@ -21,14 +18,6 @@ public class UserSettingVo {
 
     /** 充许经停（0:,1:,2:） */
     private Integer allowStop;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Integer getLanguageType() {
         return languageType;

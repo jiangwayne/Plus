@@ -4,16 +4,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 
-import com.plus.server.common.vo.MessageVo;
-import com.plus.server.common.vo.UserSettingVo;
-import com.plus.server.common.vo.WishVo;
+import com.plus.server.dal.MessageDAO;
+import com.plus.server.dal.WishDAO;
+import com.plus.server.model.UserSetting;
 import com.plus.server.model.Wish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.plus.server.dal.UserDAO;
+import com.plus.server.dal.UserSettingDAO;
 import com.plus.server.model.User;
+import com.plus.server.model.Message;
 
 /**
  * Created by jiangwulin on 16/5/22.
@@ -22,6 +25,15 @@ import com.plus.server.model.User;
 public class UserService {
 	@Autowired
 	private UserDAO userDao;
+
+	@Autowired
+	private UserSettingDAO userSettingDao;
+
+	@Autowired
+	private WishDAO wishDAO;
+
+	@Autowired
+	private MessageDAO messageDAO;
 
 	public void register(String phone, String email, String password) {
 		User user = new User();
@@ -35,9 +47,41 @@ public class UserService {
 	}
 
 	public boolean login(String loginString, String password) {
-
-		//TODO:手机或邮箱登录判断
+		User user = userDao.selectByUserName(loginString);
+		if(user != null) {
+			String password_salt = user.getPasswordSalt();
+			String password_hash = getPasswordHash(password, password_salt);
+			if(password_hash == user.getPasswordHash()){
+				return true;
+			}
+		}
 		return false;
+	}
+
+	public boolean modifyPassword(String userName, String password){
+		User user = userDao.selectByUserName(userName);
+		if(user != null){
+			String password_salt = generateSalt(5);
+			String password_hash = getPasswordHash(password, password_salt);
+			user.setPasswordSalt(password_salt);
+			user.setPasswordHash(password_hash);
+			userDao.updateByPrimaryKey(user);
+			return true;
+		}
+		return false;
+	}
+
+
+	public User getUser(Long userId){
+		return userDao.selectByPrimaryKey(userId);
+	}
+
+	public void updateUser(User user){
+		userDao.updateByPrimaryKeySelective(user);
+	}
+
+	public User getUserByName(String userName){
+		return userDao.selectByUserName(userName);
 	}
 
 	private static String generateSalt(int size) {
@@ -72,43 +116,33 @@ public class UserService {
 		return strResult.substring(0, 66);
 	}
 
-	public UserSettingVo getUserSetting(Long userId)
+	public UserSetting getUserSetting(Long userId)
 	{
-		//TODO:获取用户设置
-		UserSettingVo userSettingVo = new UserSettingVo();
-		return userSettingVo;
+		UserSetting userSetting = userSettingDao.selectByUserId(userId);
+		return userSetting;
 	}
 
-	public boolean setUserSetting(UserSettingVo userSettingVo)
-	{
-		//TODO:更新用户设置
-		return true;
+	public void setUserSetting(UserSetting userSetting) {
+		userSettingDao.updateByPrimaryKeySelective(userSetting);
 	}
 
-	public MessageVo getUserMessage(Long userId)
+
+
+	public List<Message> getUserMessage(Long userId)
 	{
-		//TODO:获取用户消息提醒
-		MessageVo messageVo = new MessageVo();
-		return messageVo;
+		List<Message> message = messageDAO.selectByUserId(userId);
+		return message;
 	}
 
-	public WishVo getUserWish(Long userId)
+	public List<Wish> getUserWish(Long userId)
 	{
-		//TODO:获取用户心愿单
-		WishVo wishVo = new WishVo();
-		return wishVo;
+		List<Wish> wishList = wishDAO.selectByUserId(userId);
+		return wishList;
 	}
 
-	public boolean commitUserWish(WishVo wishVo)
+	public void commitUserWish(Wish wish)
 	{
-		//TODO:提交用户心愿单
-		return true;
-	}
-
-	public boolean getValidateCode(String phone)
-	{
-		//TODO:调用短信通道接口给用phone发送验证码
-		return true;
+		wishDAO.insert(wish);
 	}
 
 }

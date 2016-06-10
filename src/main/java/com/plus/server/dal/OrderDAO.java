@@ -1,5 +1,7 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
 import com.plus.server.model.Order;
 
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,6 @@ public interface OrderDAO {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+	List<Order> selectByModel(Order param);
 }

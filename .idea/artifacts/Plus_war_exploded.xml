@@ -46,6 +46,13 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.3" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.3.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
+          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.8.0" module-name="Plus" />
+          <element id="library" level="module" name="Maven: com.alibaba:tools:1.8.0" module-name="Plus" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.1" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: net.sf.dozer:dozer:5.5.1" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.2.1" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.5" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="Plus/web/Web" />

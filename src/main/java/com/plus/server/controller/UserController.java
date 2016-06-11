@@ -299,4 +299,25 @@ public class UserController extends BaseController {
         }
         return userBoardingListResp;
     }
+
+
+    @RequestMapping(value = "plus/user/deletePassenger", method = RequestMethod.PUT)
+    @ResponseBody
+    @ApiOperation(value = "删除乘机人")
+    public BaseResp deletePassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)
+    {
+        User u = this.getCurrentUser();
+        BaseResp r = new BaseResp();
+        try{
+            UserBoarding userBoarding = BeanMapper.map(userBoardingVo, UserBoarding.class);
+            userBoarding.setUserId(u.getId());
+            userService.deleteUserBoarding(userBoarding);
+            r.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            r.setMsg(e.getMessage());
+        }
+        return r;
+    }
 }

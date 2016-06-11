@@ -8,6 +8,9 @@ import java.util.Date;
  * Created by jiangwulin on 16/6/11.
  */
 public class UserBoardingVo {
+    @ApiModelProperty(" 乘机人id")
+    private Long id;
+
     @ApiModelProperty(" 全名 ")
     private String fullName;
 
@@ -34,6 +37,14 @@ public class UserBoardingVo {
 
     @ApiModelProperty(" 地址 ")
     private String address;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFullName() {
         return fullName;

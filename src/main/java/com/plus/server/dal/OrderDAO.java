@@ -15,6 +15,7 @@ public interface OrderDAO {
     int insertSelective(Order record);
 
     Order selectByPrimaryKey(Long id);
+    Order selectByPrimaryKeyForUpdate(Long id);
 
     int updateByPrimaryKeySelective(Order record);
 

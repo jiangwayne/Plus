@@ -25,6 +25,12 @@
     from t_order
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT} for update
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_order
     where id = #{id,jdbcType=BIGINT}

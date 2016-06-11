@@ -55,6 +55,11 @@ public class UserService {
 		user.setPasswordHash(password_hash);
 		user.setPhone(phone);
 		user.setEmail(email);
+		user.setUserType(1); //1: app注册
+		user.setFlyCount(0);
+		user.setMileage(0);
+		user.setPoint(0);
+		user.setFlyTime(0);
 
 		user.setValid(1);
 		user.setGmtCreate(new Date());
@@ -68,7 +73,7 @@ public class UserService {
 		if(user != null) {
 			String password_salt = user.getPasswordSalt();
 			String password_hash = getPasswordHash(password, password_salt);
-			if(password_hash == user.getPasswordHash()){
+			if(password_hash.equals(user.getPasswordHash())){
 				return true;
 			}
 		}

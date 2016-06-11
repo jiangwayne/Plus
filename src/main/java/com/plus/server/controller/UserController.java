@@ -92,7 +92,7 @@ public class UserController extends BaseController {
         log.info("注册，phone={}，email={}，password={}，validateCode={}", phone, email, password, validateCode);
         BaseResp r = new BaseResp();
         Object o = this.httpSession.getAttribute("validateCode");
-        if(o == null || !validateCode.equals(o)){
+        if(o == null || !validateCode.equals(o.toString())){
             r.setMsg("验证码错误");
             return r;
         }

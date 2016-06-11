@@ -157,6 +157,14 @@ public class UserService {
 		userBoardingDAO.insert(userBoarding);
 	}
 
+	public void deleteUserBoarding(UserBoarding userBoarding)
+	{
+		userBoarding.setValid(-1);
+		userBoarding.setGmtModify(new Date());
+
+		userBoardingDAO.updateByPrimaryKeySelective(userBoarding);
+	}
+
 	public List<UserBoarding> getUserBoarding(Long userId)
 	{
 		return userBoardingDAO.selectByUserId(userId);

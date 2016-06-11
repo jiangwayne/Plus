@@ -1,9 +1,11 @@
 package com.plus.server.dal;
 
 import com.plus.server.model.Wish;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface WishDAO {
     int deleteByPrimaryKey(Long id);
 

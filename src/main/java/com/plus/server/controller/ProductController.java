@@ -66,7 +66,7 @@ public class ProductController {
 	@RequestMapping(value = "/createProductSpec", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "创建产品规格")
-	public BaseResp createProductSpec(@RequestParam(required = true) ProductSpecVo productSpecVo) {
+	public BaseResp createProductSpec(@RequestBody(required = true) ProductSpecVo productSpecVo) {
 		log.info("创建产品规格---productSpecVo={}", JSON.toJSONString(productSpecVo));
 		BaseResp r = new BaseResp();
 		if (productSpecVo == null || productSpecVo.getProductId() == null) {

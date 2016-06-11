@@ -33,6 +33,7 @@ public class UserService {
 	private UserBoardingDAO userBoardingDAO;
 
 	public void register(String phone, String email, String password) {
+		//TODO 手机号和邮箱判断重复
 		User user = new User();
 		user.setValid(1);
 		String password_salt = generateSalt(5);

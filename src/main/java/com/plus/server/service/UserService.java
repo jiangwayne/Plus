@@ -39,6 +39,8 @@ public class UserService {
 		String password_hash = getPasswordHash(password, password_salt);
 		user.setPasswordSalt(password_salt);
 		user.setPasswordHash(password_hash);
+		user.setPhone(phone);
+		user.setEmail(email);
 
 		user.setValid(1);
 		user.setGmtCreate(new Date());

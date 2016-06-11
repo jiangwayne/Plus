@@ -38,6 +38,7 @@ public class LoginController extends BaseController {
             this.httpSession.setAttribute("user", u);
             r.setSuccess(true);
         }
+        r.setMsg("用户不存在或密码不正确");
         return r;
     }
 

@@ -156,6 +156,8 @@ public class ProductController {
 				for(ProductVo vo : productList){
 					fillDateStr(vo);
 				}
+				r.setPages(pageInfo.getPages());
+				r.setTotal(pageInfo.getTotal());
 				r.setProductList(productList);
 			}
 		} catch (Exception e) {

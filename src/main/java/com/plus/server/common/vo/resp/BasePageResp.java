@@ -4,16 +4,16 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 
 public class BasePageResp extends BaseResp {
 	@ApiModelProperty("总记录数")
-	private int total;
+	private long total;
 
 	@ApiModelProperty("总页数")
 	private int pages;
 
-	public int getTotal() {
+	public long getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(long total) {
 		this.total = total;
 	}
 

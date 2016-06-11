@@ -32,8 +32,15 @@ public class ProductService {
 	 */
 	public void save(Product product) throws Exception {
 		log.info("新增产品---product={}", JSON.toJSONString(product));
-		if(product == null){
+		if(product == null || product.getName() == null){
 			throw new Exception("参数不能为空");
+		}
+		Product param = new Product();
+		param.setValid(1);
+		param.setName(product.getName());
+		List<Product> pList = productDAO.selectByModel(param);
+		if(pList != null && pList.size() > 0){
+			throw new Exception("产品名称重复");
 		}
 		product.setId(null);
 		product.setGmtCreate(new Date());
@@ -49,7 +56,7 @@ public class ProductService {
 	 * @throws Exception
 	 */
 	public void update(Product product) throws Exception {
-		log.info("新增产品---product={}", JSON.toJSONString(product));
+		log.info("修改产品---product={}", JSON.toJSONString(product));
 		if(product == null || product.getId() == null){
 			throw new Exception("参数不能为空");
 		}
@@ -58,12 +65,12 @@ public class ProductService {
 		this.productDAO.updateByPrimaryKeySelective(product);
 	}
 	
-	public PageInfo<Product> selectByModel(Product product, int page, int pageSize) {
-		log.info("订单查询，product={},page={},pageSize={}", JSON.toJSONString(product), page, pageSize);
-		if (page <= 0) {
+	public PageInfo<Product> selectByModel(Product product, Integer page, Integer pageSize) {
+		log.info("产品查询，product={},page={},pageSize={}", JSON.toJSONString(product), page, pageSize);
+		if (page == null || page <= 0) {
 			page = PageDefault.PAGE_NUM_DEFAULT;
 		}
-		if (pageSize <= 0) {
+		if (pageSize == null || pageSize <= 0) {
 			pageSize = PageDefault.PAGE_SIZE_DEFAULT;
 		}
 		PageHelper.startPage(page, pageSize);
@@ -71,12 +78,12 @@ public class ProductService {
 		PageInfo<Product> pageInfo = new PageInfo<Product>(list);
 		return pageInfo;
 	}
-	public PageInfo<ProductSpec> selectProductSpecByModel(ProductSpec productSpec, int page, int pageSize) {
-		log.info("订单查询，productSpec={},page={},pageSize={}", JSON.toJSONString(productSpec), page, pageSize);
-		if (page <= 0) {
+	public PageInfo<ProductSpec> selectProductSpecByModel(ProductSpec productSpec, Integer page, Integer pageSize) {
+		log.info("产品规格查询，productSpec={},page={},pageSize={}", JSON.toJSONString(productSpec), page, pageSize);
+		if (page == null || page <= 0) {
 			page = PageDefault.PAGE_NUM_DEFAULT;
 		}
-		if (pageSize <= 0) {
+		if (pageSize == null || pageSize <= 0) {
 			pageSize = PageDefault.PAGE_SIZE_DEFAULT;
 		}
 		PageHelper.startPage(page, pageSize);
@@ -91,8 +98,15 @@ public class ProductService {
 
 	public void saveProductSpec(ProductSpec productSpec) throws Exception{
 		log.info("新增产品规格---productSpec={}", JSON.toJSONString(productSpec));
-		if(productSpec == null || productSpec.getProductId() == null){
+		if(productSpec == null || productSpec.getProductId() == null || productSpec.getName() == null){
 			throw new Exception("参数不能为空");
+		}
+		ProductSpec param = new ProductSpec();
+		param.setValid(1);
+		param.setName(productSpec.getName());
+		List<ProductSpec> specList = productSpecDAO.selectByModel(param);
+		if(specList != null && specList.size() > 0){
+			throw new Exception("产品规格名称重复");
 		}
 		productSpec.setId(null);
 		productSpec.setGmtCreate(new Date());

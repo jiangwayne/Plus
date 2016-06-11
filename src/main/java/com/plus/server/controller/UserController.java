@@ -1,5 +1,6 @@
 package com.plus.server.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.*;
 import com.plus.server.common.vo.resp.*;
@@ -38,7 +39,14 @@ public class UserController extends BaseController {
     @ApiOperation(value = "登出")
     public BaseResp logout() {
         log.info("登出----");
+        User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
+        if(u == null)
+        {
+            r.setMsg("未登录");
+            return r;
+        }
+
         this.httpSession.removeAttribute("user");
         r.setSuccess(true);
         return r;
@@ -50,6 +58,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户设置")
     public UserSettingResp getUserSetting()
     {
+        log.info("获取用户设置----");
         User u = this.getCurrentUser();
         UserSettingResp userSettingResp = new UserSettingResp();
         if(u == null)
@@ -80,6 +89,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "更新用户设置")
     public BaseResp setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
     {
+        log.info("更新用户设置----userSettingVo={}", JSON.toJSONString(userSettingVo));
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         if(u == null)
@@ -106,6 +116,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户信息(积分,里程数,飞行时长,成行次数)")
     public UserResp getUserInfo()
     {
+        log.info("获取用户信息-------");
         User u = this.getCurrentUser();
         UserResp userResp = new UserResp();
         if(u == null)
@@ -131,6 +142,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户消息提醒")
     public MessageListResp getUserMessage()
     {
+        log.info("获取用户消息提醒-------");
         User u = this.getCurrentUser();
         MessageListResp messageResp = new MessageListResp();
         if(u == null)
@@ -162,6 +174,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户心愿单")
     public WishListResp getUserWish()
     {
+        log.info("获取用户心愿单-------");
         User u = this.getCurrentUser();
         WishListResp wishListResp = new WishListResp();
         if(u == null)
@@ -193,6 +206,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "提交用户心愿单")
     public BaseResp addUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
     {
+        log.info("提交用户心愿单-------wishVo={}", JSON.toJSONString(wishVo));
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         if(u == null)
@@ -218,6 +232,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "添加乘机人")
     public BaseResp addPassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)
     {
+        log.info("添加乘机人-------userBoardingVo={}", JSON.toJSONString(userBoardingVo));
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         if(u == null)
@@ -244,6 +259,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "乘机人列表")
     public UserBoardingListResp getPassengerList()
     {
+        log.info("乘机人列表-------");
         User u = this.getCurrentUser();
         UserBoardingListResp userBoardingListResp = new UserBoardingListResp();
         if(u == null)
@@ -274,6 +290,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "删除乘机人")
     public BaseResp deletePassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)
     {
+        log.info("删除乘机人-------userBoardingVo={}", JSON.toJSONString(userBoardingVo));
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         if(u == null)

@@ -1,5 +1,6 @@
 package com.plus.server.controller;
 
+import com.plus.server.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class BaseController {
 	@Autowired
 	protected HttpServletResponse httpResponse;
 
-	public UserVo getCurrentUser() {
-		UserVo u = (UserVo) httpRequest.getSession().getAttribute("user");
+	public User getCurrentUser() {
+		User u = (User) httpRequest.getSession().getAttribute("user");
 		return u;
 	}
 

@@ -21,7 +21,7 @@ public class UserSetting {
     /** 出行日期类型（1:灵活,2:固定） */
     private Integer travelDateType;
 
-    /** 充许经停（0:,1:,2:） */
+    /** 充许经停（1:直飞,2:加油） */
     private Integer allowStop;
 
     /** 逻辑删除（1:有效数据,-1:已删除） */

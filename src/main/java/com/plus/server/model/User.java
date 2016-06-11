@@ -39,13 +39,8 @@ public class User {
     /** 飞行时长(单位分钟) */
     private Integer flyTime;
 
-    public Integer getFlyTime() {
-        return flyTime;
-    }
-
-    public void setFlyTime(Integer flyTime) {
-        this.flyTime = flyTime;
-    }
+    /** 成行次数(即订机票的次数) */
+    private Integer flyCount;
 
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
@@ -151,6 +146,22 @@ public class User {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    public Integer getFlyTime() {
+        return flyTime;
+    }
+
+    public void setFlyTime(Integer flyTime) {
+        this.flyTime = flyTime;
+    }
+
+    public Integer getFlyCount() {
+        return flyCount;
+    }
+
+    public void setFlyCount(Integer flyCount) {
+        this.flyCount = flyCount;
     }
 
     public Date getGmtCreate() {

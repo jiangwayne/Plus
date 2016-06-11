@@ -1,13 +1,15 @@
 package com.plus.server.common.vo;
 
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /**
  * Created by jiangwulin on 16/6/1.
  */
 public class MessageVo {
-    /** 消息类型（1:行程,2:询价,3:提醒,4:促销） */
+    @ApiModelProperty(" 消息类型（1:行程,2:询价,3:提醒,4:促销） ")
     private Integer messageType;
 
-    /** 消息类容 */
+    @ApiModelProperty(" 消息类容 ")
     private String content;
 
     public Integer getMessageType() {

@@ -14,13 +14,14 @@
     <result column="point" property="point" jdbcType="INTEGER" />
     <result column="mileage" property="mileage" jdbcType="INTEGER" />
     <result column="fly_time" property="flyTime" jdbcType="INTEGER" />
+    <result column="fly_count" property="flyCount" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, phone, email, password_hash, password_salt, user_type, wx_unique_code, wx_gender, 
-    wx_region, point, mileage, fly_time, valid, gmt_create, gmt_modify
+    wx_region, point, mileage, fly_time, fly_count, valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -37,13 +38,13 @@
     insert into t_user (id, phone, email, 
       password_hash, password_salt, user_type, 
       wx_unique_code, wx_gender, wx_region, 
-      point, mileage, fly_time,valid, gmt_create,
+      point, mileage, fly_time, fly_count, valid, gmt_create,
       gmt_modify)
     values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{passwordHash,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
       #{wxUniqueCode,jdbcType=VARCHAR}, #{wxGender,jdbcType=INTEGER}, #{wxRegion,jdbcType=VARCHAR}, 
       #{point,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{flyTime,jdbcType=INTEGER},
-      #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
+      #{flyCount,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.User" >
@@ -182,6 +183,9 @@
       <if test="flyTime != null" >
         and fly_time = #{flyTime,jdbcType=INTEGER},
       </if>
+      <if test="flyCount != null" >
+        and fly_count = #{flyCount,jdbcType=INTEGER},
+      </if>
       <if test="valid != null" >
         and valid = #{valid,jdbcType=INTEGER}
       </if>
@@ -235,6 +239,9 @@
       <if test="flyTime != null" >
         fly_time = #{flyTime,jdbcType=INTEGER},
       </if>
+      <if test="flyCount != null" >
+        fly_count = #{flyCount,jdbcType=INTEGER},
+      </if>
       <if test="valid != null" >
         valid = #{valid,jdbcType=INTEGER},
       </if>
@@ -260,6 +267,7 @@
       point = #{point,jdbcType=INTEGER},
       mileage = #{mileage,jdbcType=INTEGER},
       fly_time = #{flyTime,jdbcType=INTEGER},
+      fly_count = #{flyCount,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}

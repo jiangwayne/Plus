@@ -19,7 +19,7 @@ public class Wish {
     private Integer budget;
 
     /** 内容 */
-    private Integer content;
+    private String content;
 
     /** 回复消息内容 */
     private String contentReply;
@@ -76,11 +76,11 @@ public class Wish {
         this.budget = budget;
     }
 
-    public Integer getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

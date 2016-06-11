@@ -7,7 +7,7 @@
     <result column="travel_date" property="travelDate" jdbcType="TIMESTAMP" />
     <result column="people_number" property="peopleNumber" jdbcType="INTEGER" />
     <result column="budget" property="budget" jdbcType="INTEGER" />
-    <result column="content" property="content" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="content_reply" property="contentReply" jdbcType="VARCHAR" />
     <result column="process_state" property="processState" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
@@ -40,7 +40,7 @@
       content_reply, process_state, valid, 
       gmt_create, gmt_modify)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{travelDate,jdbcType=TIMESTAMP}, 
-      #{peopleNumber,jdbcType=INTEGER}, #{budget,jdbcType=INTEGER}, #{content,jdbcType=INTEGER}, 
+      #{peopleNumber,jdbcType=INTEGER}, #{budget,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
       #{contentReply,jdbcType=VARCHAR}, #{processState,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
@@ -98,7 +98,7 @@
         #{budget,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
-        #{content,jdbcType=INTEGER},
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="contentReply != null" >
         #{contentReply,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
         budget = #{budget,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
-        content = #{content,jdbcType=INTEGER},
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="contentReply != null" >
         content_reply = #{contentReply,jdbcType=VARCHAR},
@@ -159,7 +159,7 @@
       travel_date = #{travelDate,jdbcType=TIMESTAMP},
       people_number = #{peopleNumber,jdbcType=INTEGER},
       budget = #{budget,jdbcType=INTEGER},
-      content = #{content,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
       content_reply = #{contentReply,jdbcType=VARCHAR},
       process_state = #{processState,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},

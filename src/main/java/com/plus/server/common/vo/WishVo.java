@@ -1,27 +1,29 @@
 package com.plus.server.common.vo;
 
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
  * Created by jiangwulin on 16/6/1.
  */
 public class WishVo {
-    /** 出行日期 */
+    @ApiModelProperty(" 出行日期 ")
     private Date travelDate;
 
-    /** 人数 */
+    @ApiModelProperty(" 人数 ")
     private Integer peopleNumber;
 
-    /** 预算(单位:分) */
+    @ApiModelProperty(" 预算(单位:分) ")
     private Integer budget;
 
-    /** 内容 */
-    private Integer content;
+    @ApiModelProperty(" 内容 ")
+    private String content;
 
-    /** 回复消息内容 */
+    @ApiModelProperty(" 回复消息内容 ")
     private String contentReply;
 
-    /** 处理状态（1:未回复,2:已回复） */
+    @ApiModelProperty(" 处理状态（1:未回复,2:已回复） ")
     private Integer processState;
 
     public Date getTravelDate() {
@@ -48,11 +50,11 @@ public class WishVo {
         this.budget = budget;
     }
 
-    public Integer getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

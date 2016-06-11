@@ -4,19 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
-import com.plus.server.dal.MessageDAO;
-import com.plus.server.dal.WishDAO;
-import com.plus.server.model.UserSetting;
-import com.plus.server.model.Wish;
+import com.plus.server.dal.*;
+import com.plus.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.plus.server.dal.UserDAO;
-import com.plus.server.dal.UserSettingDAO;
-import com.plus.server.model.User;
-import com.plus.server.model.Message;
 
 /**
  * Created by jiangwulin on 16/5/22.
@@ -35,6 +29,9 @@ public class UserService {
 	@Autowired
 	private MessageDAO messageDAO;
 
+	@Autowired
+	private UserBoardingDAO userBoardingDAO;
+
 	public void register(String phone, String email, String password) {
 		User user = new User();
 		user.setValid(1);
@@ -42,6 +39,10 @@ public class UserService {
 		String password_hash = getPasswordHash(password, password_salt);
 		user.setPasswordSalt(password_salt);
 		user.setPasswordHash(password_hash);
+
+		user.setValid(1);
+		user.setGmtCreate(new Date());
+		user.setGmtModify(new Date());
 
 		userDao.insert(user);
 	}
@@ -65,6 +66,7 @@ public class UserService {
 			String password_hash = getPasswordHash(password, password_salt);
 			user.setPasswordSalt(password_salt);
 			user.setPasswordHash(password_hash);
+			user.setGmtModify(new Date());
 			userDao.updateByPrimaryKey(user);
 			return true;
 		}
@@ -118,8 +120,7 @@ public class UserService {
 
 	public UserSetting getUserSetting(Long userId)
 	{
-		UserSetting userSetting = userSettingDao.selectByUserId(userId);
-		return userSetting;
+		return userSettingDao.selectByUserId(userId);
 	}
 
 	public void setUserSetting(UserSetting userSetting) {
@@ -130,19 +131,35 @@ public class UserService {
 
 	public List<Message> getUserMessage(Long userId)
 	{
-		List<Message> message = messageDAO.selectByUserId(userId);
-		return message;
+		return messageDAO.selectByUserId(userId);
 	}
 
 	public List<Wish> getUserWish(Long userId)
 	{
-		List<Wish> wishList = wishDAO.selectByUserId(userId);
-		return wishList;
+		return wishDAO.selectByUserId(userId);
 	}
 
 	public void commitUserWish(Wish wish)
 	{
+		wish.setValid(1);
+		wish.setGmtCreate(new Date());
+		wish.setGmtModify(new Date());
+
 		wishDAO.insert(wish);
+	}
+
+	public void createUserBoarding(UserBoarding userBoarding)
+	{
+		userBoarding.setValid(1);
+		userBoarding.setGmtCreate(new Date());
+		userBoarding.setGmtModify(new Date());
+
+		userBoardingDAO.insert(userBoarding);
+	}
+
+	public List<UserBoarding> getUserBoarding(Long userId)
+	{
+		return userBoardingDAO.selectByUserId(userId);
 	}
 
 }

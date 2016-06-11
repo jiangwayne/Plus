@@ -2,15 +2,9 @@ package com.plus.server.controller;
 
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.util.MsgUtil;
-import com.plus.server.common.vo.MessageVo;
-import com.plus.server.common.vo.resp.BaseResp;
-import com.plus.server.common.vo.resp.MessageListResp;
-import com.plus.server.common.vo.resp.UserSettingResp;
-import com.plus.server.common.vo.resp.WishListResp;
-import com.plus.server.model.Message;
-import com.plus.server.model.User;
-import com.plus.server.model.UserSetting;
-import com.plus.server.model.Wish;
+import com.plus.server.common.vo.*;
+import com.plus.server.common.vo.resp.*;
+import com.plus.server.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.plus.server.common.vo.UserSettingVo;
-import com.plus.server.common.vo.WishVo;
 import com.plus.server.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -149,7 +141,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户设置")
     public UserSettingResp getUserSetting()
     {
-        User u = (User) this.httpSession.getAttribute("user");
+        User u = this.getCurrentUser();
         UserSettingResp userSettingResp = new UserSettingResp();
         try{
             UserSetting userSetting = userService.getUserSetting(u.getId());
@@ -164,12 +156,13 @@ public class UserController extends BaseController {
         return userSettingResp;
     }
 
-    @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.POST)
+
+    @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.PUT)
     @ResponseBody
     @ApiOperation(value = "更新用户设置")
     public BaseResp setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
     {
-        User u = (User) this.httpSession.getAttribute("user");
+        User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         try{
             UserSetting userSetting = BeanMapper.map(userSettingVo, UserSetting.class);
@@ -184,12 +177,33 @@ public class UserController extends BaseController {
         return r;
     }
 
+    @RequestMapping(value = "plus/user/getUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "获取用户信息(积分,里程数,飞行时长,成行次数)")
+    public UserResp getUserInfo()
+    {
+        User u = this.getCurrentUser();
+        UserResp userResp = new UserResp();
+        try{
+            User user = userService.getUser(u.getId());
+            userResp.setUserVo(BeanMapper.map(user, UserVo.class));
+            userResp.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("",e);
+            userResp.setMsg(e.getMessage());
+        }
+
+        return userResp;
+    }
+
+
     @RequestMapping(value = "plus/user/getUserMessage", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户消息提醒")
     public MessageListResp getUserMessage()
     {
-        User u = (User) this.httpSession.getAttribute("user");
+        User u = this.getCurrentUser();
         MessageListResp messageResp = new MessageListResp();
         try {
             List<Message> messages = userService.getUserMessage(u.getId());
@@ -211,7 +225,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户心愿单")
     public WishListResp getUserWish()
     {
-        User u = (User) this.httpSession.getAttribute("user");
+        User u = this.getCurrentUser();
         WishListResp wishListResp = new WishListResp();
         try{
             List<Wish> wishList = userService.getUserWish(u.getId());
@@ -231,7 +245,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "提交用户心愿单")
     public BaseResp commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
     {
-        User u = (User) this.httpSession.getAttribute("user");
+        User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
         try{
             Wish wish = BeanMapper.map(wishVo, Wish.class);
@@ -244,5 +258,45 @@ public class UserController extends BaseController {
             r.setMsg(e.getMessage());
         }
         return r;
+    }
+
+    @RequestMapping(value = "plus/user/addPassenger", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "添加乘机人")
+    public BaseResp addPassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)
+    {
+        User u = this.getCurrentUser();
+        BaseResp r = new BaseResp();
+        try{
+            UserBoarding userBoarding = BeanMapper.map(userBoardingVo, UserBoarding.class);
+            userBoarding.setUserId(u.getId());
+            userService.createUserBoarding(userBoarding);
+            r.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            r.setMsg(e.getMessage());
+        }
+        return r;
+    }
+
+    @RequestMapping(value = "plus/user/passengerList", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "乘机人列表")
+    public UserBoardingListResp getPassengerList()
+    {
+        User u = this.getCurrentUser();
+        UserBoardingListResp userBoardingListResp = new UserBoardingListResp();
+        try{
+            List<UserBoarding> userBoardingList = userService.getUserBoarding(u.getId());
+            List<UserBoardingVo> userBoardingVoList = BeanMapper.mapList(userBoardingList,UserBoardingVo.class);
+            userBoardingListResp.setUserBoardingVoList(userBoardingVoList);
+            userBoardingListResp.setSuccess(true);
+        }
+        catch (Exception e){
+            log.error("", e);
+            userBoardingListResp.setMsg(e.getMessage());
+        }
+        return userBoardingListResp;
     }
 }

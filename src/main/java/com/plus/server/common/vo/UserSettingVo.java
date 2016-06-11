@@ -1,22 +1,24 @@
 package com.plus.server.common.vo;
 
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /**
  * Created by jiangwulin on 16/6/1.
  */
 public class UserSettingVo {
-    /** 语言（1:中文,2:英文） */
+    @ApiModelProperty(" 语言（1:中文,2:英文） ")
     private Integer languageType;
 
-    /** 时间区（1~24） */
+    @ApiModelProperty(" 时间区（1~24） ")
     private Integer timezone;
 
-    /** 货币（1:CNY,2:USD,3:BGP,4:EUR,5:HKD） */
+    @ApiModelProperty(" 货币（1:CNY,2:USD,3:BGP,4:EUR,5:HKD） ")
     private Integer currency;
 
-    /** 出行日期类型（1:灵活,2:固定） */
+    @ApiModelProperty(" 出行日期类型（1:灵活,2:固定） ")
     private Integer travelDateType;
 
-    /** 充许经停（0:,1:,2:） */
+    @ApiModelProperty(" 充许经停（1:直飞,2:加油） ")
     private Integer allowStop;
 
     public Integer getLanguageType() {

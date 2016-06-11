@@ -70,7 +70,7 @@ public class UserController extends BaseController {
         log.info("注册，phone={}", phone);
         BaseResp r = new BaseResp();
         Random random = new Random();
-        int randomInt = random.nextInt(100000);
+        int randomInt = random.nextInt(999999);
         if (randomInt < 100000) {
             randomInt += 100000;
         }

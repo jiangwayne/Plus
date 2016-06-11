@@ -200,7 +200,7 @@
   <select id="selectByUserName" parameterType="java.lang.String">
     select <include refid="Base_Column_List" /> from t_user
     <where>
-      (phone = #{useName,jdbcType=VARCHAR} or email = #{userName,jdbcType=VARCHAR}) and valid = 1
+      (phone = #{userName,jdbcType=VARCHAR} or email = #{userName,jdbcType=VARCHAR}) and valid = 1
     </where>
   </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.User" >

@@ -204,43 +204,43 @@
     from t_product_spec
     <where >
       <if test="productId != null" >
-        and product_id = #{productId,jdbcType=BIGINT},
+        and product_id = #{productId,jdbcType=BIGINT}
       </if>
       <if test="startDate != null" >
-        and start_date = #{startDate,jdbcType=TIMESTAMP},
+        and start_date = #{startDate,jdbcType=TIMESTAMP}
       </if>
       <if test="name != null" >
-        and name = #{name,jdbcType=VARCHAR},
+        and name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="nameEn != null" >
-       and  name_en = #{nameEn,jdbcType=VARCHAR},
+       and  name_en = #{nameEn,jdbcType=VARCHAR}
       </if>
       <if test="descriptionSimple != null" >
-        and description_simple = #{descriptionSimple,jdbcType=VARCHAR},
+        and description_simple = #{descriptionSimple,jdbcType=VARCHAR}
       </if>
       <if test="descriptionSimpleEn != null" >
-        and description_simple_en = #{descriptionSimpleEn,jdbcType=VARCHAR},
+        and description_simple_en = #{descriptionSimpleEn,jdbcType=VARCHAR}
       </if>
       <if test="priceOriginal != null" >
-        and price_original = #{priceOriginal,jdbcType=INTEGER},
+        and price_original = #{priceOriginal,jdbcType=INTEGER}
       </if>
       <if test="priceCurrent != null" >
-        and price_current = #{priceCurrent,jdbcType=INTEGER},
+        and price_current = #{priceCurrent,jdbcType=INTEGER}
       </if>
       <if test="countMax != null" >
-        and count_max = #{countMax,jdbcType=INTEGER},
+        and count_max = #{countMax,jdbcType=INTEGER}
       </if>
       <if test="countSale != null" >
-        and count_sale = #{countSale,jdbcType=INTEGER},
+        and count_sale = #{countSale,jdbcType=INTEGER}
       </if>
       <if test="valid != null" >
-        and valid = #{valid,jdbcType=INTEGER},
+        and valid = #{valid,jdbcType=INTEGER}
       </if>
       <if test="gmtCreate != null" >
-        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
       </if>
       <if test="gmtModify != null" >
-        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
       </if>
     </where>
   </select>

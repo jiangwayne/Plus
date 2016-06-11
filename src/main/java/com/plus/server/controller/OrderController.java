@@ -43,12 +43,13 @@ public class OrderController extends BaseController {
 	@ApiOperation(value = "创建订单")
 	public BaseResp createOrder(
 			@ApiParam(required = true, value = "产品规格id") @RequestParam(required = true) Long productSpecId,
-			@ApiParam(required = true, value = "数量") @RequestParam(required = true) Integer count) {
+			@ApiParam(required = true, value = "数量") @RequestParam(required = true) Integer count,
+			@ApiParam(required = false, value = "乘机人id(多个乘机人时用逗号分隔)") @RequestParam(required = false) String boardingIds) {
 		log.info("创建订单---productSpecId={},count={}", productSpecId, count);
 		BaseResp r = new BaseResp();
 		Long userId = this.getCurrentUser().getId();
 		try {
-			orderService.createOrder(userId, productSpecId, count);
+			orderService.createOrder(userId, productSpecId, count, boardingIds);
 		} catch (Exception e) {
 			log.error("", e);
 			r.setMsg(e.getMessage());
@@ -88,7 +89,7 @@ public class OrderController extends BaseController {
 		return r;
 	}
 	private void fillDateStr(OrderVo vo){
-		SimpleDateFormat f = new SimpleDateFormat();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
 		if(vo.getGmtCreate() != null){
 			vo.setGmtCreateStr(f.format(vo.getGmtCreate()));
 		}

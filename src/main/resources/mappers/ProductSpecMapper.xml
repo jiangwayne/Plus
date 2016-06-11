@@ -198,7 +198,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="selectByModel" parameterType="com.plus.server.model.ProductSpec" >
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.plus.server.model.ProductSpec" >
     select 
     <include refid="Base_Column_List" />
     from t_product_spec

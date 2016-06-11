@@ -39,7 +39,7 @@ public class OrderService {
 	 * @param productSpecId
 	 * @param count
 	 */
-	public void createOrder(Long userId, Long productSpecId, Integer count) throws Exception {
+	public void createOrder(Long userId, Long productSpecId, Integer count, String boardingIds) throws Exception {
 		log.info("创建订单，userId={},productSpecId={},count={}", userId, productSpecId, count);
 		if (userId == null || productSpecId == null || count == null) {
 			throw new Exception("参数不能为空");
@@ -56,6 +56,7 @@ public class OrderService {
 		order.setPriceTotal(count * ps.getPriceCurrent());
 		order.setProductId(ps.getProductId());
 		order.setProductSpecId(ps.getId());
+		order.setBoardingIds(boardingIds);
 		if (pro.getPayType() == 1) {// 支付类型（1-直接支付，2-不直接支付（生成的是待确认订单））
 			order.setStatus(20);// 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）
 		} else if (pro.getPayType() == 2) {

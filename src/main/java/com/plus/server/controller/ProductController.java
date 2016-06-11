@@ -1,5 +1,6 @@
 package com.plus.server.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -72,6 +73,15 @@ public class ProductController {
 		if (productSpecVo == null || productSpecVo.getProductId() == null) {
 			r.setMsg("参数为空");
 			return r;
+		}
+		if(productSpecVo.getStartDateStr() != null ){
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				productSpecVo.setStartDate(f.parse(productSpecVo.getStartDateStr()));
+			} catch (ParseException e) {
+				r.setMsg("开始日期格式错误（"+productSpecVo.getStartDateStr()+"）,正确的应该是yyyy-MM-dd");
+				return r;
+			}
 		}
 		ProductSpec productSpec = BeanMapper.copy(productSpecVo, new ProductSpec());
 		try {
@@ -251,7 +261,7 @@ public class ProductController {
 	}
 	
 	private void fillDateStr(ProductVo vo){
-		SimpleDateFormat f = new SimpleDateFormat();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
 		if(vo.getGmtCreate() != null){
 			vo.setGmtCreateStr(f.format(vo.getGmtCreate()));
 		}
@@ -261,7 +271,8 @@ public class ProductController {
 	}
 	
 	private void fillDateStr(ProductSpecVo vo){
-		SimpleDateFormat f = new SimpleDateFormat();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
+		SimpleDateFormat f2 = new SimpleDateFormat("yyyy-MM-dd");
 		if(vo.getGmtCreate() != null){
 			vo.setGmtCreateStr(f.format(vo.getGmtCreate()));
 		}
@@ -269,7 +280,7 @@ public class ProductController {
 			vo.setGmtModifyStr(f.format(vo.getGmtModify()));
 		}
 		if(vo.getStartDate() != null){
-			vo.setStartDateStr(f.format(vo.getStartDate()));
+			vo.setStartDateStr(f2.format(vo.getStartDate()));
 		}
 	}
 

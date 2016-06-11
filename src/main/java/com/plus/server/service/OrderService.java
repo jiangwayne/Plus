@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
@@ -39,14 +40,18 @@ public class OrderService {
 	 * @param productSpecId
 	 * @param count
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	public void createOrder(Long userId, Long productSpecId, Integer count, String boardingIds) throws Exception {
 		log.info("创建订单，userId={},productSpecId={},count={}", userId, productSpecId, count);
 		if (userId == null || productSpecId == null || count == null) {
 			throw new Exception("参数不能为空");
 		}
-		ProductSpec ps = productSpecDAO.selectByPrimaryKey(productSpecId);
+		ProductSpec ps = productSpecDAO.selectByPrimaryKeyForUpdate(productSpecId);
 		if (ps == null) {
 			throw new Exception("产品规格错误");
+		}
+		if(ps.getCountMax() < ps.getCountSale()+count){
+			throw new Exception("剩余库存不足");
 		}
 		Product pro = productDAO.selectByPrimaryKey(ps.getProductId());
 		Order order = new Order();
@@ -55,7 +60,7 @@ public class OrderService {
 		order.setPriceEach(ps.getPriceCurrent());
 		order.setPriceTotal(count * ps.getPriceCurrent());
 		order.setProductId(ps.getProductId());
-		order.setProductSpecId(ps.getId());
+		order.setProductSpecId(productSpecId);
 		order.setBoardingIds(boardingIds);
 		if (pro.getPayType() == 1) {// 支付类型（1-直接支付，2-不直接支付（生成的是待确认订单））
 			order.setStatus(20);// 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）
@@ -67,6 +72,16 @@ public class OrderService {
 		order.setUserId(userId);
 		order.setValid(1);
 		this.orderDAO.insert(order);
+		// 修改 产品规格的库存
+		ProductSpec proSpecParam = new ProductSpec();
+		proSpecParam.setId(productSpecId);
+		proSpecParam.setCountSale(count);
+		productSpecDAO.updateCountSaleByPrimaryKey(proSpecParam);
+		// 修改 产品的销量
+		Product proParam = new Product();
+		proParam.setId(pro.getId());
+		proParam.setSaleCount(proParam.getSaleCount()==null?count:(proParam.getSaleCount()+ count));
+		productDAO.updateCommentCountSaleCountByPrimaryKey(proParam);
 	}
 
 	/**

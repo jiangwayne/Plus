@@ -348,9 +348,16 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <update id="updateCommentCountByPrimaryKey" parameterType="com.plus.server.model.Product" >
+  <update id="updateCommentCountSaleCountByPrimaryKey" parameterType="com.plus.server.model.Product" >
     update t_product
-    set comment_count = comment_count + #{commentCount}
+    <set >
+      <if test="commentCount != null" >
+        comment_count = comment_count + #{commentCount},
+      </if>
+      <if test="saleCount != null" >
+        sale_count = sale_count + #{saleCount},
+      </if>
+    </set>
     where id = #{id}
   </update>
   <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.plus.server.model.Product" >

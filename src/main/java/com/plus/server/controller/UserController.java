@@ -1,7 +1,6 @@
 package com.plus.server.controller;
 
 import com.plus.server.common.util.BeanMapper;
-import com.plus.server.common.util.MsgUtil;
 import com.plus.server.common.vo.*;
 import com.plus.server.common.vo.resp.*;
 import com.plus.server.model.*;
@@ -53,9 +52,18 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         UserSettingResp userSettingResp = new UserSettingResp();
+        if(u == null)
+        {
+            userSettingResp.setMsg("未登录");
+            return userSettingResp;
+        }
         try{
             UserSetting userSetting = userService.getUserSetting(u.getId());
-            userSettingResp.setUserSettingVo(BeanMapper.map(userSetting, UserSettingVo.class));
+            if (userSetting != null) {
+                userSettingResp.setUserSettingVo(BeanMapper.map(userSetting, UserSettingVo.class));
+            } else {
+                userSettingResp.setMsg("用户未设置");
+            }
             userSettingResp.setSuccess(true);
         }
         catch (Exception e){
@@ -74,6 +82,11 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
+        if(u == null)
+        {
+            r.setMsg("未登录");
+            return r;
+        }
         try{
             UserSetting userSetting = BeanMapper.map(userSettingVo, UserSetting.class);
             userSetting.setUserId(u.getId());
@@ -84,6 +97,7 @@ public class UserController extends BaseController {
             log.error("", e);
             r.setMsg(e.getMessage());
         }
+
         return r;
     }
 
@@ -94,9 +108,13 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         UserResp userResp = new UserResp();
+        if(u == null)
+        {
+            userResp.setMsg("未登录");
+            return userResp;
+        }
         try{
-            User user = userService.getUser(u.getId());
-            userResp.setUserVo(BeanMapper.map(user, UserVo.class));
+            userResp.setUserVo(BeanMapper.map(u, UserVo.class));
             userResp.setSuccess(true);
         }
         catch (Exception e){
@@ -115,10 +133,19 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         MessageListResp messageResp = new MessageListResp();
+        if(u == null)
+        {
+            messageResp.setMsg("未登录");
+            return messageResp;
+        }
         try {
             List<Message> messages = userService.getUserMessage(u.getId());
-            List<MessageVo> messageVoList = BeanMapper.mapList(messages,MessageVo.class);
-            messageResp.setMessageVoList(messageVoList);
+            if(messages != null && !messages.isEmpty()){
+                List<MessageVo> messageVoList = BeanMapper.mapList(messages, MessageVo.class);
+                messageResp.setMessageVoList(messageVoList);
+            } else {
+                messageResp.setMsg("该用户无消息提醒");
+            }
             messageResp.setSuccess(true);
         }
         catch (Exception e){
@@ -137,30 +164,46 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         WishListResp wishListResp = new WishListResp();
+        if(u == null)
+        {
+            wishListResp.setMsg("未登录");
+            return wishListResp;
+        }
         try{
             List<Wish> wishList = userService.getUserWish(u.getId());
-            List<WishVo> wishVoList = BeanMapper.mapList(wishList,WishVo.class);
-            wishListResp.setWishVoList(wishVoList);
+            if(wishList != null && !wishList.isEmpty()){
+                List<WishVo> wishVoList = BeanMapper.mapList(wishList,WishVo.class);
+                wishListResp.setWishVoList(wishVoList);
+            } else {
+                wishListResp.setMsg("该用户无心愿单");
+            }
+
             wishListResp.setSuccess(true);
         }
         catch (Exception e){
             log.error("", e);
             wishListResp.setMsg(e.getMessage());
         }
+
         return wishListResp;
     }
 
-    @RequestMapping(value = "/commitUserWish", method = RequestMethod.POST)
+    @RequestMapping(value = "/addUserWish", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "提交用户心愿单")
-    public BaseResp commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
+    public BaseResp addUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
     {
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
-        try{
+        if(u == null)
+        {
+            r.setMsg("未登录");
+            return r;
+        }
+        try {
             Wish wish = BeanMapper.map(wishVo, Wish.class);
             wish.setUserId(u.getId());
-            userService.commitUserWish(wish);
+            userService.addUserWish(wish);
             r.setSuccess(true);
         }
         catch (Exception e){
@@ -177,11 +220,17 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
+        if(u == null)
+        {
+            r.setMsg("未登录");
+            return r;
+        }
         try{
             UserBoarding userBoarding = BeanMapper.map(userBoardingVo, UserBoarding.class);
             userBoarding.setUserId(u.getId());
             userService.createUserBoarding(userBoarding);
             r.setSuccess(true);
+
         }
         catch (Exception e){
             log.error("", e);
@@ -197,10 +246,19 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         UserBoardingListResp userBoardingListResp = new UserBoardingListResp();
+        if(u == null)
+        {
+            userBoardingListResp.setMsg("未登录");
+            return userBoardingListResp;
+        }
         try{
             List<UserBoarding> userBoardingList = userService.getUserBoarding(u.getId());
-            List<UserBoardingVo> userBoardingVoList = BeanMapper.mapList(userBoardingList,UserBoardingVo.class);
-            userBoardingListResp.setUserBoardingVoList(userBoardingVoList);
+            if(userBoardingList != null && !userBoardingList.isEmpty()) {
+                List<UserBoardingVo> userBoardingVoList = BeanMapper.mapList(userBoardingList, UserBoardingVo.class);
+                userBoardingListResp.setUserBoardingVoList(userBoardingVoList);
+            } else {
+                userBoardingListResp.setMsg("该用户无乘机人");
+            }
             userBoardingListResp.setSuccess(true);
         }
         catch (Exception e){
@@ -218,6 +276,11 @@ public class UserController extends BaseController {
     {
         User u = this.getCurrentUser();
         BaseResp r = new BaseResp();
+        if(u == null)
+        {
+            r.setMsg("未登录");
+            return r;
+        }
         try{
             UserBoarding userBoarding = BeanMapper.map(userBoardingVo, UserBoarding.class);
             userBoarding.setUserId(u.getId());

@@ -37,8 +37,9 @@ public class LoginController extends BaseController {
             User u = userService.getUserByName(userName);
             this.httpSession.setAttribute("user", u);
             r.setSuccess(true);
+        } else {
+            r.setMsg("用户不存在或密码不正确");
         }
-        r.setMsg("用户不存在或密码不正确");
         return r;
     }
 
@@ -95,11 +96,11 @@ public class LoginController extends BaseController {
         log.info("找回密码，userName={}, password={}，confirmpassword={}，validateCode={}", userName, password, confirmpassword, validateCode);
         BaseResp r = new BaseResp();
         Object o = this.httpSession.getAttribute("validateCode");
-        if(o == null || !validateCode.equals(o)){
+        if(o == null || !validateCode.equals(o.toString())){
             r.setMsg("验证码错误");
             return r;
         }
-        if(password != confirmpassword){
+        if(!password.equals(confirmpassword)){
             r.setMsg("两次输入密码不一致");
             return r;
         }

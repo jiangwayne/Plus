@@ -3,124 +3,136 @@ package com.plus.server.model;
 import java.util.Date;
 
 public class Order {
-    /**  */
-    private Long id;
+	/**  */
+	private Long id;
 
-    /** 用户id */
-    private Long userId;
+	/** 用户id */
+	private Long userId;
 
-    /** 产品id */
-    private Long productId;
+	/** 产品id */
+	private Long productId;
 
-    /** 产品规格id */
-    private Long productSpecId;
+	/** 产品规格id */
+	private Long productSpecId;
 
-    /** 数量 */
-    private Integer count;
+	/** 数量 */
+	private Integer count;
 
-    /** 单价 */
-    private Integer priceEach;
+	/** 单价 */
+	private Integer priceEach;
 
-    /** 总价 */
-    private Integer priceTotal;
+	/** 总价 */
+	private Integer priceTotal;
 
-    /** 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消） */
-    private Integer status;
+	/** 登机人id，逗号分隔 */
+	private String boardingIds;
 
-    /** 逻辑删除（1:有效数据,-1:已删除） */
-    private Integer valid;
+	/** 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消） */
+	private Integer status;
 
-    /** 创建时间 */
-    private Date gmtCreate;
+	/** 逻辑删除（1:有效数据,-1:已删除） */
+	private Integer valid;
 
-    /** 修改时间 */
-    private Date gmtModify;
+	/** 创建时间 */
+	private Date gmtCreate;
 
-    public Long getId() {
-        return id;
-    }
+	/** 修改时间 */
+	private Date gmtModify;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getUserId() {
-        return userId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public Long getProductId() {
-        return productId;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
+	public Long getProductId() {
+		return productId;
+	}
 
-    public Long getProductSpecId() {
-        return productSpecId;
-    }
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
 
-    public void setProductSpecId(Long productSpecId) {
-        this.productSpecId = productSpecId;
-    }
+	public Long getProductSpecId() {
+		return productSpecId;
+	}
 
-    public Integer getCount() {
-        return count;
-    }
+	public void setProductSpecId(Long productSpecId) {
+		this.productSpecId = productSpecId;
+	}
 
-    public void setCount(Integer count) {
-        this.count = count;
-    }
+	public Integer getCount() {
+		return count;
+	}
 
-    public Integer getPriceEach() {
-        return priceEach;
-    }
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 
-    public void setPriceEach(Integer priceEach) {
-        this.priceEach = priceEach;
-    }
+	public Integer getPriceEach() {
+		return priceEach;
+	}
 
-    public Integer getPriceTotal() {
-        return priceTotal;
-    }
+	public void setPriceEach(Integer priceEach) {
+		this.priceEach = priceEach;
+	}
 
-    public void setPriceTotal(Integer priceTotal) {
-        this.priceTotal = priceTotal;
-    }
+	public Integer getPriceTotal() {
+		return priceTotal;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public void setPriceTotal(Integer priceTotal) {
+		this.priceTotal = priceTotal;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public Integer getValid() {
-        return valid;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setValid(Integer valid) {
-        this.valid = valid;
-    }
+	public Integer getValid() {
+		return valid;
+	}
 
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
+	public void setValid(Integer valid) {
+		this.valid = valid;
+	}
 
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
+	public Date getGmtCreate() {
+		return gmtCreate;
+	}
 
-    public Date getGmtModify() {
-        return gmtModify;
-    }
+	public void setGmtCreate(Date gmtCreate) {
+		this.gmtCreate = gmtCreate;
+	}
 
-    public void setGmtModify(Date gmtModify) {
-        this.gmtModify = gmtModify;
-    }
+	public Date getGmtModify() {
+		return gmtModify;
+	}
+
+	public void setGmtModify(Date gmtModify) {
+		this.gmtModify = gmtModify;
+	}
+
+	public String getBoardingIds() {
+		return boardingIds;
+	}
+
+	public void setBoardingIds(String boardingIds) {
+		this.boardingIds = boardingIds;
+	}
+
 }

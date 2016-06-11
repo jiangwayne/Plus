@@ -13,10 +13,11 @@
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+    <result column="boarding_ids" property="boardingIds" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, product_id, product_spec_id, count, price_each, price_total,
-    status, valid, gmt_create, gmt_modify
+    status, valid, gmt_create, gmt_modify,boarding_ids
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -33,12 +34,12 @@
       product_spec_id, count, price_each, 
       price_total, status,
       valid, gmt_create,
-      gmt_modify)
+      gmt_modify,boarding_ids)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
       #{productSpecId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{priceEach,jdbcType=INTEGER}, 
       #{priceTotal,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
-      #{gmtModify,jdbcType=TIMESTAMP})
+      #{gmtModify,jdbcType=TIMESTAMP},#{boardingIds})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.Order" >
     insert into t_order
@@ -76,6 +77,9 @@
       <if test="gmtModify != null" >
         gmt_modify,
       </if>
+      <if test="gmtModify != null" >
+        boarding_ids,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -110,6 +114,9 @@
       </if>
       <if test="gmtModify != null" >
         #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="boardingIds != null" >
+        #{boardingIds},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="gmtModify != null" >
         gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
       </if>
+      <if test="boardingIds != null" >
+        boarding_ids = #{boardingIds},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -160,7 +170,8 @@
       status = #{status,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      boarding_ids = #{boardingIds}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByModel">
@@ -200,6 +211,9 @@
       </if>
       <if test="gmtModify != null" >
         and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="boardingIds != null" >
+        and boarding_ids = #{boardingIds},
       </if>
     </where>
   </select>

@@ -34,8 +34,7 @@ public class LoginController extends BaseController {
         log.info("登录---userName={},pwd={}", userName, pwd);
         BaseResp r = new BaseResp();
         if(userService.login(userName, pwd)) {
-            User u = new User();
-            u.setPhone(userName);
+            User u = userService.getUserByName(userName);
             this.httpSession.setAttribute("user", u);
             r.setSuccess(true);
         }

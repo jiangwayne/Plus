@@ -101,6 +101,10 @@ public class ProductService {
 		if(productSpec == null || productSpec.getProductId() == null || productSpec.getName() == null){
 			throw new Exception("参数不能为空");
 		}
+		Product product = productDAO.selectByPrimaryKey(productSpec.getProductId());
+		if(product == null){
+			throw new Exception("产品不存在");
+		}
 		ProductSpec param = new ProductSpec();
 		param.setValid(1);
 		param.setName(productSpec.getName());

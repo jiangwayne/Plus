@@ -27,6 +27,12 @@
     from t_product_spec
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_spec
+    where id = #{id,jdbcType=BIGINT} for update
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_product_spec
     where id = #{id,jdbcType=BIGINT}
@@ -244,4 +250,10 @@
       </if>
     </where>
   </select>
+  
+  <update id="updateCountSaleByPrimaryKey" parameterType="com.plus.server.model.ProductSpec" >
+    update t_product_spec
+    set count_sale = count_sale+#{countSale}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

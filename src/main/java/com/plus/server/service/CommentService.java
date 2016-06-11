@@ -50,6 +50,9 @@ public class CommentService {
 		if (order == null) {
 			throw new Exception("订单不存在");
 		}
+		if (order.getStatus() != 30) {
+			throw new Exception("订单状态不正确");
+		}
 		Product pro = productDAO.selectByPrimaryKey(order.getProductId());
 		if (pro == null) {
 			throw new Exception("产品不存在");
@@ -67,8 +70,13 @@ public class CommentService {
 		// 修改 产品的评论数
 		Product proParam = new Product();
 		proParam.setId(pro.getId());
-		proParam.setCommentCount(proParam.getCommentCount() + 1);
+		proParam.setCommentCount(proParam.getCommentCount()==null?1:(proParam.getCommentCount()+ 1));
 		productDAO.updateCommentCountByPrimaryKey(proParam);
+		// 修改订单状态为已评论
+		Order oParam = new Order();
+		oParam.setId(orderId);
+		oParam.setStatus(40);//状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）
+		orderDAO.updateByPrimaryKeySelective(oParam);
 	}
 
 	/**

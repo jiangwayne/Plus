@@ -44,7 +44,7 @@
         values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{fullName,jdbcType=VARCHAR},
         #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{nationality,jdbcType=VARCHAR},
         #{credentialType,jdbcType=INTEGER}, #{credentialNumber,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
-        #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+        #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},#{valid,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP},
         #{gmtModify,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.plus.server.model.UserBoarding" >

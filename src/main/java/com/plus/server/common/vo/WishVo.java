@@ -2,6 +2,7 @@ package com.plus.server.common.vo;
 
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,6 +11,9 @@ import java.util.Date;
 public class WishVo {
     @ApiModelProperty(" 出行日期 ")
     private Date travelDate;
+
+    @ApiModelProperty(" 创建时间(yyyy-MM-dd Hh:mm:ss) ")
+    private String travelDateStr;
 
     @ApiModelProperty(" 人数 ")
     private Integer peopleNumber;
@@ -32,6 +36,14 @@ public class WishVo {
 
     public void setTravelDate(Date travelDate) {
         this.travelDate = travelDate;
+    }
+
+    public String getTravelDateStr() {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
+        if(this.travelDate != null && this.travelDate.equals("")){
+            return f.format(this.travelDate);
+        }
+        return "";
     }
 
     public Integer getPeopleNumber() {

@@ -1,8 +1,9 @@
 package com.plus.server.dal;
 
 import com.plus.server.model.UserBoarding;
-import com.sun.tools.javac.util.List;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by jiangwulin on 16/6/5.

@@ -160,9 +160,10 @@ public class UserService {
 		return wishDAO.selectByUserId(userId);
 	}
 
-	public void commitUserWish(Wish wish)
+	public void addUserWish(Wish wish)
 	{
 		wish.setValid(1);
+		wish.setProcessState(1);
 		wish.setGmtCreate(new Date());
 		wish.setGmtModify(new Date());
 

@@ -13,6 +13,12 @@
   <sql id="Base_Column_List" >
     id, code, value, remark, valid, gmt_create, gmt_modify
   </sql>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_config
+    where valid=1
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

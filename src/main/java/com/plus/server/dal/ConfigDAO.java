@@ -1,5 +1,7 @@
 package com.plus.server.dal;
 
+import java.util.List;
+
 import com.plus.server.model.Config;
 
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,6 @@ public interface ConfigDAO {
     int updateByPrimaryKeySelective(Config record);
 
     int updateByPrimaryKey(Config record);
+
+	List<Config> findAll();
 }

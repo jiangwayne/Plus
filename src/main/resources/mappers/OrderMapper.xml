@@ -174,46 +174,46 @@
       boarding_ids = #{boardingIds}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByModel">
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.plus.server.model.Order">
   	select 
     <include refid="Base_Column_List" />
     from t_order
     <where >
       <if test="id != null" >
-        and id = #{id},
+        and id = #{id}
       </if>
       <if test="userId != null" >
-        and user_id = #{userId,jdbcType=BIGINT},
+        and user_id = #{userId,jdbcType=BIGINT}
       </if>
       <if test="productId != null" >
-        and product_id = #{productId,jdbcType=BIGINT},
+        and product_id = #{productId,jdbcType=BIGINT}
       </if>
       <if test="productSpecId != null" >
-       and  product_spec_id = #{productSpecId,jdbcType=BIGINT},
+       and  product_spec_id = #{productSpecId,jdbcType=BIGINT}
       </if>
       <if test="count != null" >
-        and count = #{count,jdbcType=INTEGER},
+        and count = #{count,jdbcType=INTEGER}
       </if>
       <if test="priceEach != null" >
-        and price_each = #{priceEach,jdbcType=INTEGER},
+        and price_each = #{priceEach,jdbcType=INTEGER}
       </if>
       <if test="priceTotal != null" >
-        and price_total = #{priceTotal,jdbcType=INTEGER},
+        and price_total = #{priceTotal,jdbcType=INTEGER}
       </if>
       <if test="status != null" >
-        and status = #{status,jdbcType=INTEGER},
+        and status = #{status,jdbcType=INTEGER}
       </if>
       <if test="valid != null" >
-        and valid = #{valid,jdbcType=INTEGER},
+        and valid = #{valid,jdbcType=INTEGER}
       </if>
       <if test="gmtCreate != null" >
-        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
       </if>
       <if test="gmtModify != null" >
-        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
       </if>
       <if test="boardingIds != null" >
-        and boarding_ids = #{boardingIds},
+        and boarding_ids = #{boardingIds}
       </if>
     </where>
   </select>

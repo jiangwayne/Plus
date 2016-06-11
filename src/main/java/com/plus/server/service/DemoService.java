@@ -12,9 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.plus.server.dal.UserDAO;
 import com.plus.server.model.User;
 
-/**
- * Created by jiangwulin on 16/5/22.
- */
 @Service
 public class DemoService {
 	private static final Logger log = LoggerFactory.getLogger(DemoService.class);

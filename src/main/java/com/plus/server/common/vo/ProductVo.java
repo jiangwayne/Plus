@@ -2,6 +2,7 @@ package com.plus.server.common.vo;
 
 import java.util.Date;
 
+import com.plus.server.common.SysConfig;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 public class ProductVo {
@@ -200,8 +201,15 @@ public class ProductVo {
 		this.addressEndEn = addressEndEn;
 	}
 
+	/**
+	 * 增加系数
+	 * @return
+	 */
 	public Integer getSaleCount() {
-		return saleCount;
+		if(saleCount == null){
+			saleCount = 0;
+		}
+		return saleCount * SysConfig.up_scale_a + SysConfig.up_scale_b;
 	}
 
 	public void setSaleCount(Integer saleCount) {
@@ -224,8 +232,15 @@ public class ProductVo {
 		this.orderAlterAgreementId = orderAlterAgreementId;
 	}
 
+	/**
+	 * 增加系数
+	 * @return
+	 */
 	public Integer getCommentCount() {
-		return commentCount;
+		if(commentCount == null){
+			commentCount = 0;
+		}
+		return commentCount * SysConfig.up_scale_a + SysConfig.up_scale_b;
 	}
 
 	public void setCommentCount(Integer commentCount) {

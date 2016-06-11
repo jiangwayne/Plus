@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plus.server.common.PageDefault;
+import com.plus.server.common.SysConfig;
 import com.plus.server.dal.CommentDAO;
 import com.plus.server.dal.OrderDAO;
 import com.plus.server.dal.ProductDAO;
@@ -46,12 +47,23 @@ public class OrderService {
 		if (userId == null || productSpecId == null || count == null) {
 			throw new Exception("参数不能为空");
 		}
+		if(count > SysConfig.product_max_buy_count){
+			throw new Exception("超过最大购买数["+SysConfig.product_max_buy_count+"]");
+		}
 		ProductSpec ps = productSpecDAO.selectByPrimaryKeyForUpdate(productSpecId);
 		if (ps == null) {
 			throw new Exception("产品规格错误");
 		}
 		if(ps.getCountMax() < ps.getCountSale()+count){
 			throw new Exception("剩余库存不足");
+		}
+		Order orderParam = new Order();
+		orderParam.setValid(1);
+		orderParam.setUserId(userId);
+		orderParam.setStatus(20);
+		List<Order> existNoPayOrderList = this.orderDAO.selectByModel(orderParam);
+		if(existNoPayOrderList != null && existNoPayOrderList.size() >= SysConfig.max_no_pay_order_count){
+			throw new Exception("您已有["+SysConfig.max_no_pay_order_count+"]笔订单等待付款");
 		}
 		Product pro = productDAO.selectByPrimaryKey(ps.getProductId());
 		Order order = new Order();

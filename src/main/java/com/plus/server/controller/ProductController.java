@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class ProductController {
 	@RequestMapping(value = "/createProduct", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "创建产品")
-	public BaseResp createProduct(@RequestParam(required = true) ProductVo productVo) {
+	public BaseResp createProduct(@RequestBody(required = true) ProductVo productVo) {
 		log.info("创建产品---productVo={}", JSON.toJSONString(productVo));
 		BaseResp r = new BaseResp();
 		if (productVo == null) {

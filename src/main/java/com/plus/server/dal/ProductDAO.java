@@ -17,9 +17,9 @@ public interface ProductDAO {
 
     int updateByPrimaryKey(Product record);
     /**
-     * 增加评论数
+     * 增加评论数、销量
      */
-    int updateCommentCountByPrimaryKey(Product record);
+    int updateCommentCountSaleCountByPrimaryKey(Product record);
 
 	List<Product> selectByModel(Product product);
 }

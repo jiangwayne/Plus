@@ -71,7 +71,7 @@ public class CommentService {
 		Product proParam = new Product();
 		proParam.setId(pro.getId());
 		proParam.setCommentCount(proParam.getCommentCount()==null?1:(proParam.getCommentCount()+ 1));
-		productDAO.updateCommentCountByPrimaryKey(proParam);
+		productDAO.updateCommentCountSaleCountByPrimaryKey(proParam);
 		// 修改订单状态为已评论
 		Order oParam = new Order();
 		oParam.setId(orderId);

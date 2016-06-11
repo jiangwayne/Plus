@@ -77,6 +77,11 @@ public class OrderService {
 		proSpecParam.setId(productSpecId);
 		proSpecParam.setCountSale(count);
 		productSpecDAO.updateCountSaleByPrimaryKey(proSpecParam);
+		// 修改 产品的销量
+		Product proParam = new Product();
+		proParam.setId(pro.getId());
+		proParam.setSaleCount(proParam.getSaleCount()==null?count:(proParam.getSaleCount()+ count));
+		productDAO.updateCommentCountSaleCountByPrimaryKey(proParam);
 	}
 
 	/**

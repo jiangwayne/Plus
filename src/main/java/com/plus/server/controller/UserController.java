@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +20,6 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by jiangwulin on 16/5/22.
@@ -29,30 +27,14 @@ import java.util.Random;
 
 @RestController
 @Api("用户")
-@RequestMapping
+@RequestMapping(value = "plus/user")
 public class UserController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "登录")
-    public BaseResp login(@ApiParam(required = true, value = "邮箱或手机号") @RequestParam(required = true) String userName,
-                          @ApiParam(required = true, value = "密码") @RequestParam(required = true) String pwd) {
-        log.info("登录---userName={},pwd={}", userName, pwd);
-        BaseResp r = new BaseResp();
-        if(userService.login(userName, pwd)) {
-            User u = new User();
-            u.setPhone(userName);
-            this.httpSession.setAttribute("user", u);
-            r.setSuccess(true);
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "plus/user/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "登出")
     public BaseResp logout() {
@@ -63,80 +45,8 @@ public class UserController extends BaseController {
         return r;
     }
 
-    @RequestMapping(value = "/getValidateCode", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "获取注册验证码")
-    public BaseResp getValidateCode(@ApiParam(required = true, value = "手机号") @RequestParam(required = true) String phone) {
-        log.info("注册，phone={}", phone);
-        BaseResp r = new BaseResp();
-        Random random = new Random();
-        int randomInt = random.nextInt(999999);
-        if (randomInt < 100000) {
-            randomInt += 100000;
-        }
-        String msg = "验证码：" + randomInt;
-        MsgUtil.sendMsg(phone, msg);
-        this.httpSession.setAttribute("validateCode", randomInt);
 
-        r.setSuccess(true);
-        return r;
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "注册")
-    public BaseResp register(@ApiParam(required = true, value = "手机号") @RequestParam(required = true) String phone,
-                             @ApiParam(required = true, value = "邮箱") @RequestParam(required = true) String email,
-                             @ApiParam(required = true, value = "密码") @RequestParam(required = true) String password,
-                             @ApiParam(required = true, value = "验证码") @RequestParam(required = true) String validateCode) {
-        log.info("注册，phone={}，email={}，password={}，validateCode={}", phone, email, password, validateCode);
-        BaseResp r = new BaseResp();
-        Object o = this.httpSession.getAttribute("validateCode");
-        if(o == null || !validateCode.equals(o.toString())){
-            r.setMsg("验证码错误");
-            return r;
-        }
-        try {
-            userService.register(phone, email, password);
-            r.setSuccess(true);
-        } catch (Exception e) {
-            log.error("", e);
-            r.setMsg("注册失败");
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "找回密码")
-    public BaseResp modifyPassword(@ApiParam(required = true, value = "邮箱或手机号") @RequestParam(required = true) String userName,
-                                   @ApiParam(required = true, value = "新密码") @RequestParam(required = true) String password,
-                                   @ApiParam(required = true, value = "确认新密码") @RequestParam(required = true) String confirmpassword,
-                                   @ApiParam(required = true, value = "验证码") @RequestParam(required = true) String validateCode){
-        log.info("找回密码，userName={}, password={}，confirmpassword={}，validateCode={}", userName, password, confirmpassword, validateCode);
-        BaseResp r = new BaseResp();
-        Object o = this.httpSession.getAttribute("validateCode");
-        if(o == null || !validateCode.equals(o)){
-            r.setMsg("验证码错误");
-            return r;
-        }
-        if(password != confirmpassword){
-            r.setMsg("两次输入密码不一致");
-            return r;
-        }
-
-        try{
-            userService.modifyPassword(userName, password);
-            r.setSuccess(true);
-        }
-        catch (Exception e){
-            log.error("", e);
-            r.setMsg("重置密码失败");
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "plus/user/getUserSetting", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserSetting", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户设置")
     public UserSettingResp getUserSetting()
@@ -157,7 +67,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "plus/user/setUserSetting", method = RequestMethod.PUT)
+    @RequestMapping(value = "/setUserSetting", method = RequestMethod.PUT)
     @ResponseBody
     @ApiOperation(value = "更新用户设置")
     public BaseResp setUserSetting(@ApiParam(required = true, value = "用户设置") @RequestBody(required = true) UserSettingVo userSettingVo)
@@ -177,7 +87,7 @@ public class UserController extends BaseController {
         return r;
     }
 
-    @RequestMapping(value = "plus/user/getUserInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户信息(积分,里程数,飞行时长,成行次数)")
     public UserResp getUserInfo()
@@ -198,7 +108,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "plus/user/getUserMessage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserMessage", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户消息提醒")
     public MessageListResp getUserMessage()
@@ -220,7 +130,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "plus/user/getUserWish", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserWish", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "获取用户心愿单")
     public WishListResp getUserWish()
@@ -240,7 +150,7 @@ public class UserController extends BaseController {
         return wishListResp;
     }
 
-    @RequestMapping(value = "plus/user/commitUserWish", method = RequestMethod.POST)
+    @RequestMapping(value = "/commitUserWish", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "提交用户心愿单")
     public BaseResp commitUserWish(@ApiParam(required = true, value = "用户心愿单") @RequestBody(required = true) WishVo wishVo)
@@ -260,7 +170,7 @@ public class UserController extends BaseController {
         return r;
     }
 
-    @RequestMapping(value = "plus/user/addPassenger", method = RequestMethod.POST)
+    @RequestMapping(value = "/addPassenger", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "添加乘机人")
     public BaseResp addPassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)
@@ -280,7 +190,7 @@ public class UserController extends BaseController {
         return r;
     }
 
-    @RequestMapping(value = "plus/user/passengerList", method = RequestMethod.GET)
+    @RequestMapping(value = "/passengerList", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "乘机人列表")
     public UserBoardingListResp getPassengerList()
@@ -301,7 +211,7 @@ public class UserController extends BaseController {
     }
 
 
-    @RequestMapping(value = "plus/user/deletePassenger", method = RequestMethod.PUT)
+    @RequestMapping(value = "/deletePassenger", method = RequestMethod.PUT)
     @ResponseBody
     @ApiOperation(value = "删除乘机人")
     public BaseResp deletePassenger(@ApiParam(required = true, value = "乘机人") @RequestBody(required = true) UserBoardingVo userBoardingVo)

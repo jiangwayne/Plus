@@ -48,7 +48,7 @@
   <insert id="insert" parameterType="com.plus.server.model.Product" >
     insert into t_product (id, type, name, name_en,
       description_simple, description_simple_en, description_detail, description_detail_en, price_original,
-      price_current, address_start, address_start_en, address_start, address_start_en, sale_count,
+      price_current, address_start, address_start_en, address_end, address_end_en, sale_count,
       icon, order_alter_agreement_id, comment_count, 
       long_lat, long_lat_address, long_lat_address_en, pay_type, mileage, fly_time,
       valid, gmt_create, gmt_modify

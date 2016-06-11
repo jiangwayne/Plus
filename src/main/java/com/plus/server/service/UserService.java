@@ -32,8 +32,21 @@ public class UserService {
 	@Autowired
 	private UserBoardingDAO userBoardingDAO;
 
-	public void register(String phone, String email, String password) {
+	public void register(String phone, String email, String password) throws Exception {
 		//TODO 手机号和邮箱判断重复
+		User u = userDao.selectByUserName(phone);
+		if(u != null)
+		{
+			throw new Exception("该手机号已被注册");
+		}
+		else{
+			u = userDao.selectByUserName(email);
+			if(u != null){
+				throw new Exception("该邮箱已被注册");
+			}
+		}
+
+
 		User user = new User();
 		user.setValid(1);
 		String password_salt = generateSalt(5);

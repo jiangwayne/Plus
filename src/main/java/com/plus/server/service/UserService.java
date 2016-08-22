@@ -48,7 +48,6 @@ public class UserService {
 
 
 		User user = new User();
-		user.setValid(1);
 		String password_salt = generateSalt(5);
 		String password_hash = getPasswordHash(password, password_salt);
 		user.setPasswordSalt(password_salt);

@@ -11,13 +11,14 @@
     <result column="price_total" property="priceTotal" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
     <result column="boarding_ids" property="boardingIds" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, product_id, product_spec_id, count, price_each, price_total,
-    status, valid, gmt_create, gmt_modify,boarding_ids
+    status, valid, gmt_create, gmt_modify,boarding_ids,comment
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -40,12 +41,13 @@
       product_spec_id, count, price_each, 
       price_total, status,
       valid, gmt_create,
-      gmt_modify,boarding_ids)
+      gmt_modify,boarding_ids,comment)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
       #{productSpecId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{priceEach,jdbcType=INTEGER}, 
       #{priceTotal,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
-      #{gmtModify,jdbcType=TIMESTAMP},#{boardingIds})
+      #{gmtModify,jdbcType=TIMESTAMP},#{boardingIds},
+      #{comment,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.Order" >
     insert into t_order
@@ -86,6 +88,9 @@
       <if test="gmtModify != null" >
         boarding_ids,
       </if>
+      <if test="comment != null">
+        comment,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -122,7 +127,10 @@
         #{gmtModify,jdbcType=TIMESTAMP},
       </if>
       <if test="boardingIds != null" >
-        #{boardingIds},
+        #{boardingIds, jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -162,6 +170,9 @@
       <if test="boardingIds != null" >
         boarding_ids = #{boardingIds},
       </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -177,7 +188,8 @@
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
-      boarding_ids = #{boardingIds}
+      boarding_ids = #{boardingIds},
+      comment = #{comment,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.plus.server.model.Order">
@@ -220,6 +232,9 @@
       </if>
       <if test="boardingIds != null" >
         and boarding_ids = #{boardingIds}
+      </if>
+      <if test="comment != null">
+        and comment = #{comment,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

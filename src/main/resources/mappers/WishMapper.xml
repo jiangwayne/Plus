@@ -1,170 +1,266 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.plus.server.dal.WishDAO" >
-  <resultMap id="BaseResultMap" type="com.plus.server.model.Wish" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="travel_date" property="travelDate" jdbcType="TIMESTAMP" />
-    <result column="people_number" property="peopleNumber" jdbcType="INTEGER" />
-    <result column="budget" property="budget" jdbcType="INTEGER" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="content_reply" property="contentReply" jdbcType="VARCHAR" />
-    <result column="process_state" property="processState" jdbcType="INTEGER" />
-    <result column="valid" property="valid" jdbcType="INTEGER" />
-    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
-    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.server.dal.WishDAO">
+  <resultMap id="BaseResultMap" type="com.plus.server.model.Wish">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="travel_date" jdbcType="TIMESTAMP" property="travelDate" />
+    <result column="people_number" jdbcType="INTEGER" property="peopleNumber" />
+    <result column="budget" jdbcType="INTEGER" property="budget" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="content_reply" jdbcType="VARCHAR" property="contentReply" />
+    <result column="process_state" jdbcType="INTEGER" property="processState" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, travel_date, people_number, budget, content, content_reply, process_state, 
-    valid, gmt_create, gmt_modify
+  <sql id="Base_Column_List">
+    id, user_id, travel_date, people_number, budget, content, content_reply, process_state,
+    valid, comment, gmt_create, gmt_modify
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_wish
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_wish
-    where user_id = #{userId,jdbcType=BIGINT} and valid = 1
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="selectByModel" parameterType="com.plus.server.model.Wish" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_wish
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="travelDate != null">
+        and travel_date = #{travelDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="peopleNumber != null">
+        and people_number = #{peopleNumber,jdbcType=INTEGER}
+      </if>
+      <if test="budget != null">
+        and budget = #{budget,jdbcType=INTEGER}
+      </if>
+      <if test="content != null">
+        and content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="contentReply != null">
+        and content_reply = #{contentReply,jdbcType=VARCHAR}
+      </if>
+      <if test="processState != null">
+        and process_state = #{processState,jdbcType=INTEGER}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="comment != null">
+        and comment = #{comment,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectByModelLike" parameterType="com.plus.server.model.Wish" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_wish
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="travelDate != null">
+        and travel_date = #{travelDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="peopleNumber != null">
+        and people_number = #{peopleNumber,jdbcType=INTEGER}
+      </if>
+      <if test="budget != null">
+        and budget = #{budget,jdbcType=INTEGER}
+      </if>
+      <if test="content != null">
+        and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="contentReply != null">
+        and content_reply like CONCAT('%',#{contentReply,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="processState != null">
+        and process_state = #{processState,jdbcType=INTEGER}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="comment != null">
+        and comment like CONCAT('%',#{comment,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_wish
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.plus.server.model.Wish" >
-    insert into t_wish (id, user_id, travel_date, 
-      people_number, budget, content, 
-      content_reply, process_state, valid, 
-      gmt_create, gmt_modify)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{travelDate,jdbcType=TIMESTAMP}, 
-      #{peopleNumber,jdbcType=INTEGER}, #{budget,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
-      #{contentReply,jdbcType=VARCHAR}, #{processState,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP})
+  <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Wish" useGeneratedKeys="true">
+    insert into t_wish (id, user_id, travel_date,
+    people_number, budget, content,
+    content_reply, process_state, valid,
+    comment, gmt_create, gmt_modify
+    )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{travelDate,jdbcType=TIMESTAMP},
+    #{peopleNumber,jdbcType=INTEGER}, #{budget,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+    #{contentReply,jdbcType=VARCHAR}, #{processState,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER},
+    #{comment,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+    )
   </insert>
-  <insert id="insertSelective" parameterType="com.plus.server.model.Wish" >
+  <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Wish" useGeneratedKeys="true">
     insert into t_wish
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         user_id,
       </if>
-      <if test="travelDate != null" >
+      <if test="travelDate != null">
         travel_date,
       </if>
-      <if test="peopleNumber != null" >
+      <if test="peopleNumber != null">
         people_number,
       </if>
-      <if test="budget != null" >
+      <if test="budget != null">
         budget,
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         content,
       </if>
-      <if test="contentReply != null" >
+      <if test="contentReply != null">
         content_reply,
       </if>
-      <if test="processState != null" >
+      <if test="processState != null">
         process_state,
       </if>
-      <if test="valid != null" >
+      <if test="valid != null">
         valid,
       </if>
-      <if test="gmtCreate != null" >
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="gmtCreate != null">
         gmt_create,
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         gmt_modify,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null" >
+      <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="travelDate != null" >
+      <if test="travelDate != null">
         #{travelDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="peopleNumber != null" >
+      <if test="peopleNumber != null">
         #{peopleNumber,jdbcType=INTEGER},
       </if>
-      <if test="budget != null" >
+      <if test="budget != null">
         #{budget,jdbcType=INTEGER},
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="contentReply != null" >
+      <if test="contentReply != null">
         #{contentReply,jdbcType=VARCHAR},
       </if>
-      <if test="processState != null" >
+      <if test="processState != null">
         #{processState,jdbcType=INTEGER},
       </if>
-      <if test="valid != null" >
+      <if test="valid != null">
         #{valid,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreate != null" >
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         #{gmtModify,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Wish" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Wish">
     update t_wish
-    <set >
-      <if test="userId != null" >
+    <set>
+      <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="travelDate != null" >
+      <if test="travelDate != null">
         travel_date = #{travelDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="peopleNumber != null" >
+      <if test="peopleNumber != null">
         people_number = #{peopleNumber,jdbcType=INTEGER},
       </if>
-      <if test="budget != null" >
+      <if test="budget != null">
         budget = #{budget,jdbcType=INTEGER},
       </if>
-      <if test="content != null" >
+      <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="contentReply != null" >
+      <if test="contentReply != null">
         content_reply = #{contentReply,jdbcType=VARCHAR},
       </if>
-      <if test="processState != null" >
+      <if test="processState != null">
         process_state = #{processState,jdbcType=INTEGER},
       </if>
-      <if test="valid != null" >
+      <if test="valid != null">
         valid = #{valid,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreate != null" >
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Wish" >
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Wish">
     update t_wish
     set user_id = #{userId,jdbcType=BIGINT},
-      travel_date = #{travelDate,jdbcType=TIMESTAMP},
-      people_number = #{peopleNumber,jdbcType=INTEGER},
-      budget = #{budget,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      content_reply = #{contentReply,jdbcType=VARCHAR},
-      process_state = #{processState,jdbcType=INTEGER},
-      valid = #{valid,jdbcType=INTEGER},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    travel_date = #{travelDate,jdbcType=TIMESTAMP},
+    people_number = #{peopleNumber,jdbcType=INTEGER},
+    budget = #{budget,jdbcType=INTEGER},
+    content = #{content,jdbcType=VARCHAR},
+    content_reply = #{contentReply,jdbcType=VARCHAR},
+    process_state = #{processState,jdbcType=INTEGER},
+    valid = #{valid,jdbcType=INTEGER},
+    comment = #{comment,jdbcType=VARCHAR},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update t_wish set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach>
   </update>
 </mapper>

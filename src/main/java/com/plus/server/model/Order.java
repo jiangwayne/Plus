@@ -30,6 +30,8 @@ public class Order {
 	/** 状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消） */
 	private Integer status;
 
+	private String comment;
+
 	/** 逻辑删除（1:有效数据,-1:已删除） */
 	private Integer valid;
 
@@ -135,4 +137,11 @@ public class Order {
 		this.boardingIds = boardingIds;
 	}
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }

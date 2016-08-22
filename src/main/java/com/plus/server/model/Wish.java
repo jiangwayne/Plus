@@ -27,6 +27,8 @@ public class Wish {
     /** 处理状态（1:未回复,2:已回复） */
     private Integer processState;
 
+    private String comment;
+
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
 
@@ -122,5 +124,13 @@ public class Wish {
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

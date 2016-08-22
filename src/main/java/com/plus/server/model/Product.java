@@ -3,83 +3,72 @@ package com.plus.server.model;
 import java.util.Date;
 
 public class Product {
-	/**  */
 	private Long id;
 
-	/** 类型（10-机票，20-门票） */
 	private Integer type;
 
-	/** 产品名称 */
 	private String name;
 
-	/** 产品名称(英文) */
 	private String nameEn;
 
-	/** 素材url */
 	private String fileUrl;
 
-	/** 产品简介 */
 	private String descriptionSimple;
 
 	private String descriptionSimpleEn;
 
-	/** 产品详细描述 */
 	private String descriptionDetail;
 
 	private String descriptionDetailEn;
 
-	/** 原价 */
 	private Integer priceOriginal;
 
-	/** 现价 */
 	private Integer priceCurrent;
 
-	/** 出发地点 */
 	private String addressStart;
 
 	private String addressStartEn;
 
-	/** 目的地 */
 	private String addressEnd;
 
 	private String addressEndEn;
 
-	/** 销量 */
+	private Integer cityStart;
+
+	private Integer cityEnd;
+
+	private Integer airportStart;
+
+	private Integer airportEnd;
+
 	private Integer saleCount;
 
-	/** 6个icon的图片id */
 	private String icon;
 
-	/** 改退须知id */
 	private Integer orderAlterAgreementId;
 
-	/** 评论数 */
 	private Integer commentCount;
 
-	/** 位置经纬度 */
 	private String longLat;
 
-	/** 位置描述 */
 	private String longLatAddress;
 
 	private String longLatAddressEn;
 
-	/** 支付类型（1-直接支付，2-不直接支付（生成的是待确认订单）） */
 	private Integer payType;
 
-	/** 里程数(单位km) */
 	private Integer mileage;
 
-	/** 飞行时长(单位分钟) */
 	private Integer flyTime;
 
-	/** 逻辑删除（1:有效数据,-1:已删除） */
+	private Integer isShowHome;
+
+	private Integer isSpecialPrice;
+
 	private Integer valid;
 
-	/** 创建时间 */
 	private Date gmtCreate;
 
-	/** 修改时间 */
 	private Date gmtModify;
 
 	public Long getId() {
@@ -106,6 +95,22 @@ public class Product {
 		this.name = name == null ? null : name.trim();
 	}
 
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn == null ? null : nameEn.trim();
+	}
+
+	public String getFileUrl() {
+		return fileUrl;
+	}
+
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl == null ? null : fileUrl.trim();
+	}
+
 	public String getDescriptionSimple() {
 		return descriptionSimple;
 	}
@@ -114,12 +119,28 @@ public class Product {
 		this.descriptionSimple = descriptionSimple == null ? null : descriptionSimple.trim();
 	}
 
+	public String getDescriptionSimpleEn() {
+		return descriptionSimpleEn;
+	}
+
+	public void setDescriptionSimpleEn(String descriptionSimpleEn) {
+		this.descriptionSimpleEn = descriptionSimpleEn == null ? null : descriptionSimpleEn.trim();
+	}
+
 	public String getDescriptionDetail() {
 		return descriptionDetail;
 	}
 
 	public void setDescriptionDetail(String descriptionDetail) {
 		this.descriptionDetail = descriptionDetail == null ? null : descriptionDetail.trim();
+	}
+
+	public String getDescriptionDetailEn() {
+		return descriptionDetailEn;
+	}
+
+	public void setDescriptionDetailEn(String descriptionDetailEn) {
+		this.descriptionDetailEn = descriptionDetailEn == null ? null : descriptionDetailEn.trim();
 	}
 
 	public Integer getPriceOriginal() {
@@ -144,6 +165,62 @@ public class Product {
 
 	public void setAddressStart(String addressStart) {
 		this.addressStart = addressStart == null ? null : addressStart.trim();
+	}
+
+	public String getAddressStartEn() {
+		return addressStartEn;
+	}
+
+	public void setAddressStartEn(String addressStartEn) {
+		this.addressStartEn = addressStartEn == null ? null : addressStartEn.trim();
+	}
+
+	public String getAddressEnd() {
+		return addressEnd;
+	}
+
+	public void setAddressEnd(String addressEnd) {
+		this.addressEnd = addressEnd == null ? null : addressEnd.trim();
+	}
+
+	public String getAddressEndEn() {
+		return addressEndEn;
+	}
+
+	public void setAddressEndEn(String addressEndEn) {
+		this.addressEndEn = addressEndEn == null ? null : addressEndEn.trim();
+	}
+
+	public Integer getCityStart() {
+		return cityStart;
+	}
+
+	public void setCityStart(Integer cityStart) {
+		this.cityStart = cityStart;
+	}
+
+	public Integer getCityEnd() {
+		return cityEnd;
+	}
+
+	public void setCityEnd(Integer cityEnd) {
+		this.cityEnd = cityEnd;
+	}
+
+	public Integer getAirportStart() {
+		return airportStart;
+	}
+
+	public void setAirportStart(Integer airportStart) {
+		this.airportStart = airportStart;
+	}
+
+	public Integer getAirportEnd() {
+		return airportEnd;
+	}
+
+	public void setAirportEnd(Integer airportEnd) {
+		this.airportEnd = airportEnd;
 	}
 
 	public Integer getSaleCount() {
@@ -194,12 +271,52 @@ public class Product {
 		this.longLatAddress = longLatAddress == null ? null : longLatAddress.trim();
 	}
 
+	public String getLongLatAddressEn() {
+		return longLatAddressEn;
+	}
+
+	public void setLongLatAddressEn(String longLatAddressEn) {
+		this.longLatAddressEn = longLatAddressEn == null ? null : longLatAddressEn.trim();
+	}
+
 	public Integer getPayType() {
 		return payType;
 	}
 
 	public void setPayType(Integer payType) {
 		this.payType = payType;
+	}
+
+	public Integer getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(Integer mileage) {
+		this.mileage = mileage;
+	}
+
+	public Integer getFlyTime() {
+		return flyTime;
+	}
+
+	public void setFlyTime(Integer flyTime) {
+		this.flyTime = flyTime;
+	}
+
+	public Integer getIsShowHome() {
+		return isShowHome;
+	}
+
+	public void setIsShowHome(Integer isShowHome) {
+		this.isShowHome = isShowHome;
+	}
+
+	public Integer getIsSpecialPrice() {
+		return isSpecialPrice;
+	}
+
+	public void setIsSpecialPrice(Integer isSpecialPrice) {
+		this.isSpecialPrice = isSpecialPrice;
 	}
 
 	public Integer getValid() {
@@ -224,85 +341,5 @@ public class Product {
 
 	public void setGmtModify(Date gmtModify) {
 		this.gmtModify = gmtModify;
-	}
-
-	public String getAddressStartEn() {
-		return addressStartEn;
-	}
-
-	public void setAddressStartEn(String addressStartEn) {
-		this.addressStartEn = addressStartEn;
-	}
-
-	public String getDescriptionDetailEn() {
-		return descriptionDetailEn;
-	}
-
-	public void setDescriptionDetailEn(String descriptionDetailEn) {
-		this.descriptionDetailEn = descriptionDetailEn;
-	}
-
-	public String getDescriptionSimpleEn() {
-		return descriptionSimpleEn;
-	}
-
-	public void setDescriptionSimpleEn(String descriptionSimpleEn) {
-		this.descriptionSimpleEn = descriptionSimpleEn;
-	}
-
-	public String getLongLatAddressEn() {
-		return longLatAddressEn;
-	}
-
-	public void setLongLatAddressEn(String longLatAddressEn) {
-		this.longLatAddressEn = longLatAddressEn;
-	}
-
-	public String getNameEn() {
-		return nameEn;
-	}
-
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
-
-	public String getAddressEnd() {
-		return addressEnd;
-	}
-
-	public void setAddressEnd(String addressEnd) {
-		this.addressEnd = addressEnd;
-	}
-
-	public String getAddressEndEn() {
-		return addressEndEn;
-	}
-
-	public void setAddressEndEn(String addressEndEn) {
-		this.addressEndEn = addressEndEn;
-	}
-
-	public String getFileUrl() {
-		return fileUrl;
-	}
-
-	public void setFileUrl(String fileUrl) {
-		this.fileUrl = fileUrl;
-	}
-
-	public Integer getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(Integer mileage) {
-		this.mileage = mileage;
-	}
-
-	public Integer getFlyTime() {
-		return flyTime;
-	}
-
-	public void setFlyTime(Integer flyTime) {
-		this.flyTime = flyTime;
 	}
 }

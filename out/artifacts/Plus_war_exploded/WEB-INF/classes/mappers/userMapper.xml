@@ -12,13 +12,16 @@
     <result column="wx_gender" property="wxGender" jdbcType="INTEGER" />
     <result column="wx_region" property="wxRegion" jdbcType="VARCHAR" />
     <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="mileage" property="mileage" jdbcType="INTEGER" />
+    <result column="fly_time" property="flyTime" jdbcType="INTEGER" />
+    <result column="fly_count" property="flyCount" jdbcType="INTEGER" />
     <result column="valid" property="valid" jdbcType="INTEGER" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, phone, email, password_hash, password_salt, user_type, wx_unique_code, wx_gender, 
-    wx_region, point, valid, gmt_create, gmt_modify
+    wx_region, point, mileage, fly_time, fly_count, valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -35,12 +38,13 @@
     insert into t_user (id, phone, email, 
       password_hash, password_salt, user_type, 
       wx_unique_code, wx_gender, wx_region, 
-      point, valid, gmt_create, 
+      point, mileage, fly_time, fly_count, valid, gmt_create,
       gmt_modify)
     values (#{id,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{passwordHash,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
       #{wxUniqueCode,jdbcType=VARCHAR}, #{wxGender,jdbcType=INTEGER}, #{wxRegion,jdbcType=VARCHAR}, 
-      #{point,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{point,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{flyTime,jdbcType=INTEGER},
+      #{flyCount,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.User" >
@@ -75,6 +79,12 @@
       </if>
       <if test="point != null" >
         point,
+      </if>
+      <if test="mileage != null" >
+        mileage,
+      </if>
+      <if test="flyTime != null" >
+        fly_time,
       </if>
       <if test="valid != null" >
         valid,
@@ -116,6 +126,12 @@
       </if>
       <if test="point != null" >
         #{point,jdbcType=INTEGER},
+      </if>
+      <if test="mileage != null" >
+        #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        #{flyTime,jdbcType=INTEGER},
       </if>
       <if test="valid != null" >
         #{valid,jdbcType=INTEGER},
@@ -161,6 +177,15 @@
       <if test="point != null" >
         and point = #{point,jdbcType=INTEGER}
       </if>
+      <if test="mileage != null" >
+        and mileage = #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        and fly_time = #{flyTime,jdbcType=INTEGER},
+      </if>
+      <if test="flyCount != null" >
+        and fly_count = #{flyCount,jdbcType=INTEGER},
+      </if>
       <if test="valid != null" >
         and valid = #{valid,jdbcType=INTEGER}
       </if>
@@ -170,6 +195,12 @@
       <if test="gmtModify != null" >
         and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
       </if>
+    </where>
+  </select>
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> from t_user
+    <where>
+      (phone = #{userName,jdbcType=VARCHAR} or email = #{userName,jdbcType=VARCHAR}) and valid = 1
     </where>
   </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.User" >
@@ -202,6 +233,15 @@
       <if test="point != null" >
         point = #{point,jdbcType=INTEGER},
       </if>
+      <if test="mileage != null" >
+        mileage = #{mileage,jdbcType=INTEGER},
+      </if>
+      <if test="flyTime != null" >
+        fly_time = #{flyTime,jdbcType=INTEGER},
+      </if>
+      <if test="flyCount != null" >
+        fly_count = #{flyCount,jdbcType=INTEGER},
+      </if>
       <if test="valid != null" >
         valid = #{valid,jdbcType=INTEGER},
       </if>
@@ -225,6 +265,9 @@
       wx_gender = #{wxGender,jdbcType=INTEGER},
       wx_region = #{wxRegion,jdbcType=VARCHAR},
       point = #{point,jdbcType=INTEGER},
+      mileage = #{mileage,jdbcType=INTEGER},
+      fly_time = #{flyTime,jdbcType=INTEGER},
+      fly_count = #{flyCount,jdbcType=INTEGER},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}

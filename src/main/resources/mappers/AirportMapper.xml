@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.server.dal.AirportDAO">
+  <resultMap id="BaseResultMap" type="com.plus.server.model.Airport">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="country_id" jdbcType="INTEGER" property="countryId" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, city_id, country_id, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.plus.server.model.Airport" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="cityId != null">
+        and city_id = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test="countryId != null">
+        and country_id = #{countryId,jdbcType=INTEGER}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectByModelLike" parameterType="com.plus.server.model.Airport" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null">
+        and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="cityId != null">
+        and city_id = #{cityId,jdbcType=INTEGER}
+      </if>
+      <if test="countryId != null">
+        and country_id = #{countryId,jdbcType=INTEGER}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_airport
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Airport" useGeneratedKeys="true">
+    insert into t_airport (id, name, city_id, 
+      country_id, valid, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{countryId,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Airport" useGeneratedKeys="true">
+    insert into t_airport
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="countryId != null">
+        #{countryId,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Airport">
+    update t_airport
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="countryId != null">
+        country_id = #{countryId,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Airport">
+    update t_airport
+    set name = #{name,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      country_id = #{countryId,jdbcType=INTEGER},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update t_airport set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+</mapper>

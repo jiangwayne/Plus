@@ -89,6 +89,7 @@ CREATE TABLE `t_order` (
   `price_total` int(11) DEFAULT NULL COMMENT '总价',
   `status` int(11) DEFAULT NULL COMMENT '状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）',
   `boarding_ids` VARCHAR(512) COMMENT '登机人id，逗号分隔',
+  `comment` VARCHAR(4000) COLLATE utf8_bin DEFAULT NULL COMMENT '备注，操作日志',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -152,6 +153,10 @@ CREATE TABLE `t_product` (
   `address_start_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '出发地点(英文)',
   `address_end` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '目的地',
   `address_end_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '目的地(英文)',
+  `city_start` int(11) DEFAULT NULL COMMENT '出发城市id',
+  `city_end` int(11) DEFAULT NULL COMMENT '目的城市id',
+  `airport_start` int(11) DEFAULT NULL COMMENT '出发机场id',
+  `airport_end` int(11) DEFAULT NULL COMMENT '目的机场id',
   `sale_count` int(11) DEFAULT NULL COMMENT '销量',
   `icon` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '6个icon的图片id',
   `order_alter_agreement_id` int(11) DEFAULT NULL COMMENT '改退须知id',
@@ -162,6 +167,8 @@ CREATE TABLE `t_product` (
   `pay_type` int(11) DEFAULT NULL COMMENT '支付类型（1-直接支付，2-不直接支付（生成的是待确认订单））',
   `mileage` int(11) DEFAULT NULL COMMENT '里程数(单位km)',
   `fly_time` int(11) DEFAULT NULL COMMENT '飞行时长(单位分钟)',
+  `is_show_home` int(11) DEFAULT NULL COMMENT '是否在首页展示',
+  `is_special_price` int(11) DEFAULT NULL COMMENT '是否特价(惊喜产品)',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -232,7 +239,7 @@ CREATE TABLE `t_user_setting` (
   `timezone` int(11) DEFAULT NULL COMMENT '时间区（1~24）',
   `currency` int(11) DEFAULT NULL COMMENT '货币（1:CNY,2:USD,3:BGP,4:EUR,5:HKD）',
   `travel_date_type` int(11) DEFAULT NULL COMMENT '出行日期类型（1:灵活,2:固定）',
-  `allow_stop` int(11) DEFAULT NULL COMMENT '充许经停（0:,1:,2:）',
+  `allow_stop` int(11) DEFAULT NULL COMMENT '充许经停（1：经停，2：直飞）',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -255,6 +262,7 @@ CREATE TABLE `t_wish` (
   `content_reply` varchar(4000) COLLATE utf8_bin DEFAULT NULL COMMENT '回复消息内容',
   `process_state` int(11) DEFAULT NULL COMMENT '处理状态（1:未回复,2:已回复）',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `comment` varchar(4000) COLLATE utf8_bin DEFAULT NULL COMMENT '备注，操作日志',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -286,6 +294,54 @@ CREATE TABLE `t_user_boarding` (
 
 /*Data for the table `t_user_boarding` */
 
+/*Table structure for table `t_country` */
+
+DROP TABLE IF EXISTS `t_country`;
+
+CREATE TABLE `t_country` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_country` */
+
+
+/*Table structure for table `t_city` */
+
+DROP TABLE IF EXISTS `t_city`;
+
+CREATE TABLE `t_city` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `country_id` int(11) DEFAULT NULL COMMENT '国家id',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_city` */
+
+/*Table structure for table `t_airport` */
+
+DROP TABLE IF EXISTS `t_airport`;
+
+CREATE TABLE `t_airport` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `city_id` int(11) DEFAULT NULL COMMENT '国家id',
+  `country_id` int(11) DEFAULT NULL COMMENT '国家id',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_airport` */
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

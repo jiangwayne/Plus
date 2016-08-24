@@ -1,5 +1,17 @@
 package com.plus.server.controller;
 
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.plus.server.common.util.EmailUtil;
 import com.plus.server.common.util.MsgUtil;
 import com.plus.server.common.vo.resp.BaseResp;
 import com.plus.server.model.User;
@@ -7,12 +19,6 @@ import com.plus.server.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Random;
 
 /**
  * Created by jiangwulin on 16/6/11.
@@ -47,16 +53,36 @@ public class LoginController extends BaseController {
     @ResponseBody
     @ApiOperation(value = "获取注册验证码")
     public BaseResp getValidateCode(@ApiParam(required = true, value = "手机号") @RequestParam(required = true) String phone) {
-        log.info("注册，phone={}", phone);
+        log.info("手机注册，phone={}", phone);
         BaseResp r = new BaseResp();
         Random random = new Random();
         int randomInt = random.nextInt(999999);
         if (randomInt < 100000) {
             randomInt += 100000;
         }
-        randomInt = 123456;//测试用
+        randomInt = 123456;//TODO 测试用
         String msg = "验证码：" + randomInt;
         MsgUtil.sendMsg(phone, msg);
+        this.httpSession.setAttribute("validateCode", randomInt);
+
+        r.setSuccess(true);
+        return r;
+    }
+    
+    @RequestMapping(value = "/getEmailValidateCode", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "获取邮箱注册验证码")
+    public BaseResp getEmailValidateCode(@ApiParam(required = true, value = "邮箱") @RequestParam(required = true) String toEmailUser) {
+        log.info("邮箱注册，toEmailUser={}", toEmailUser);
+        BaseResp r = new BaseResp();
+        Random random = new Random();
+        int randomInt = random.nextInt(999999);
+        if (randomInt < 100000) {
+            randomInt += 100000;
+        }
+        randomInt = 123456;//TODO 测试用
+        String msg = "验证码：" + randomInt;
+        EmailUtil.sendMsg(toEmailUser,"验证码", msg);
         this.httpSession.setAttribute("validateCode", randomInt);
 
         r.setSuccess(true);

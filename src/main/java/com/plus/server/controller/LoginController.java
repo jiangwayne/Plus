@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
         if (randomInt < 100000) {
             randomInt += 100000;
         }
-        randomInt = 123456;//TODO 测试用
+        randomInt = 123456;//TODO 测试用 
         String msg = "验证码：" + randomInt;
         MsgUtil.sendMsg(phone, msg);
         this.httpSession.setAttribute("validateCode", randomInt);

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.server.dal.TransactionDAO">
+  <resultMap id="BaseResultMap" type="com.plus.server.model.Transaction">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="TRADE_NO" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="TRANS_STATUS" jdbcType="INTEGER" property="transStatus" />
+    <result column="TRANS_TYPE" jdbcType="INTEGER" property="transType" />
+    <result column="TRANS_AMOUNT" jdbcType="INTEGER" property="transAmount" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="SOURCE_CHANNEL" jdbcType="VARCHAR" property="sourceChannel" />
+    <result column="PARTNER_ORDER_NO" jdbcType="VARCHAR" property="partnerOrderNo" />
+    <result column="PARTNER_TYPE" jdbcType="VARCHAR" property="partnerType" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TRADE_NO, TRANS_STATUS, TRANS_TYPE, TRANS_AMOUNT, USER_ID, USER_NAME, IP, SOURCE_CHANNEL, 
+    PARTNER_ORDER_NO, PARTNER_TYPE, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_transaction
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.plus.server.model.Transaction" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_transaction
+    <where>
+      <if test="id != null">
+        and ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="tradeNo != null">
+        and TRADE_NO = #{tradeNo,jdbcType=VARCHAR}
+      </if>
+      <if test="transStatus != null">
+        and TRANS_STATUS = #{transStatus,jdbcType=INTEGER}
+      </if>
+      <if test="transType != null">
+        and TRANS_TYPE = #{transType,jdbcType=INTEGER}
+      </if>
+      <if test="transAmount != null">
+        and TRANS_AMOUNT = #{transAmount,jdbcType=INTEGER}
+      </if>
+      <if test="userId != null">
+        and USER_ID = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null">
+        and USER_NAME = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="ip != null">
+        and IP = #{ip,jdbcType=VARCHAR}
+      </if>
+      <if test="sourceChannel != null">
+        and SOURCE_CHANNEL = #{sourceChannel,jdbcType=VARCHAR}
+      </if>
+      <if test="partnerOrderNo != null">
+        and PARTNER_ORDER_NO = #{partnerOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="partnerType != null">
+        and PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectByModelLike" parameterType="com.plus.server.model.Transaction" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_transaction
+    <where>
+      <if test="id != null">
+        and ID = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="tradeNo != null">
+        and TRADE_NO like CONCAT('%',#{tradeNo,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="transStatus != null">
+        and TRANS_STATUS = #{transStatus,jdbcType=INTEGER}
+      </if>
+      <if test="transType != null">
+        and TRANS_TYPE = #{transType,jdbcType=INTEGER}
+      </if>
+      <if test="transAmount != null">
+        and TRANS_AMOUNT = #{transAmount,jdbcType=INTEGER}
+      </if>
+      <if test="userId != null">
+        and USER_ID like CONCAT('%',#{userId,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="userName != null">
+        and USER_NAME like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="ip != null">
+        and IP like CONCAT('%',#{ip,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="sourceChannel != null">
+        and SOURCE_CHANNEL like CONCAT('%',#{sourceChannel,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="partnerOrderNo != null">
+        and PARTNER_ORDER_NO like CONCAT('%',#{partnerOrderNo,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="partnerType != null">
+        and PARTNER_TYPE like CONCAT('%',#{partnerType,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_transaction
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Transaction" useGeneratedKeys="true">
+    insert into t_transaction (ID, TRADE_NO, TRANS_STATUS, 
+      TRANS_TYPE, TRANS_AMOUNT, USER_ID, 
+      USER_NAME, IP, SOURCE_CHANNEL, 
+      PARTNER_ORDER_NO, PARTNER_TYPE, valid, 
+      gmt_create, gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{tradeNo,jdbcType=VARCHAR}, #{transStatus,jdbcType=INTEGER}, 
+      #{transType,jdbcType=INTEGER}, #{transAmount,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{sourceChannel,jdbcType=VARCHAR}, 
+      #{partnerOrderNo,jdbcType=VARCHAR}, #{partnerType,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Transaction" useGeneratedKeys="true">
+    insert into t_transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="tradeNo != null">
+        TRADE_NO,
+      </if>
+      <if test="transStatus != null">
+        TRANS_STATUS,
+      </if>
+      <if test="transType != null">
+        TRANS_TYPE,
+      </if>
+      <if test="transAmount != null">
+        TRANS_AMOUNT,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="sourceChannel != null">
+        SOURCE_CHANNEL,
+      </if>
+      <if test="partnerOrderNo != null">
+        PARTNER_ORDER_NO,
+      </if>
+      <if test="partnerType != null">
+        PARTNER_TYPE,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transStatus != null">
+        #{transStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transType != null">
+        #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transAmount != null">
+        #{transAmount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceChannel != null">
+        #{sourceChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerOrderNo != null">
+        #{partnerOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerType != null">
+        #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Transaction">
+    update t_transaction
+    <set>
+      <if test="tradeNo != null">
+        TRADE_NO = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transStatus != null">
+        TRANS_STATUS = #{transStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transType != null">
+        TRANS_TYPE = #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transAmount != null">
+        TRANS_AMOUNT = #{transAmount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceChannel != null">
+        SOURCE_CHANNEL = #{sourceChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerOrderNo != null">
+        PARTNER_ORDER_NO = #{partnerOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerType != null">
+        PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Transaction">
+    update t_transaction
+    set TRADE_NO = #{tradeNo,jdbcType=VARCHAR},
+      TRANS_STATUS = #{transStatus,jdbcType=INTEGER},
+      TRANS_TYPE = #{transType,jdbcType=INTEGER},
+      TRANS_AMOUNT = #{transAmount,jdbcType=INTEGER},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      SOURCE_CHANNEL = #{sourceChannel,jdbcType=VARCHAR},
+      PARTNER_ORDER_NO = #{partnerOrderNo,jdbcType=VARCHAR},
+      PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update t_transaction set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+</mapper>

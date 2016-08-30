@@ -24,13 +24,21 @@ public class EmailUtil {
 	// @Value("#{configProperties['email.sender_password']}")
 	private static String sender_password = "123abc";
 	// @Value("#{configProperties['email.sender_mail_server']}")
-	private static String sender_mail_server = "stmp.163.com";
+	private static String sender_mail_server = "smtp.163.com";
+	
+//	// @Value("#{configProperties['email.sender_username']}")
+//	private static String sender_user = "no_reply@ifyplus.com";
+//	private static String sender_username = "no_reply";
+//	// @Value("#{configProperties['email.sender_password']}")
+//	private static String sender_password = "Flyfly789";
+//	// @Value("#{configProperties['email.sender_mail_server']}")
+//	private static String sender_mail_server = "smtp.ifyplus.com";
 
 	private final static Properties props = new Properties();// 配置发送邮件的环境属性
 	static {
 		// 表示SMTP发送邮件，需要进行身份验证
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.host", "smtp.163.com");
+		props.put("mail.smtp.host", sender_mail_server);
 		// 发件人的账号
 		props.put("mail.user", sender_user);
 		// 访问SMTP服务时需要提供的密码

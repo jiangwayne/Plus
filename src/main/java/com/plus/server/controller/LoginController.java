@@ -81,12 +81,32 @@ public class LoginController extends BaseController {
             randomInt += 100000;
         }
         randomInt = 123456;//TODO 测试用
-        String msg = "验证码：" + randomInt;
-        EmailUtil.sendMsg(toEmailUser,"验证码", msg);
+        String msg = genMailContent( randomInt);
+        EmailUtil.sendMsg(toEmailUser,"确认电子邮件(验证码)", msg);
         this.httpSession.setAttribute("validateCode", randomInt);
 
         r.setSuccess(true);
         return r;
+    }
+//    public static void main(String[] args) throws Exception {
+//    	int randomInt = 123456;
+//    	LoginController lc = new LoginController();
+//        String msg = lc.genMailContent( randomInt);
+//        EmailUtil.sendMsg("150491137@qq.com","确认电子邮件(验证码)", msg);
+//	}
+    private String genMailContent(int validCode){
+    	String s = "<b>您好！</b><br>";
+    	s+="<b>恭喜您注册成为iFlyPlus私人飞行平台用户。iFlyPlus将用心为您服务！爱飞行，自逍遥。</b><br>";
+    	s+="您现在正验证您的邮箱，验证成功后，您可以使用邮箱作为用户名进行登录及其他操作。<br>";
+    	s+="请输入<span style=\"color:#ff6666;\">邮箱验证码："+validCode+"</span>，以完成注册。<br>";
+    	s+="注册完成后，您可以使用邮箱作为用户名进行iFlyPlus App登录及其他操作。您也可通过邮箱及时收到订单提醒，惊喜包机等信息。<br><br>";
+    	s+="最后祝您生活愉快。<br><br>";
+    	s+="iFlyPlus团队 敬奉<br>";
+    	s+="no_reply@iflyplus.com<br>";
+    	s+="联系我们<br>";
+    	s+="vip_service@iflyplus.com<br>";
+    	
+    	return s;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

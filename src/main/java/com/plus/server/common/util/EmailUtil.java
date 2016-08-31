@@ -1,8 +1,5 @@
 package com.plus.server.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -15,24 +12,28 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.sun.mail.util.MailSSLSocketFactory;
+
 public class EmailUtil {
 	private static final Logger log = LoggerFactory.getLogger(EmailUtil.class);
 
+	// // @Value("#{configProperties['email.sender_username']}")
+	// private static String sender_user = "plus_cly@163.com";
+	// private static String sender_username = "plus_cly";
+	// // @Value("#{configProperties['email.sender_password']}")
+	// private static String sender_password = "123abc";
+	// // @Value("#{configProperties['email.sender_mail_server']}")
+	// private static String sender_mail_server = "smtp.163.com";
+
 	// @Value("#{configProperties['email.sender_username']}")
-	private static String sender_user = "plus_cly@163.com";
-	private static String sender_username = "plus_cly";
+	private static String sender_user = "no_reply@iflyplus.com";
+	private static String sender_username = "no_reply";
 	// @Value("#{configProperties['email.sender_password']}")
-	private static String sender_password = "123abc";
+	private static String sender_password = "Flyfly9";
 	// @Value("#{configProperties['email.sender_mail_server']}")
-	private static String sender_mail_server = "smtp.163.com";
-	
-//	// @Value("#{configProperties['email.sender_username']}")
-//	private static String sender_user = "no_reply@ifyplus.com";
-//	private static String sender_username = "no_reply";
-//	// @Value("#{configProperties['email.sender_password']}")
-//	private static String sender_password = "Flyfly789";
-//	// @Value("#{configProperties['email.sender_mail_server']}")
-//	private static String sender_mail_server = "smtp.ifyplus.com";
+	private static String sender_mail_server = "smtp.exmail.qq.com";// "smtp.ifyplus.com";
 
 	private final static Properties props = new Properties();// 配置发送邮件的环境属性
 	static {
@@ -70,6 +71,15 @@ public class EmailUtil {
 					return new PasswordAuthentication(userName, password);
 				}
 			};
+			MailSSLSocketFactory sf = null;
+			try {
+				sf = new MailSSLSocketFactory();
+			} catch (Exception e) {
+				log.info("error", e);
+			}
+			sf.setTrustAllHosts(true);
+			props.put("mail.smtp.ssl.enable", "true");
+			props.put("mail.smtp.ssl.socketFactory", sf);
 			// 使用环境属性和授权信息，创建邮件会话
 			Session mailSession = Session.getInstance(props, authenticator);
 			// 创建邮件消息
@@ -99,9 +109,9 @@ public class EmailUtil {
 			// 发送邮件
 			Transport.send(message);
 		} catch (AddressException e) {
-			log.error("收件人地址错误",e);
+			log.error("收件人地址错误", e);
 		} catch (MessagingException e) {
-			log.error("发送失败",e);
+			log.error("发送失败", e);
 		}
 	}
 

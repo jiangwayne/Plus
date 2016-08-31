@@ -33,9 +33,9 @@ public class FtlProductController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/list")
     public ModelAndView test() {
-        ModelAndView mv = new ModelAndView("test.ftl");
+        ModelAndView mv = new ModelAndView("productList.ftl");
         return mv;
     }
 

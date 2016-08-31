@@ -26,8 +26,8 @@ import com.wordnik.swagger.annotations.ApiParam;
  * Created by jiangwulin on 16/6/11.
  */
 @Controller
-@RequestMapping(value = "ftl/order")
-public class FtlOrderController extends BaseController {
+@RequestMapping(value = "ftl/product")
+public class FtlProductController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired

@@ -78,6 +78,11 @@ public class ProductService {
 		PageInfo<Product> pageInfo = new PageInfo<Product>(list);
 		return pageInfo;
 	}
+	public List<Product> selectByModel(Product product) {
+		log.info("产品查询，product={} ", JSON.toJSONString(product) );
+		List<Product> list = productDAO.selectByModel(product);
+		return list;
+	}
 	public PageInfo<ProductSpec> selectProductSpecByModel(ProductSpec productSpec, Integer page, Integer pageSize) {
 		log.info("产品规格查询，productSpec={},page={},pageSize={}", JSON.toJSONString(productSpec), page, pageSize);
 		if (page == null || page <= 0) {

@@ -141,7 +141,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/listProduct", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value = "查询产品")
+	@ApiOperation(value = "查询产品列表")
 	public ProductListResp listProduct(
 			@ApiParam(required = false, value = "类型（10-机票，20-门票）") @RequestParam(required = false) Integer type,
 			@ApiParam(required = false, value = "产品名称") @RequestParam(required = false) String name,
@@ -178,9 +178,61 @@ public class ProductController {
 		r.setSuccess(true);
 		return r;
 	}
+	@RequestMapping(value = "/listHomePageProduct", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "查询首页产品列表")
+	public ProductListResp listHomePageProduct() {
+		log.info("查询首页产品列表");
+		ProductListResp r = new ProductListResp();
+		Product pro = new Product();
+		pro.setIsShowHome(1);
+		pro.setValid(1);
+		try {
+			List<Product> pageInfo = productService.selectByModel(pro);
+			if(pageInfo != null ){
+				List<ProductVo> productList = BeanMapper.mapList(pageInfo , ProductVo.class);
+				for(ProductVo vo : productList){
+					fillDateStr(vo);
+				}
+				r.setProductList(productList);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+			r.setMsg(e.getMessage());
+			return r;
+		}
+		r.setSuccess(true);
+		return r;
+	}
+	@RequestMapping(value = "/listSpecialPriceProduct", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "查询特价产品列表")
+	public ProductListResp listSpecialPriceProduct() {
+		log.info("查询特价产品列表");
+		ProductListResp r = new ProductListResp();
+		Product pro = new Product();
+		pro.setIsSpecialPrice(1);
+		pro.setValid(1);
+		try {
+			List<Product> pageInfo = productService.selectByModel(pro);
+			if(pageInfo != null ){
+				List<ProductVo> productList = BeanMapper.mapList(pageInfo , ProductVo.class);
+				for(ProductVo vo : productList){
+					fillDateStr(vo);
+				}
+				r.setProductList(productList);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+			r.setMsg(e.getMessage());
+			return r;
+		}
+		r.setSuccess(true);
+		return r;
+	}
 	@RequestMapping(value = "/listProductSpec", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value = "查询产品规格")
+	@ApiOperation(value = "查询产品规格列表")
 	public ProductSpecListResp listProductSpec(
 			@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId) {
 		log.info("查询产品规格---productId={}", productId);
@@ -207,7 +259,7 @@ public class ProductController {
 	}
 	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value = "产品查询")
+	@ApiOperation(value = "产品明细查询")
 	public ProductResp queryById(@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId) {
 		log.info("产品查询---productId={}", productId);
 		ProductResp r = new ProductResp();

@@ -1,5 +1,10 @@
 package com.plus.server.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -43,6 +48,7 @@ public class LoginController extends BaseController {
             User u = userService.getUserByName(userName);
             this.httpSession.setAttribute("user", u);
             r.setSuccess(true);
+            r.setMsg(u.getId().toString()); //到极光注册别名用
         } else {
             r.setMsg("用户不存在或密码不正确");
         }
@@ -60,7 +66,24 @@ public class LoginController extends BaseController {
         if (randomInt < 100000) {
             randomInt += 100000;
         }
-        randomInt = 123456;//TODO 测试用 
+
+        try {
+            String getURL = "http://222.73.117.169/msg/HttpBatchSendSM?account=N9778371&pswd=Ps03262e&mobile=" + phone +
+                    "&msg=【iFlyPlus】" + URLEncoder.encode("您好，您的验证码是", "utf-8") + randomInt + "&needstatus=true";
+            URL getUrl = new URL(getURL);
+            HttpURLConnection connection = (HttpURLConnection)getUrl.openConnection();
+            connection.connect();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            String lines;
+            while ((lines = reader.readLine()) != null) {
+                lines += lines.toString();
+            }
+            reader.close();
+            connection.disconnect();
+        }catch (Exception e){
+
+        }
+
         String msg = "验证码：" + randomInt;
         MsgUtil.sendMsg(phone, msg);
         this.httpSession.setAttribute("validateCode", randomInt);
@@ -80,8 +103,8 @@ public class LoginController extends BaseController {
         if (randomInt < 100000) {
             randomInt += 100000;
         }
-        randomInt = 123456;//TODO 测试用
-        String msg = genMailContent( randomInt);
+        //randomInt = 123456;//TODO 测试用
+        String msg = genMailContent(randomInt);
         EmailUtil.sendMsg(toEmailUser,"确认电子邮件(验证码)", msg);
         this.httpSession.setAttribute("validateCode", randomInt);
 

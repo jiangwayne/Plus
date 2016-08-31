@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.server.dal.PlanDAO">
+  <resultMap id="BaseResultMap" type="com.plus.server.model.Plan">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="plane_id" jdbcType="INTEGER" property="planeId" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="passengers" jdbcType="INTEGER" property="passengers" />
+    <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="outside_url" jdbcType="VARCHAR" property="outsideUrl" />
+    <result column="inside_url" jdbcType="VARCHAR" property="insideUrl" />
+    <result column="seat_url" jdbcType="VARCHAR" property="seatUrl" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, plane_id, model, passengers, manufacturer, merchant_id, delivery_time, outside_url, 
+    inside_url, seat_url, valid, gmt_create, gmt_modify
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_plane
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.plus.server.model.Plan" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_plane
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="planeId != null">
+        and plane_id = #{planeId,jdbcType=INTEGER}
+      </if>
+      <if test="model != null">
+        and model = #{model,jdbcType=VARCHAR}
+      </if>
+      <if test="passengers != null">
+        and passengers = #{passengers,jdbcType=INTEGER}
+      </if>
+      <if test="manufacturer != null">
+        and manufacturer = #{manufacturer,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantId != null">
+        and merchant_id = #{merchantId,jdbcType=INTEGER}
+      </if>
+      <if test="deliveryTime != null">
+        and delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="outsideUrl != null">
+        and outside_url = #{outsideUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="insideUrl != null">
+        and inside_url = #{insideUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="seatUrl != null">
+        and seat_url = #{seatUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectByModelLike" parameterType="com.plus.server.model.Plan" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_plane
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="planeId != null">
+        and plane_id = #{planeId,jdbcType=INTEGER}
+      </if>
+      <if test="model != null">
+        and model like CONCAT('%',#{model,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="passengers != null">
+        and passengers = #{passengers,jdbcType=INTEGER}
+      </if>
+      <if test="manufacturer != null">
+        and manufacturer like CONCAT('%',#{manufacturer,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="merchantId != null">
+        and merchant_id = #{merchantId,jdbcType=INTEGER}
+      </if>
+      <if test="deliveryTime != null">
+        and delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="outsideUrl != null">
+        and outside_url like CONCAT('%',#{outsideUrl,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="insideUrl != null">
+        and inside_url like CONCAT('%',#{insideUrl,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="seatUrl != null">
+        and seat_url like CONCAT('%',#{seatUrl,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_plane
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Plan" useGeneratedKeys="true">
+    insert into t_plane (id, plane_id, model, 
+      passengers, manufacturer, merchant_id, 
+      delivery_time, outside_url, inside_url, 
+      seat_url, valid, gmt_create, 
+      gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{planeId,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, 
+      #{passengers,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR}, #{merchantId,jdbcType=INTEGER}, 
+      #{deliveryTime,jdbcType=TIMESTAMP}, #{outsideUrl,jdbcType=VARCHAR}, #{insideUrl,jdbcType=VARCHAR}, 
+      #{seatUrl,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModify,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Plan" useGeneratedKeys="true">
+    insert into t_plane
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="planeId != null">
+        plane_id,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="passengers != null">
+        passengers,
+      </if>
+      <if test="manufacturer != null">
+        manufacturer,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="outsideUrl != null">
+        outside_url,
+      </if>
+      <if test="insideUrl != null">
+        inside_url,
+      </if>
+      <if test="seatUrl != null">
+        seat_url,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="planeId != null">
+        #{planeId,jdbcType=INTEGER},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="passengers != null">
+        #{passengers,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outsideUrl != null">
+        #{outsideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="insideUrl != null">
+        #{insideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seatUrl != null">
+        #{seatUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Plan">
+    update t_plane
+    <set>
+      <if test="planeId != null">
+        plane_id = #{planeId,jdbcType=INTEGER},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="passengers != null">
+        passengers = #{passengers,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outsideUrl != null">
+        outside_url = #{outsideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="insideUrl != null">
+        inside_url = #{insideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seatUrl != null">
+        seat_url = #{seatUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Plan">
+    update t_plane
+    set plane_id = #{planeId,jdbcType=INTEGER},
+      model = #{model,jdbcType=VARCHAR},
+      passengers = #{passengers,jdbcType=INTEGER},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      outside_url = #{outsideUrl,jdbcType=VARCHAR},
+      inside_url = #{insideUrl,jdbcType=VARCHAR},
+      seat_url = #{seatUrl,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update t_plane set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </update>
+</mapper>

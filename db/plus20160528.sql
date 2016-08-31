@@ -335,6 +335,7 @@ CREATE TABLE `t_airport` (
   `name` varchar(64) DEFAULT NULL COMMENT '名称',
   `city_id` int(11) DEFAULT NULL COMMENT '国家id',
   `country_id` int(11) DEFAULT NULL COMMENT '国家id',
+  `code` varchar(16) DEFAULT NULL COMMENT '机场编号',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -342,6 +343,50 @@ CREATE TABLE `t_airport` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Data for the table `t_airport` */
+
+
+DROP TABLE IF EXISTS `t_plane`;
+
+CREATE TABLE `t_plane` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `plane_id` int(11) DEFAULT NULL COMMENT '飞行器id',
+  `model` varchar(64) DEFAULT NULL COMMENT '模型',
+  `passengers` int(11) DEFAULT NULL COMMENT '载客数',
+  `manufacturer` varchar(128) DEFAULT NULL COMMENT '制造商',
+  `merchant_id` int(11) DEFAULT NULL COMMENT '商家id',
+  `delivery_time` datetime DEFAULT NULL COMMENT '交付时间',
+  `outside_url`varchar(1024) DEFAULT NULL COMMENT '外部图片url',
+  `inside_url`varchar(1024) DEFAULT NULL COMMENT '内部图片url',
+  `seat_url`varchar(1024) DEFAULT NULL COMMENT '座位图片url',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `t_merchant`;
+
+CREATE TABLE `t_merchant` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL COMMENT '商家名称',
+  `contact` varchar(64) DEFAULT NULL COMMENT '联系人',
+  `phone` varchar(32) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(512) DEFAULT NULL COMMENT '邮箱',
+  `contact2` varchar(64) DEFAULT NULL COMMENT '备用联系人',
+  `phone2` varchar(32) DEFAULT NULL COMMENT '备用联系人手机号',
+  `email2` varchar(512) DEFAULT NULL COMMENT '备用联系人邮箱',
+  `aqc`varchar(512) DEFAULT NULL COMMENT '飞行合格证',
+  `aqc_url`varchar(512) DEFAULT NULL COMMENT '飞行合格证图片url',
+  `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+
+
 DROP TABLE IF EXISTS `t_transaction`;
 CREATE TABLE `t_transaction` (
   `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -360,7 +405,10 @@ CREATE TABLE `t_transaction` (
   `gmt_modify` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
 ) ENGINE=INNODB AUTO_INCREMENT=1282 DEFAULT CHARSET=utf8 COMMENT='交易记录主表';
+
+
 DROP TABLE IF EXISTS `t_transaction_detail`;
+
 CREATE TABLE `t_transaction_detail` (
   `ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `transaction_id` BIGINT(20) DEFAULT NULL,

@@ -11,6 +11,8 @@ public class Airport {
 
     private Integer countryId;
 
+    private String code;
+
     private Integer valid;
 
     private Date gmtCreate;
@@ -47,6 +49,14 @@ public class Airport {
 
     public void setCountryId(Integer countryId) {
         this.countryId = countryId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     public Integer getValid() {

@@ -6,21 +6,22 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="city_id" jdbcType="INTEGER" property="cityId" />
     <result column="country_id" jdbcType="INTEGER" property="countryId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="valid" jdbcType="INTEGER" property="valid" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, city_id, country_id, valid, gmt_create, gmt_modify
+    id, name, city_id, country_id, code,valid, gmt_create, gmt_modify
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_airport
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectByModel" parameterType="com.plus.server.model.Airport" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_airport
     <where>
@@ -36,6 +37,9 @@
       <if test="countryId != null">
         and country_id = #{countryId,jdbcType=INTEGER}
       </if>
+      <if test="code != null">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
       <if test="valid != null">
         and valid = #{valid,jdbcType=INTEGER}
       </if>
@@ -48,7 +52,7 @@
     </where>
   </select>
   <select id="selectByModelLike" parameterType="com.plus.server.model.Airport" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_airport
     <where>
@@ -63,6 +67,9 @@
       </if>
       <if test="countryId != null">
         and country_id = #{countryId,jdbcType=INTEGER}
+      </if>
+      <if test="code != null">
+        and code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
       </if>
       <if test="valid != null">
         and valid = #{valid,jdbcType=INTEGER}
@@ -80,12 +87,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Airport" useGeneratedKeys="true">
-    insert into t_airport (id, name, city_id, 
-      country_id, valid, gmt_create, 
-      gmt_modify)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
-      #{countryId,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModify,jdbcType=TIMESTAMP})
+    insert into t_airport (id, name, city_id,
+    country_id, code,valid, gmt_create,
+    gmt_modify)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER},
+    #{countryId,jdbcType=INTEGER},#{code,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
+    #{gmtModify,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Airport" useGeneratedKeys="true">
     insert into t_airport
@@ -101,6 +108,9 @@
       </if>
       <if test="countryId != null">
         country_id,
+      </if>
+      <if test="code != null">
+        code,
       </if>
       <if test="valid != null">
         valid,
@@ -125,6 +135,9 @@
       <if test="countryId != null">
         #{countryId,jdbcType=INTEGER},
       </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
       <if test="valid != null">
         #{valid,jdbcType=INTEGER},
       </if>
@@ -148,6 +161,9 @@
       <if test="countryId != null">
         country_id = #{countryId,jdbcType=INTEGER},
       </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
       <if test="valid != null">
         valid = #{valid,jdbcType=INTEGER},
       </if>
@@ -163,14 +179,15 @@
   <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Airport">
     update t_airport
     set name = #{name,jdbcType=VARCHAR},
-      city_id = #{cityId,jdbcType=INTEGER},
-      country_id = #{countryId,jdbcType=INTEGER},
-      valid = #{valid,jdbcType=INTEGER},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+    city_id = #{cityId,jdbcType=INTEGER},
+    country_id = #{countryId,jdbcType=INTEGER},
+    code = #{code,jdbcType=VARCHAR},
+    valid = #{valid,jdbcType=INTEGER},
+    gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+    gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="deleteLogicByIds">
-    update t_airport set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+    update t_airport set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach>
   </update>
 </mapper>

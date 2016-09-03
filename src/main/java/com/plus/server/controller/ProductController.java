@@ -155,6 +155,7 @@ public class ProductController {
 		Product pro = new Product();
 		pro.setType(payType);
 		pro.setName(name);
+
 		pro.setAddressStart(addressStart);
 		pro.setAddressEnd(addressEnd);
 		pro.setPayType(payType);

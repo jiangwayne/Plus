@@ -8,11 +8,7 @@ import com.plus.server.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.plus.server.service.UserService;
 import com.wordnik.swagger.annotations.Api;
@@ -83,6 +79,28 @@ public class UserController extends BaseController {
         return userSettingResp;
     }
 
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "updateUser")
+    public BaseResp updateUser(@ApiParam(required = false, value = "手机号") @RequestParam(required = false) String phone,
+                               @ApiParam(required = false, value = "邮箱") @RequestParam(required = false) String email,
+                               @ApiParam(required = false, value = "密码") @RequestParam(required = false) String password){
+        BaseResp r = new BaseResp();
+        User u = (User)httpSession.getAttribute("user");
+        if(u == null){
+            r.setMsg("用户不存在");
+        }
+        if(phone != null && !phone.equals("")){
+            u.setPhone(phone);
+        }
+        if(email != null && !email.equals("")) {
+            u.setEmail(email);
+        }
+        userService.updateUser(u, password);
+
+        return r;
+    }
 
     @RequestMapping(value = "/setUserSetting", method = RequestMethod.PUT)
     @ResponseBody

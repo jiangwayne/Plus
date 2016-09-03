@@ -5,7 +5,7 @@ import java.util.Date;
 public class Product {
 	private Long id;
 
-	private Integer type;
+	private Integer type;//类型（10-机票BB,11-机票LY,20-门票SE,21-门票SP）
 
 	private String name;
 

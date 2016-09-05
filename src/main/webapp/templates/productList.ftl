@@ -15,8 +15,7 @@
 	<#include "include/menu.ftl">
 </div>
 <div class="right">
-<span align="right"><a href="queryById">添加產品</a></span>
-	<table border="1" width="100%">
+	<table class="table table-striped">
 		<tr>
 			<td>編號</td>
 			<td>產品ID</td>

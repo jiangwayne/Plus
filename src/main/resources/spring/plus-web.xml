@@ -41,6 +41,7 @@
 		<property name="freemarkerVariables">
 			<map>
 				<entry key="base_addr" value="http://127.0.0.1:8080"></entry>
+<!-- 				<entry key="base_addr" value="http://202.127.28.66"></entry> -->
 			</map>
 		</property>
 	</bean>

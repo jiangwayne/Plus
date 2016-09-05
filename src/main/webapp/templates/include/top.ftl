@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>top</title>
     <link href="${base_addr}/static/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="${base_addr}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="${base_addr}/static/js/jquery-2.2.0.min.js"></script>
+    <script src="${base_addr}/static/js/bootstrap.min.js"></script>
 </head>
 <body>
 <!--头部区域-->

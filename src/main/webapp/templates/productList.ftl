@@ -15,7 +15,7 @@
 	<#include "include/menu.ftl">
 </div>
 <div class="right">
-	<table>
+	<table class="table table-striped">
 		<tr>
 			<td>編號</td>
 			<td>產品ID</td>

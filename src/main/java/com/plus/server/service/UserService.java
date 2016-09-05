@@ -98,7 +98,13 @@ public class UserService {
 		return userDao.selectByPrimaryKey(userId);
 	}
 
-	public void updateUser(User user){
+	public void updateUser(User user, String password){
+		if(password != null && !password.equals("")){
+			String password_salt = generateSalt(5);
+			String password_hash = getPasswordHash(password, password_salt);
+			user.setPasswordHash(password_hash);
+			user.setPasswordSalt(password_salt);
+		}
 		userDao.updateByPrimaryKeySelective(user);
 	}
 

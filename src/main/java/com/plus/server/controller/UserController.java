@@ -5,20 +5,18 @@ import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.*;
 import com.plus.server.common.vo.resp.*;
 import com.plus.server.model.*;
+import com.plus.server.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.plus.server.service.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +31,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
@@ -83,6 +84,28 @@ public class UserController extends BaseController {
         return userSettingResp;
     }
 
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "updateUser")
+    public BaseResp updateUser(@ApiParam(required = false, value = "手机号") @RequestParam(required = false) String phone,
+                               @ApiParam(required = false, value = "邮箱") @RequestParam(required = false) String email,
+                               @ApiParam(required = false, value = "密码") @RequestParam(required = false) String password){
+        BaseResp r = new BaseResp();
+        User u = (User)httpSession.getAttribute("user");
+        if(u == null){
+            r.setMsg("用户不存在");
+        }
+        if(phone != null && !phone.equals("")){
+            u.setPhone(phone);
+        }
+        if(email != null && !email.equals("")) {
+            u.setEmail(email);
+        }
+        userService.updateUser(u, password);
+
+        return r;
+    }
 
     @RequestMapping(value = "/setUserSetting", method = RequestMethod.PUT)
     @ResponseBody
@@ -257,7 +280,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/passengerList", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "乘机人列表")
-    public UserBoardingListResp getPassengerList()
+    public UserBoardingListResp getPassengerList(@ApiParam(required = false, value = "oderId") @RequestParam(required = false) String orderId)
     {
         log.info("乘机人列表-------");
         User u = this.getCurrentUser();
@@ -268,13 +291,29 @@ public class UserController extends BaseController {
             return userBoardingListResp;
         }
         try{
+            String ids = "";
+            if(orderId != null && !orderId.equals("")){
+                ids = orderService.selectById(Long.parseLong(orderId)).getBoardingIds();
+            }
+
             List<UserBoarding> userBoardingList = userService.getUserBoarding(u.getId());
+            List<UserBoarding> result = new ArrayList<>();
+            if(!ids.equals("")) {
+                for(UserBoarding userBoarding : userBoardingList){
+                    if(ids.contains(userBoarding.getId().toString())){
+                        result.add(userBoarding);
+                    }
+                }
+            }
+            userBoardingList = result;
+
             if(userBoardingList != null && !userBoardingList.isEmpty()) {
                 List<UserBoardingVo> userBoardingVoList = BeanMapper.mapList(userBoardingList, UserBoardingVo.class);
                 userBoardingListResp.setUserBoardingVoList(userBoardingVoList);
             } else {
                 userBoardingListResp.setMsg("该用户无乘机人");
             }
+
             userBoardingListResp.setSuccess(true);
         }
         catch (Exception e){

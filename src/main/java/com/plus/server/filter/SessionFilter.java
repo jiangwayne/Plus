@@ -42,7 +42,7 @@ public class SessionFilter implements Filter {
 		if (!isOpenUrl(url)) {// 如果不是openUrl，则需要校验登录状态
 			if (!url.matches("^.*/login.*$") && !url.matches("^.*/index.*$")) {
 				if (httpRequest.getSession().getAttribute("user") == null) {
-					httpResponse.setStatus(401);
+//					httpResponse.setStatus(401);
 				}
 			}
 		}

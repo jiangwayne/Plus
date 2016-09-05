@@ -24,7 +24,8 @@ public class OrderNoPayStatusTask {
 	/**
 	 * 每分钟检查未支付订单，若超过最大未支付等待时间，则将订单状态设置为取消
 	 */
-	@Scheduled(cron = "0 * * * * ? ")
+//	@Scheduled(cron = "0 * * * * ? ") //正式
+	@Scheduled(cron = "0 0 * * * ? ")  //测试，每小时一次
 	@Transactional(rollbackFor = Exception.class)
 	public void setStatus2CacelOfNoPayOrder() {
 		log.info("未支付订单超时任务启动...");

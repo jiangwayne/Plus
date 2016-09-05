@@ -82,7 +82,7 @@
 		    <td >频道图片（684*304）</td>
 		    <td colspan=3>
 		    	<input type="hidden" id="pindaoPic" name="pindaoPic" value="${s.pindaoPic?if_exists}">
-		    	<img width="68" height="30" id="picUrlShow1" src="${base_addr}/gtb/file/downloadFile?fileName=${oc.picUrl?if_exists}">
+		    	<img width="68" height="30" id="picUrlShow1" src="${base_addr}/plus/file/downloadFile?fileName=${s.pindaoPic?if_exists}">
 		    		<input type="file" id="fileToUpload1" name="fileToUpload1" >
 		    		<input type="button" value="上传" onclick="ajaxUploadFile('fileToUpload1','pindaoPic','picUrlShow1')" /> 
 		    </td>
@@ -91,7 +91,7 @@
 		    <td >封面图片（750*1334）</td>
 		    <td colspan=3>
 		    	<input type="hidden" id="fengmianPic" name="fengmianPic" value="${s.fengmianPic?if_exists}">
-		    	<img width="75" height="133" id="picUrlShow2" src="${base_addr}/gtb/file/downloadFile?fileName=${oc.picUrl?if_exists}">
+		    	<img width="75" height="133" id="picUrlShow2" src="${base_addr}/plus/file/downloadFile?fileName=${s.fengmianPic?if_exists}">
 		    		<input type="file" id="fileToUpload2" name="fileToUpload2" >
 		    		<input type="button" value="上传" onclick="ajaxUploadFile('fileToUpload2','fengmianPic','picUrlShow2')" /> 
 		    </td>
@@ -100,7 +100,7 @@
 		    <td >轮播图片（750*550）</td>
 		    <td colspan=3>
 		    	<input type="hidden" id="lunboPic" name="lunboPic" value="${s.lunboPic?if_exists}">
-		    	<img width="75" height="55" id="picUrlShow3" src="${base_addr}/gtb/file/downloadFile?fileName=${oc.picUrl?if_exists}">
+		    	<img width="75" height="55" id="picUrlShow3" src="${base_addr}/plus/file/downloadFile?fileName=${s.lunboPic?if_exists}">
 		    		<input type="file" id="fileToUpload3" name="fileToUpload3" >
 		    		<input type="button" value="上传" onclick="ajaxUploadFile('fileToUpload3','lunboPic','picUrlShow3')" /> 
 		    </td>

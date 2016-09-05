@@ -173,7 +173,7 @@ CREATE TABLE `t_product` (
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
-  `plan_id` bigint(20) DEFAULT NULL COMMENT '飞机id',
+  `plane_id` bigint(20) DEFAULT NULL COMMENT '飞机id',
   `pindao_pic` varchar(128)  DEFAULT NULL COMMENT '频道图片 684*304 1张',
   `fengmian_pic` varchar(128)  DEFAULT NULL COMMENT '封面图片750*1334  1张',
   `lunbo_pic` varchar(128)  DEFAULT NULL COMMENT '轮播图片750*550 8张',

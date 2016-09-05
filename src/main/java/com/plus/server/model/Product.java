@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Product {
 	private Long id;
+	
+	private String code;
 
 	private Integer type;//类型（10-机票BB,11-机票LY,20-门票SE,21-门票SP）
 
@@ -70,6 +72,44 @@ public class Product {
 	private Date gmtCreate;
 
 	private Date gmtModify;
+	
+	/*******/
+	private Long planeId;//飞机Id
+	private String pindaoPic;//频道图片 684*304 1张
+	private String fengmianPic;//封面图片750*1334  1张
+	private String lunboPic;//轮播图片750*550 8张
+	
+	public Long getPlaneId() {
+		return planeId;
+	}
+
+	public void setPlaneId(Long planeId) {
+		this.planeId = planeId;
+	}
+
+	public String getPindaoPic() {
+		return pindaoPic;
+	}
+
+	public void setPindaoPic(String pindaoPic) {
+		this.pindaoPic = pindaoPic;
+	}
+
+	public String getFengmianPic() {
+		return fengmianPic;
+	}
+
+	public void setFengmianPic(String fengmianPic) {
+		this.fengmianPic = fengmianPic;
+	}
+
+	public String getLunboPic() {
+		return lunboPic;
+	}
+
+	public void setLunboPic(String lunboPic) {
+		this.lunboPic = lunboPic;
+	}
 
 	public Long getId() {
 		return id;
@@ -341,5 +381,13 @@ public class Product {
 
 	public void setGmtModify(Date gmtModify) {
 		this.gmtModify = gmtModify;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

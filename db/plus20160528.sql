@@ -139,6 +139,7 @@ DROP TABLE IF EXISTS `t_product`;
 
 CREATE TABLE `t_product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `code` varchar(128) DEFAULT NULL COMMENT '产品编码',
   `type` int(11) DEFAULT NULL COMMENT '类型（10-机票BB,11-机票LY,20-门票SE,21-门票SP）',
   `name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '产品名称',
   `name_en` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '产品名称(英文)',
@@ -172,6 +173,10 @@ CREATE TABLE `t_product` (
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
+  `plan_id` bigint(20) DEFAULT NULL COMMENT '飞机id',
+  `pindao_pic` varchar(128)  DEFAULT NULL COMMENT '频道图片 684*304 1张',
+  `fengmian_pic` varchar(128)  DEFAULT NULL COMMENT '封面图片750*1334  1张',
+  `lunbo_pic` varchar(128)  DEFAULT NULL COMMENT '轮播图片750*550 8张',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

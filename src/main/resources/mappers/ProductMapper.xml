@@ -3,6 +3,7 @@
 <mapper namespace="com.plus.server.dal.ProductDAO" >
   <resultMap id="BaseResultMap" type="com.plus.server.model.Product" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code"  property="code" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
@@ -36,9 +37,13 @@
     <result column="valid" jdbcType="INTEGER" property="valid" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+    <result column="planeId" property="plane_id" />
+    <result column="pindaoPic" property="pindao_pic" />
+    <result column="fengmianPic" property="fengmian_pic" />
+    <result column="lunboPic" property="lunbo_pic" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, type, name, name_en, file_url, description_simple, description_simple_en, description_detail,
+    id,plane_id,pindao_pic,fengmian_pic,lunbo_pic, code,type, name, name_en, file_url, description_simple, description_simple_en, description_detail,
     description_detail_en, price_original, price_current, address_start, address_start_en,
     address_end, address_end_en, city_start, city_end, airport_start, airport_end, sale_count,
     icon, order_alter_agreement_id, comment_count, long_lat, long_lat_address, long_lat_address_en,
@@ -55,7 +60,8 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.Product" useGeneratedKeys="true">
-    insert into t_product (id, type, name,
+    insert into t_product (id,plane_id,pindao_pic,fengmian_pic,lunbo_pic,
+    	code, type, name,
       name_en, file_url, description_simple,
       description_simple_en, description_detail,
       description_detail_en, price_original, price_current,
@@ -67,7 +73,8 @@
       pay_type, mileage, fly_time,
       is_show_home, is_special_price, valid,
       gmt_create, gmt_modify)
-    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT}, #{planeId},#{pindaoPic},#{fengmianPic},#{lunboPic},#{code},
+      #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
       #{nameEn,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{descriptionSimple,jdbcType=VARCHAR},
       #{descriptionSimpleEn,jdbcType=VARCHAR}, #{descriptionDetail,jdbcType=VARCHAR},
       #{descriptionDetailEn,jdbcType=VARCHAR}, #{priceOriginal,jdbcType=INTEGER}, #{priceCurrent,jdbcType=INTEGER},
@@ -85,6 +92,21 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="planeId != null">
+        plane_id,
+      </if>
+      <if test="pindaoPic != null">
+        pindao_pic,
+      </if>
+      <if test="fengmianPic != null">
+        fengmian_pic,
+      </if>
+      <if test="lunboPic != null">
+        lunbo_pic,
+      </if>
+      <if test="code != null">
+        code,
       </if>
       <if test="type != null">
         type,
@@ -190,6 +212,21 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="planeId != null">
+        #{planeId},
+      </if>
+      <if test="pindaoPic != null">
+        #{pindaoPic},
+      </if>
+      <if test="fengmianPic != null">
+        #{fengmianPic},
+      </if>
+      <if test="lunboPic != null">
+        #{lunboPic},
+      </if>
+      <if test="code != null">
+        #{code},
+      </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
@@ -294,6 +331,21 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Product">
     update t_product
     <set>
+      <if test="planeId != null">
+        plane_id = #{planeId},
+      </if>
+      <if test="pindaoPic != null">
+        pindao_pic = #{pindaoPic},
+      </if>
+      <if test="fengmianPic != null">
+        fengmian_pic = #{fengmianPic},
+      </if>
+      <if test="lunboPic != null">
+        lunbo_pic = #{lunboPic},
+      </if>
+      <if test="code != null">
+        type = #{code},
+      </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
@@ -399,6 +451,11 @@
   <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Product">
     update t_product
     set type = #{type,jdbcType=INTEGER},
+        plane_id = #{planeId},
+        pindao_pic = #{pindaoPic},
+        fengmian_pic = #{fengmianPic},
+        lunbo_pic = #{lunboPic},
+    code = #{code},
     name = #{name,jdbcType=VARCHAR},
     name_en = #{nameEn,jdbcType=VARCHAR},
     file_url = #{fileUrl,jdbcType=VARCHAR},
@@ -452,6 +509,21 @@
     <where>
       <if test="id != null">
         and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="planeId != null">
+        and plane_id = #{planeId}
+      </if>
+      <if test="pindaoPic != null">
+        and pindao_pic = #{pindaoPic}
+      </if>
+      <if test="fengmianPic != null">
+        and fengmian_pic = #{fengmianPic}
+      </if>
+      <if test="lunboPic != null">
+        and lunbo_pic = #{lunboPic}
+      </if>
+      <if test="code != null">
+        and code = #{code}
       </if>
       <if test="type != null">
         and type = #{type,jdbcType=INTEGER}

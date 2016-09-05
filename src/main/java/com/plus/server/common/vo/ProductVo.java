@@ -80,6 +80,46 @@ public class ProductVo {
 	private Date gmtModify;
 	@ApiModelProperty(" 最后修改时间(yyyy-MM-dd Hh:mm:ss)")
 	private String gmtModifyStr;
+	@ApiModelProperty(" 飞机Id")
+	private Long planeId;//
+	@ApiModelProperty(" 频道图片 684*304 1张")
+	private String pindaoPic;//
+	@ApiModelProperty(" 封面图片750*1334  1张")
+	private String fengmianPic;//
+	@ApiModelProperty("轮播图片750*550 8张")
+	private String lunboPic;//
+
+	public Long getPlaneId() {
+		return planeId;
+	}
+
+	public void setPlaneId(Long planeId) {
+		this.planeId = planeId;
+	}
+
+	public String getPindaoPic() {
+		return pindaoPic;
+	}
+
+	public void setPindaoPic(String pindaoPic) {
+		this.pindaoPic = pindaoPic;
+	}
+
+	public String getFengmianPic() {
+		return fengmianPic;
+	}
+
+	public void setFengmianPic(String fengmianPic) {
+		this.fengmianPic = fengmianPic;
+	}
+
+	public String getLunboPic() {
+		return lunboPic;
+	}
+
+	public void setLunboPic(String lunboPic) {
+		this.lunboPic = lunboPic;
+	}
 
 	public Long getId() {
 		return id;

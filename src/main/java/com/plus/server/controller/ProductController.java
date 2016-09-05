@@ -153,7 +153,7 @@ public class ProductController {
 		log.info("查询产品---type={},name={}", type, name);
 		ProductListResp r = new ProductListResp();
 		Product pro = new Product();
-		pro.setType(payType);
+		pro.setType(type);
 		pro.setName(name);
 
 		pro.setAddressStart(addressStart);

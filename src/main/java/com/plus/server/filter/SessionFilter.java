@@ -21,16 +21,29 @@ public class SessionFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
+	
+	private static final String[] openUrlArr = new String[] { "login", "getValidateCode", "getEmailValidateCode",
+			"register", "ftl/","static/","file/"};
 
+	private boolean isOpenUrl(String url) {
+		for (String openUrl : openUrlArr) {
+			if (url.indexOf(openUrl) >= 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String url = httpRequest.getRequestURL().toString();
-		if (!url.matches("^.*/login.*$") && !url.matches("^.*/index.*$")) {
-			if (httpRequest.getSession().getAttribute("user") == null) {
-				//httpResponse.setStatus(401);
+		if (!isOpenUrl(url)) {// 如果不是openUrl，则需要校验登录状态
+			if (!url.matches("^.*/login.*$") && !url.matches("^.*/index.*$")) {
+				if (httpRequest.getSession().getAttribute("user") == null) {
+					httpResponse.setStatus(401);
+				}
 			}
 		}
 		if (httpResponse.getStatus() == 200) {

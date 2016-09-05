@@ -3,10 +3,16 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>left</title>
-    <link href="${base_addr}/static/css/main.css" rel="stylesheet" type="text/css">
-    <link href="${base_addr}/static/css/left.css" rel="stylesheet" type="text/css">
-	<script src="${base_addr}/static/js/jquery-1.3.2.min.js"></script>
-    <script src="${base_addr}/static/js/leftmenu.js" type="text/javascript"></script>
+    <script type="text/javascript" >
+        $(document).ready(function(){
+            $("#menu").children().each(function(){
+                $(this).removeClass("active");
+                if(location.href == $(this).children().get(0).getAttribute("href")){
+                    $(this).addClass("active");
+                }
+            })
+        })
+    </script>
 </head>
 
 <body>

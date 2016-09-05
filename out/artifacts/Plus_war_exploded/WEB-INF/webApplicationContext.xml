@@ -77,5 +77,6 @@
     
     <import resource="classpath*:spring/plus-datasource.xml"/>
     <import resource="classpath*:spring/plus-service.xml"/>
+    <import resource="classpath*:spring/plus-web.xml"/>
 <!--     <import resource="classpath*:spring/applicationContext-*.xml" /> -->
 </beans>

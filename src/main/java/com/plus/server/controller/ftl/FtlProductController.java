@@ -38,6 +38,7 @@ public class FtlProductController extends BaseController {
 
     @RequestMapping(value = "/list")
     public ModelAndView list(Model model, Integer type,Integer page, Integer pageSize) {
+    	System.out.println("ffff");
     	model.addAttribute("type", type);
 		Product pro = new Product();
 		pro.setType(type);

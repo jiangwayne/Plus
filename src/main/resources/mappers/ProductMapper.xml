@@ -37,10 +37,10 @@
     <result column="valid" jdbcType="INTEGER" property="valid" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
-    <result column="planeId" property="plane_id" />
-    <result column="pindaoPic" property="pindao_pic" />
-    <result column="fengmianPic" property="fengmian_pic" />
-    <result column="lunboPic" property="lunbo_pic" />
+    <result column="plane_id" property="planeId" />
+    <result column="pindao_pic" property="pindaoPic" />
+    <result column="fengmian_pic" property="fengmianPic" />
+    <result column="lunbo_pic" property="lunboPic" />
   </resultMap>
   <sql id="Base_Column_List">
     id,plane_id,pindao_pic,fengmian_pic,lunbo_pic, code,type, name, name_en, file_url, description_simple, description_simple_en, description_detail,

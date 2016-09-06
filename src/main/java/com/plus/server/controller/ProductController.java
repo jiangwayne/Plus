@@ -34,7 +34,7 @@ import com.wordnik.swagger.annotations.ApiParam;
 @RestController
 @Api("产品")
 @RequestMapping(value = "plus/product")
-public class ProductController {
+public class ProductController extends BaseController{
 	private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
 	@Autowired
@@ -163,6 +163,7 @@ public class ProductController {
 		try {
 			PageInfo<Product> pageInfo = productService.selectByModel(pro, page, pageSize);
 			if(pageInfo != null && pageInfo.getList() != null){
+				fillImgPathOfProductList(pageInfo.getList());
 				List<ProductVo> productList = BeanMapper.mapList(pageInfo.getList(), ProductVo.class);
 				for(ProductVo vo : productList){
 					fillDateStr(vo);
@@ -191,6 +192,7 @@ public class ProductController {
 		try {
 			List<Product> pageInfo = productService.selectByModel(pro);
 			if(pageInfo != null ){
+				fillImgPathOfProductList(pageInfo);
 				List<ProductVo> productList = BeanMapper.mapList(pageInfo , ProductVo.class);
 				for(ProductVo vo : productList){
 					fillDateStr(vo);
@@ -212,11 +214,12 @@ public class ProductController {
 		log.info("查询特价产品列表");
 		ProductListResp r = new ProductListResp();
 		Product pro = new Product();
-		pro.setIsSpecialPrice(1);
+		pro.setType(21);//21-SP,表示特价
 		pro.setValid(1);
 		try {
 			List<Product> pageInfo = productService.selectByModel(pro);
 			if(pageInfo != null ){
+				fillImgPathOfProductList(pageInfo);
 				List<ProductVo> productList = BeanMapper.mapList(pageInfo , ProductVo.class);
 				for(ProductVo vo : productList){
 					fillDateStr(vo);

@@ -98,14 +98,26 @@ public class OrderService {
 
 	/**
 	 * 查询订单
-	 * 
-	 * @param userId
-	 * @param status
+	 *
 	 * @return
 	 */
 	public PageInfo<Order> selectByModel(Order order, int page, int pageSize) {
 		log.info("订单查询，order={},page={},pageSize={}", JSON.toJSONString(order), page, pageSize);
 
+		if (page <= 0) {
+			page = PageDefault.PAGE_NUM_DEFAULT;
+		}
+		if (pageSize <= 0) {
+			pageSize = PageDefault.PAGE_SIZE_DEFAULT;
+		}
+		PageHelper.startPage(page, pageSize);
+		List<Order> orderList = orderDAO.selectByModel(order);
+		PageInfo<Order> pageInfo = new PageInfo<Order>(orderList);
+		return pageInfo;
+	}
+
+	public PageInfo<Order> selectByProductType(Order order, int page, int pageSize, int productType, String keywords) {
+		log.info("订单查询，order={},page={},pageSize={}", JSON.toJSONString(order), page, pageSize);
 		if (page <= 0) {
 			page = PageDefault.PAGE_NUM_DEFAULT;
 		}

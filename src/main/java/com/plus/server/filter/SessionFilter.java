@@ -40,7 +40,7 @@ public class SessionFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String url = httpRequest.getRequestURL().toString();
 		if (!isOpenUrl(url)) {// 如果不是openUrl，则需要校验登录状态
-			if (!url.matches("^.*/login.*$") && !url.matches("^.*/plus.*$")) {
+			if (!url.matches("^.*/login.*$") && url.matches("^.*/plus.*$")) {
 				if (httpRequest.getSession().getAttribute("user") == null) {
 					httpResponse.setStatus(401);
 				}

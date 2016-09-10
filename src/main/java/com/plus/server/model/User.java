@@ -42,6 +42,15 @@ public class User {
     /** 成行次数(即订机票的次数) */
     private Integer flyCount;
 
+    /**昵称**/
+    private String nickname;
+
+    /**性别（1:男,2:女）**/
+    private Integer gender;
+
+    /**1出差；2度假；3直飞；4家庭**/
+    private Integer habit;
+
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
 
@@ -178,5 +187,29 @@ public class User {
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public Integer getHabit() {
+        return habit;
+    }
+
+    public void setHabit(Integer habit) {
+        this.habit = habit;
     }
 }

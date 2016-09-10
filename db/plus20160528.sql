@@ -123,6 +123,7 @@ CREATE TABLE `t_pic_lib` (
   `pic_url` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '图片url',
   `remark` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '图片说明',
   `remark_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '图片说明(英文)',
+  `type` int(11) DEFAULT NULL COMMENT '类型（1：首页头部，2首页底部）',
   `name` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '图片名',
   `name_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '图片名(英文)',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
@@ -227,6 +228,9 @@ CREATE TABLE `t_user` (
   `mileage` int(11) DEFAULT NULL COMMENT '里程数(单位km)',
   `fly_time` int(11) DEFAULT NULL COMMENT '飞行时长(单位分钟)',
   `fly_count` int(11) DEFAULT NULL COMMENT '成行次数(即订机票的次数)',
+  `nickname` VARCHAR(64) DEFAULT NULL COMMENT '昵称',
+   `gender` int(11) DEFAULT NULL COMMENT '性别（1:男,2:女）',
+   `habit` int(11) DEFAULT NULL COMMENT '（1出差；2度假；3直飞；4家庭）',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
@@ -427,7 +431,6 @@ CREATE TABLE `t_transaction_detail` (
   `gmt_modify` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
 ) ENGINE=INNODB AUTO_INCREMENT=1337 DEFAULT CHARSET=utf8 COMMENT='交易记录明细';
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

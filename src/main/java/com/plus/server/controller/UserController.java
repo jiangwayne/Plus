@@ -90,7 +90,11 @@ public class UserController extends BaseController {
     @ApiOperation(value = "updateUser")
     public BaseResp updateUser(@ApiParam(required = false, value = "手机号") @RequestParam(required = false) String phone,
                                @ApiParam(required = false, value = "邮箱") @RequestParam(required = false) String email,
-                               @ApiParam(required = false, value = "密码") @RequestParam(required = false) String password){
+                               @ApiParam(required = false, value = "旧密码") @RequestParam(required = false) String oldpassword,
+                               @ApiParam(required = false, value = "密码") @RequestParam(required = false) String password,
+                               @ApiParam(required = false, value = "昵称") @RequestParam(required = false) String nickname,
+                               @ApiParam(required = false, value = "性别") @RequestParam(required = false) Integer gender,
+                               @ApiParam(required = false,value = "习惯") @RequestParam(required = false) Integer habit){
         BaseResp r = new BaseResp();
         User u = (User)httpSession.getAttribute("user");
         if(u == null){
@@ -102,7 +106,25 @@ public class UserController extends BaseController {
         if(email != null && !email.equals("")) {
             u.setEmail(email);
         }
-        userService.updateUser(u, password);
+        if(oldpassword != null && !oldpassword.equals("")){
+            if(!userService.login(phone,oldpassword) && !userService.login(email,oldpassword)){
+                r.setMsg("旧密码错误");
+            }
+        }
+        if(nickname != null && !nickname.equals("")){
+            u.setNickname(nickname);
+        }
+        if(gender != null){
+            u.setGender(gender);
+        }
+        if(habit != null){
+            u.setHabit(habit);
+        }
+        if(password != null && !password.equals("")) {
+            userService.updateUser(u, password);
+        } else {
+            userService.updateUser(u);
+        }
 
         return r;
     }
@@ -148,6 +170,7 @@ public class UserController extends BaseController {
             return userResp;
         }
         try{
+            u = userService.getUser(u.getId());
             userResp.setUserVo(BeanMapper.map(u, UserVo.class));
             userResp.setSuccess(true);
         }
@@ -304,8 +327,9 @@ public class UserController extends BaseController {
                         result.add(userBoarding);
                     }
                 }
+                userBoardingList = result;
             }
-            userBoardingList = result;
+
 
             if(userBoardingList != null && !userBoardingList.isEmpty()) {
                 List<UserBoardingVo> userBoardingVoList = BeanMapper.mapList(userBoardingList, UserBoardingVo.class);
@@ -348,5 +372,26 @@ public class UserController extends BaseController {
             r.setMsg(e.getMessage());
         }
         return r;
+    }
+
+
+    @RequestMapping(value = "/picLibList", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "首页图片")
+    public PicLibListResp getPicLibList(){
+        PicLibListResp picLibListResp = new PicLibListResp();
+
+        try{
+            List<PicLib> list = userService.getPicLib();
+            if(list != null && !list.isEmpty()) {
+                List<PicLibVo> PicLibVoList = BeanMapper.mapList(list, PicLibVo.class);
+                picLibListResp.setPicLibList(PicLibVoList);
+            }
+
+        }catch (Exception e){
+            log.error("", e);
+            picLibListResp.setMsg(e.getMessage());
+        }
+        return picLibListResp;
     }
 }

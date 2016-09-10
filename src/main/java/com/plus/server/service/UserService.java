@@ -32,6 +32,9 @@ public class UserService {
 	@Autowired
 	private UserBoardingDAO userBoardingDAO;
 
+	@Autowired
+	private PicLibDAO picLibDAO;
+
 	public void register(String phone, String email, String password) throws Exception {
 		//TODO 手机号和邮箱判断重复
 		if(phone != null && !phone.equals("")){
@@ -107,6 +110,10 @@ public class UserService {
 			user.setPasswordHash(password_hash);
 			user.setPasswordSalt(password_salt);
 		}
+		userDao.updateByPrimaryKeySelective(user);
+	}
+
+	public void updateUser(User user){
 		userDao.updateByPrimaryKeySelective(user);
 	}
 
@@ -197,6 +204,12 @@ public class UserService {
 	public List<UserBoarding> getUserBoarding(Long userId)
 	{
 		return userBoardingDAO.selectByUserId(userId);
+	}
+
+	public List<PicLib> getPicLib(){
+		PicLib  picLib = new PicLib();
+		picLib.setValid(1);
+		return picLibDAO.selectByModel(picLib);
 	}
 
 }

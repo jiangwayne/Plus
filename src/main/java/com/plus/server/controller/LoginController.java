@@ -105,7 +105,7 @@ public class LoginController extends BaseController {
         }
         //randomInt = 123456;//TODO 测试用
         String msg = genMailContent(randomInt);
-        EmailUtil.sendMsg(toEmailUser,"确认电子邮件(验证码)", msg);
+        EmailUtil.sendMsg(toEmailUser,"【iFlyPlus】确认电子邮件(验证码)", msg);
         this.httpSession.setAttribute("validateCode", randomInt);
 
         r.setSuccess(true);
@@ -125,7 +125,6 @@ public class LoginController extends BaseController {
     	s+="注册完成后，您可以使用邮箱作为用户名进行iFlyPlus App登录及其他操作。您也可通过邮箱及时收到订单提醒，惊喜包机等信息。<br><br>";
     	s+="最后祝您生活愉快。<br><br>";
     	s+="iFlyPlus团队 敬奉<br>";
-    	s+="no_reply@iflyplus.com<br>";
     	s+="联系我们<br>";
     	s+="vip_service@iflyplus.com<br>";
     	

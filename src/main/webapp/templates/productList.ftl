@@ -17,6 +17,9 @@
 <div class="right">
 	<table class="table table-striped">
 		<tr>
+			<td colspan=999 align=left><a href="queryById">新建产品</a></td>
+		</tr>
+		<tr>
 			<td>編號</td>
 			<td>產品ID</td>
 			<td>產品名字</td>

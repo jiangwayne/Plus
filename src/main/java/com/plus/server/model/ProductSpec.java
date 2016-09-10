@@ -11,6 +11,10 @@ public class ProductSpec {
 
     /** 开始日期 */
     private Date startDate;
+    /** 开始日期-开始 */
+    private Date startDate_start;
+    /** 开始日期-结束 */
+    private Date startDate_end;
 
     /** 名称 */
     private String name;
@@ -154,4 +158,21 @@ public class ProductSpec {
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
     }
+
+	public Date getStartDate_start() {
+		return startDate_start;
+	}
+
+	public void setStartDate_start(Date startDate_start) {
+		this.startDate_start = startDate_start;
+	}
+
+	public Date getStartDate_end() {
+		return startDate_end;
+	}
+
+	public void setStartDate_end(Date startDate_end) {
+		this.startDate_end = startDate_end;
+	}
+    
 }

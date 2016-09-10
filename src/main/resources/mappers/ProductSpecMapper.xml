@@ -215,6 +215,16 @@
       <if test="startDate != null" >
         and start_date = #{startDate,jdbcType=TIMESTAMP}
       </if>
+      <if test="startDate_start != null" >
+        <![CDATA[
+		      and start_date >= #{startDate_start}
+		]]>
+      </if>
+       <if test="startDate_end != null" >
+        <![CDATA[
+		      and start_date < #{startDate_end}
+		]]>
+      </if>
       <if test="name != null" >
         and name = #{name,jdbcType=VARCHAR}
       </if>

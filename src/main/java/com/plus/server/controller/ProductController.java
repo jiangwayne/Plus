@@ -2,12 +2,13 @@ package com.plus.server.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.ProductSpecVo;
 import com.plus.server.common.vo.ProductVo;
@@ -41,103 +44,6 @@ public class ProductController extends BaseController{
 	private ProductService productService;
 	@Autowired
 	private CommentService commentService;
-
-	@RequestMapping(value = "/createProduct", method = RequestMethod.POST)
-	@ResponseBody
-	@ApiOperation(value = "创建产品")
-	public BaseResp createProduct(@RequestBody(required = true) ProductVo productVo) {
-		log.info("创建产品---productVo={}", JSON.toJSONString(productVo));
-		BaseResp r = new BaseResp();
-		if (productVo == null) {
-			r.setMsg("参数为空");
-			return r;
-		}
-		Product pro = BeanMapper.copy(productVo, new Product());
-		try {
-			productService.save(pro);
-		} catch (Exception e) {
-			log.error("", e);
-			r.setMsg(e.getMessage());
-			return r;
-		}
-		r.setSuccess(true);
-		return r;
-	}
-	
-	@RequestMapping(value = "/createProductSpec", method = RequestMethod.POST)
-	@ResponseBody
-	@ApiOperation(value = "创建产品规格")
-	public BaseResp createProductSpec(@RequestBody(required = true) ProductSpecVo productSpecVo) {
-		log.info("创建产品规格---productSpecVo={}", JSON.toJSONString(productSpecVo));
-		BaseResp r = new BaseResp();
-		if (productSpecVo == null || productSpecVo.getProductId() == null) {
-			r.setMsg("参数为空");
-			return r;
-		}
-		if(productSpecVo.getStartDateStr() != null ){
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				productSpecVo.setStartDate(f.parse(productSpecVo.getStartDateStr()));
-			} catch (ParseException e) {
-				r.setMsg("开始日期格式错误（"+productSpecVo.getStartDateStr()+"）,正确的应该是yyyy-MM-dd");
-				return r;
-			}
-		}
-		ProductSpec productSpec = BeanMapper.copy(productSpecVo, new ProductSpec());
-		try {
-			productService.saveProductSpec(productSpec);
-		} catch (Exception e) {
-			log.error("", e);
-			r.setMsg(e.getMessage());
-			return r;
-		}
-		r.setSuccess(true);
-		return r;
-	}
-
-	@RequestMapping(value = "/updateProduct", method = RequestMethod.PUT)
-	@ResponseBody
-	@ApiOperation(value = "更新产品")
-	public BaseResp updateProduct(@RequestParam(required = true) ProductVo productVo) {
-		log.info("更新产品---productVo={}", JSON.toJSONString(productVo));
-		BaseResp r = new BaseResp();
-		if (productVo == null || productVo.getId() == null) {
-			r.setMsg("参数为空");
-			return r;
-		}
-		Product pro = BeanMapper.copy(productVo, new Product());
-		try {
-			productService.update(pro);
-		} catch (Exception e) {
-			log.error("", e);
-			r.setMsg(e.getMessage());
-			return r;
-		}
-		r.setSuccess(true);
-		return r;
-	}
-	
-	@RequestMapping(value = "/updateProductSpec", method = RequestMethod.PUT)
-	@ResponseBody
-	@ApiOperation(value = "更新产品规格")
-	public BaseResp updateProductSpec(@RequestParam(required = true) ProductSpecVo productSpecVo) {
-		log.info("更新产品规格---productSpecVo={}", JSON.toJSONString(productSpecVo));
-		BaseResp r = new BaseResp();
-		if (productSpecVo == null || productSpecVo.getId() == null) {
-			r.setMsg("参数为空");
-			return r;
-		}
-		ProductSpec productSpec = BeanMapper.copy(productSpecVo, new ProductSpec());
-		try {
-			productService.updateProductSpec(productSpec);
-		} catch (Exception e) {
-			log.error("", e);
-			r.setMsg(e.getMessage());
-			return r;
-		}
-		r.setSuccess(true);
-		return r;
-	}
 
 	@RequestMapping(value = "/listProduct", method = RequestMethod.GET)
 	@ResponseBody
@@ -261,6 +167,54 @@ public class ProductController extends BaseController{
 		r.setSuccess(true);
 		return r;
 	}
+	
+	@RequestMapping(value = "/queryStorageByDay", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "查询每日库存")
+	public BaseResp queryStorageByDay(
+			@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId,
+			@ApiParam(required = true, value = "开始日期(yyyy-MM-dd)") @RequestParam(required = true) String startDateStr,
+			@ApiParam(required = true, value = "开始日期(yyyy-MM-dd)") @RequestParam(required = true) String endDateStr) {
+		log.info("查询每日库存---productId={}", productId);
+		BaseResp r = new BaseResp();
+		ProductSpec productSpec = new ProductSpec();
+		productSpec.setValid(1);
+		productSpec.setProductId(productId);
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			if(startDateStr != null && !startDateStr.isEmpty()){
+				productSpec.setStartDate_start(f.parse(startDateStr));
+			}
+			if(endDateStr != null && !endDateStr.isEmpty()){
+				Date dd = f.parse(endDateStr);
+				dd.setTime(dd.getTime() + 24 * 3600 * 1000);//查询条件没有等于
+				productSpec.setStartDate_end(dd);
+			}
+		} catch (ParseException e1) {
+			r.setMsg("日期格式错误");
+			return r;
+		}
+		try {
+			List<ProductSpec> list = productService.selectProductSpecByModel(productSpec);
+			if(list != null && list.size() > 0){
+				List<Map> retlist = Lists.newArrayList();
+				for(ProductSpec vo : list){
+					Map map = Maps.newHashMap();
+					map.put("startDate", f.format(vo.getStartDate()));
+					map.put("count", vo.getCountMax()-vo.getCountSale());
+					retlist.add(map);
+				}
+				r.setMsg(JSON.toJSONString(retlist));
+			}
+		} catch (Exception e) {
+			log.error("", e);
+			r.setMsg(e.getMessage());
+			return r;
+		}
+		r.setSuccess(true);
+		return r;
+	}
+	
 	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "产品明细查询")

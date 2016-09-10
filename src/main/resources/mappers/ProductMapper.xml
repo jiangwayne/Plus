@@ -18,6 +18,8 @@
     <result column="address_start_en" jdbcType="VARCHAR" property="addressStartEn" />
     <result column="address_end" jdbcType="VARCHAR" property="addressEnd" />
     <result column="address_end_en" jdbcType="VARCHAR" property="addressEndEn" />
+    <result column="country_start" jdbcType="INTEGER" property="countryStart" />
+    <result column="country_end" jdbcType="INTEGER" property="countryEnd" />
     <result column="city_start" jdbcType="INTEGER" property="cityStart" />
     <result column="city_end" jdbcType="INTEGER" property="cityEnd" />
     <result column="airport_start" jdbcType="INTEGER" property="airportStart" />
@@ -47,7 +49,7 @@
     description_detail_en, price_original, price_current, address_start, address_start_en,
     address_end, address_end_en, city_start, city_end, airport_start, airport_end, sale_count,
     icon, order_alter_agreement_id, comment_count, long_lat, long_lat_address, long_lat_address_en,
-    pay_type, mileage, fly_time, is_show_home, is_special_price, valid, gmt_create, gmt_modify
+    pay_type, mileage, fly_time, is_show_home, is_special_price, valid, gmt_create, gmt_modify,country_start,country_end
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -72,7 +74,7 @@
       long_lat, long_lat_address, long_lat_address_en,
       pay_type, mileage, fly_time,
       is_show_home, is_special_price, valid,
-      gmt_create, gmt_modify)
+      gmt_create, gmt_modify,country_start,country_end)
     values (#{id,jdbcType=BIGINT}, #{planeId},#{pindaoPic},#{fengmianPic},#{lunboPic},#{code},
       #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
       #{nameEn,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{descriptionSimple,jdbcType=VARCHAR},
@@ -85,13 +87,19 @@
       #{longLat,jdbcType=VARCHAR}, #{longLatAddress,jdbcType=VARCHAR}, #{longLatAddressEn,jdbcType=VARCHAR},
       #{payType,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{flyTime,jdbcType=INTEGER},
       #{isShowHome,jdbcType=INTEGER}, #{isSpecialPrice,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER},
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP})
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP},#{countryStart}, #{countryEnd})
   </insert>
   <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.Product" useGeneratedKeys="true">
     insert into t_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="countryStart != null">
+        country_start,
+      </if>
+      <if test="countryEnd != null">
+        country_end,
       </if>
       <if test="planeId != null">
         plane_id,
@@ -212,6 +220,12 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="countryStart != null">
+        #{countryStart},
+      </if>
+      <if test="countryEnd != null">
+        #{countryEnd},
+      </if>
       <if test="planeId != null">
         #{planeId},
       </if>
@@ -331,6 +345,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.Product">
     update t_product
     <set>
+    	<if test="countryStart != null">
+        country_start = #{countryStart},
+      </if>
+      <if test="countryEnd != null">
+        country_end = #{countryEnd},
+      </if>
       <if test="planeId != null">
         plane_id = #{planeId},
       </if>
@@ -344,7 +364,7 @@
         lunbo_pic = #{lunboPic},
       </if>
       <if test="code != null">
-        type = #{code},
+        code = #{code},
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -455,6 +475,8 @@
         pindao_pic = #{pindaoPic},
         fengmian_pic = #{fengmianPic},
         lunbo_pic = #{lunboPic},
+        country_start = #{countryStart},
+        country_end = #{countryEnd},
     code = #{code},
     name = #{name,jdbcType=VARCHAR},
     name_en = #{nameEn,jdbcType=VARCHAR},
@@ -509,6 +531,12 @@
     <where>
       <if test="id != null">
         and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="countryStart != null">
+        and country_start = #{countryStart}
+      </if>
+      <if test="countryEnd != null">
+        and country_end = #{countryEnd}
       </if>
       <if test="planeId != null">
         and plane_id = #{planeId}

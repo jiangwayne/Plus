@@ -3,7 +3,7 @@
 <mapper namespace="com.plus.server.dal.PlanDAO">
   <resultMap id="BaseResultMap" type="com.plus.server.model.Plan">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="plane_id" jdbcType="INTEGER" property="planeId" />
+    <result column="plane_id"  property="planeId" />
     <result column="model" jdbcType="VARCHAR" property="model" />
     <result column="passengers" jdbcType="INTEGER" property="passengers" />
     <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer" />
@@ -35,7 +35,7 @@
         and id = #{id,jdbcType=BIGINT}
       </if>
       <if test="planeId != null">
-        and plane_id = #{planeId,jdbcType=INTEGER}
+        and plane_id = #{planeId}
       </if>
       <if test="model != null">
         and model = #{model,jdbcType=VARCHAR}
@@ -81,7 +81,7 @@
         and id = #{id,jdbcType=BIGINT}
       </if>
       <if test="planeId != null">
-        and plane_id = #{planeId,jdbcType=INTEGER}
+        and #{planeId} = #{planeId}
       </if>
       <if test="model != null">
         and model like CONCAT('%',#{model,jdbcType=VARCHAR},'%')
@@ -128,7 +128,7 @@
       delivery_time, outside_url, inside_url, 
       seat_url, valid, gmt_create, 
       gmt_modify)
-    values (#{id,jdbcType=BIGINT}, #{planeId,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{planeId}, #{model,jdbcType=VARCHAR}, 
       #{passengers,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR}, #{merchantId,jdbcType=INTEGER}, 
       #{deliveryTime,jdbcType=TIMESTAMP}, #{outsideUrl,jdbcType=VARCHAR}, #{insideUrl,jdbcType=VARCHAR}, 
       #{seatUrl,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
@@ -182,7 +182,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="planeId != null">
-        #{planeId,jdbcType=INTEGER},
+        #{planeId},
       </if>
       <if test="model != null">
         #{model,jdbcType=VARCHAR},
@@ -223,7 +223,7 @@
     update t_plane
     <set>
       <if test="planeId != null">
-        plane_id = #{planeId,jdbcType=INTEGER},
+        plane_id = #{planeId},
       </if>
       <if test="model != null">
         model = #{model,jdbcType=VARCHAR},
@@ -263,7 +263,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Plan">
     update t_plane
-    set plane_id = #{planeId,jdbcType=INTEGER},
+    set plane_id = #{planeId},
       model = #{model,jdbcType=VARCHAR},
       passengers = #{passengers,jdbcType=INTEGER},
       manufacturer = #{manufacturer,jdbcType=VARCHAR},

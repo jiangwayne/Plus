@@ -157,6 +157,8 @@ CREATE TABLE `t_product` (
   `address_start_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '出发地点(英文)',
   `address_end` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '目的地',
   `address_end_en` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '目的地(英文)',
+  `country_start` int(11) DEFAULT NULL COMMENT '出发国家id',
+  `country_end` int(11) DEFAULT NULL COMMENT '目的国家id',
   `city_start` int(11) DEFAULT NULL COMMENT '出发城市id',
   `city_end` int(11) DEFAULT NULL COMMENT '目的城市id',
   `airport_start` int(11) DEFAULT NULL COMMENT '出发机场id',
@@ -176,7 +178,7 @@ CREATE TABLE `t_product` (
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',
-  `plane_id` bigint(20) DEFAULT NULL COMMENT '飞机id',
+  `plane_id` varchar(128) DEFAULT NULL COMMENT '飞机id',
   `pindao_pic` varchar(128)  DEFAULT NULL COMMENT '频道图片 684*304 1张',
   `fengmian_pic` varchar(128)  DEFAULT NULL COMMENT '封面图片750*1334  1张',
   `lunbo_pic` varchar(128)  DEFAULT NULL COMMENT '轮播图片750*550 8张',
@@ -360,7 +362,7 @@ DROP TABLE IF EXISTS `t_plane`;
 
 CREATE TABLE `t_plane` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plane_id` int(11) DEFAULT NULL COMMENT '飞行器id',
+  `plane_id` varchar(128) DEFAULT NULL COMMENT '飞行器id',
   `model` varchar(64) DEFAULT NULL COMMENT '模型',
   `passengers` int(11) DEFAULT NULL COMMENT '载客数',
   `manufacturer` varchar(128) DEFAULT NULL COMMENT '制造商',

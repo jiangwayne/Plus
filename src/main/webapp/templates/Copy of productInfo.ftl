@@ -3,6 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>right</title>
 <link href="${base_addr}/static/css/main.css" rel="stylesheet" type="text/css" />
+<script src="${base_addr}/static/js/jquery1.4.2.min.js" type="text/javascript"></script>
+<script src="${base_addr}/static/js/ajaxfileupload.js"></script>
+
 </head>
 
 <body>
@@ -12,7 +15,6 @@
 <div class="left">
 	<#include "include/menu.ftl">
 </div>
-<script src="${base_addr}/static/js/ajaxfileupload.js"></script>
 <div class="right">
 <h3>產品信息</h3>
 	<form action="#" method="post" id="productForm">
@@ -99,8 +101,8 @@
 		    <td >轮播图片（750*550）</td>
 		    <td colspan=3>
 		    	<input type="hidden" id="lunboPic" name="lunboPic" value="${s.lunboPic?if_exists}">
-		    		<table border="1" ><tr id="lunboBR"></tr></table>
-		    		<input type="file" id="fileToUpload3" name="fileToUpload3" >
+		    	<img width="75" height="55" id="picUrlShow3" src="${base_addr}/plus/file/downloadFile?fileName=${s.lunboPic?if_exists}">
+		    		<br id="lunboBR" /><input type="file" id="fileToUpload3" name="fileToUpload3" >
 		    		<input type="button" value="上传" onclick="ajaxUploadFile('fileToUpload3','lunboPic','picUrlShow3')" /> 
 		    </td>
 		</tr>
@@ -230,10 +232,6 @@
 	    });
 	}
 	function ajaxUploadFile(fileDomId,valueId,showId){
-		var fileDomValue= $('#'+fileDomId).val();
-		if(fileDomValue == null || fileDomValue==''){
-			return;
-		}
 		$.ajaxFileUpload({
 			url: '${base_addr}/plus/file/uploadFile' ,
 	        secureuri: false,
@@ -245,9 +243,8 @@
 	        	if(data.success){
 	        		if('fileToUpload3'==fileDomId){
 	        			lunboPicAdd(data.msg);
-	        			var domHtml = '<td id="'+data.msg+'" align="center"><img width="75" height="55" style="margin:10 10 0 10" src="${base_addr}/plus/file/downloadFile?fileName='+data.msg+'">';
-	        			domHtml+='<br /><a href="javascript:lunboPicDelete(\''+data.msg+'\',\''+data.msg+'\',this)" style="color:#ff0000"><b>X</b></a></td>';
-	        			$('#lunboBR').append(domHtml);
+	        			var domHtml = '<img width="75" height="55" src="${base_addr}/plus/file/downloadFile?fileName='+data.msg+'">';
+	        			$('#lunboBR').before(domHtml);
 	        		}else{
 		        		$('#'+valueId).val(data.msg);
 		        		$('#'+showId).attr("src","${base_addr}/plus/file/downloadFile?fileName="+data.msg);
@@ -311,14 +308,14 @@
 		}
 		
 	}
-	function lunboPicDelete(picUrl,tdId,dom){
+	function lunboPicDelete(picUrl){
 		var lunboPic = $('#lunboPic').val();
 		picUrl = ","+picUrl+",";
 		if(lunboPic.indexOf(picUrl)>=0){
 			lunboPic = lunboPic.replace(picUrl,"");
 			$('#lunboPic').val(lunboPic);
 		}
-		$('#'+tdId).remove();
+		
 	}
 </script>
 </html>

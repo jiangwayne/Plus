@@ -34,7 +34,11 @@ public class Product {
 	private String addressEnd;
 
 	private String addressEndEn;
+	
+	private Integer countryStart;
 
+	private Integer countryEnd;
+	
 	private Integer cityStart;
 
 	private Integer cityEnd;
@@ -74,16 +78,16 @@ public class Product {
 	private Date gmtModify;
 	
 	/*******/
-	private Long planeId;//飞机Id
+	private String planeId;//飞机Id
 	private String pindaoPic;//频道图片 684*304 1张
 	private String fengmianPic;//封面图片750*1334  1张
 	private String lunboPic;//轮播图片750*550 8张
 	
-	public Long getPlaneId() {
+	public String getPlaneId() {
 		return planeId;
 	}
 
-	public void setPlaneId(Long planeId) {
+	public void setPlaneId(String planeId) {
 		this.planeId = planeId;
 	}
 
@@ -390,4 +394,21 @@ public class Product {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	public Integer getCountryStart() {
+		return countryStart;
+	}
+
+	public void setCountryStart(Integer countryStart) {
+		this.countryStart = countryStart;
+	}
+
+	public Integer getCountryEnd() {
+		return countryEnd;
+	}
+
+	public void setCountryEnd(Integer countryEnd) {
+		this.countryEnd = countryEnd;
+	}
+	
 }

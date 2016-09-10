@@ -2,12 +2,13 @@ package com.plus.server.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.ProductSpecVo;
 import com.plus.server.common.vo.ProductVo;
@@ -164,6 +167,54 @@ public class ProductController extends BaseController{
 		r.setSuccess(true);
 		return r;
 	}
+	
+	@RequestMapping(value = "/queryStorageByDay", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "查询每日库存")
+	public BaseResp queryStorageByDay(
+			@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId,
+			@ApiParam(required = true, value = "开始日期(yyyy-MM-dd)") @RequestParam(required = true) String startDateStr,
+			@ApiParam(required = true, value = "开始日期(yyyy-MM-dd)") @RequestParam(required = true) String endDateStr) {
+		log.info("查询每日库存---productId={}", productId);
+		BaseResp r = new BaseResp();
+		ProductSpec productSpec = new ProductSpec();
+		productSpec.setValid(1);
+		productSpec.setProductId(productId);
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			if(startDateStr != null && !startDateStr.isEmpty()){
+				productSpec.setStartDate_start(f.parse(startDateStr));
+			}
+			if(endDateStr != null && !endDateStr.isEmpty()){
+				Date dd = f.parse(endDateStr);
+				dd.setTime(dd.getTime() + 24 * 3600 * 1000);//查询条件没有等于
+				productSpec.setStartDate_end(dd);
+			}
+		} catch (ParseException e1) {
+			r.setMsg("日期格式错误");
+			return r;
+		}
+		try {
+			List<ProductSpec> list = productService.selectProductSpecByModel(productSpec);
+			if(list != null && list.size() > 0){
+				List<Map> retlist = Lists.newArrayList();
+				for(ProductSpec vo : list){
+					Map map = Maps.newHashMap();
+					map.put("startDate", f.format(vo.getStartDate()));
+					map.put("count", vo.getCountMax()-vo.getCountSale());
+					retlist.add(map);
+				}
+				r.setMsg(JSON.toJSONString(retlist));
+			}
+		} catch (Exception e) {
+			log.error("", e);
+			r.setMsg(e.getMessage());
+			return r;
+		}
+		r.setSuccess(true);
+		return r;
+	}
+	
 	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "产品明细查询")

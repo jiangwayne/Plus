@@ -11,8 +11,8 @@
 -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<!-- 定义日志文件位置 -->
-	<property name="log_dir" value="/Users/jiangwulin/logs/plus" />
-<!-- 	<property name="log_dir" value="c:/test/plus_log" /> -->
+<!-- 	<property name="log_dir" value="/Users/jiangwulin/logs/plus" /> -->
+	<property name="log_dir" value="c:/test/plus_log" />
 	<!-- 日志最大历史30天 -->
 	<property name="maxHistory" value="30" />
 

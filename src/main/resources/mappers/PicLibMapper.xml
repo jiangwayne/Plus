@@ -1,117 +1,212 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.plus.server.dal.PicLibDAO" >
-  <resultMap id="BaseResultMap" type="com.plus.server.model.PicLib" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="valid" property="valid" jdbcType="INTEGER" />
-    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
-    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.server.dal.PicLibDAO">
+  <resultMap id="BaseResultMap" type="com.plus.server.model.PicLib">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="remark_en" jdbcType="VARCHAR" property="remarkEn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="valid" jdbcType="INTEGER" property="valid" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, pic_url, remark, name, valid, gmt_create, gmt_modify
+  <sql id="Base_Column_List">
+    id, pic_url, remark, remark_en, name, name_en, valid, gmt_create, gmt_modify
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_pic_lib
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="selectByModel" parameterType="com.plus.server.model.PicLib" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pic_lib
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="picUrl != null">
+        and pic_url = #{picUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null">
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="remarkEn != null">
+        and remark_en = #{remarkEn,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="nameEn != null">
+        and name_en = #{nameEn,jdbcType=VARCHAR}
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectByModelLike" parameterType="com.plus.server.model.PicLib" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pic_lib
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="picUrl != null">
+        and pic_url like CONCAT('%',#{picUrl,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="remark != null">
+        and remark like CONCAT('%',#{remark,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="remarkEn != null">
+        and remark_en like CONCAT('%',#{remarkEn,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="name != null">
+        and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="nameEn != null">
+        and name_en like CONCAT('%',#{nameEn,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="valid != null">
+        and valid = #{valid,jdbcType=INTEGER}
+      </if>
+      <if test="gmtCreate != null">
+        and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModify != null">
+        and gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_pic_lib
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.plus.server.model.PicLib" >
+  <insert id="insert" keyProperty="id" parameterType="com.plus.server.model.PicLib" useGeneratedKeys="true">
     insert into t_pic_lib (id, pic_url, remark, 
-      name, valid, gmt_create, 
-      gmt_modify)
+      remark_en, name, name_en, 
+      valid, gmt_create, gmt_modify
+      )
     values (#{id,jdbcType=BIGINT}, #{picUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModify,jdbcType=TIMESTAMP})
+      #{remarkEn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, 
+      #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.plus.server.model.PicLib" >
+  <insert id="insertSelective" keyProperty="id" parameterType="com.plus.server.model.PicLib" useGeneratedKeys="true">
     insert into t_pic_lib
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="picUrl != null" >
+      <if test="picUrl != null">
         pic_url,
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         remark,
       </if>
-      <if test="name != null" >
+      <if test="remarkEn != null">
+        remark_en,
+      </if>
+      <if test="name != null">
         name,
       </if>
-      <if test="valid != null" >
+      <if test="nameEn != null">
+        name_en,
+      </if>
+      <if test="valid != null">
         valid,
       </if>
-      <if test="gmtCreate != null" >
+      <if test="gmtCreate != null">
         gmt_create,
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         gmt_modify,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="picUrl != null" >
+      <if test="picUrl != null">
         #{picUrl,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="remarkEn != null">
+        #{remarkEn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="valid != null" >
+      <if test="nameEn != null">
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
         #{valid,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreate != null" >
+      <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         #{gmtModify,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.PicLib" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.plus.server.model.PicLib">
     update t_pic_lib
-    <set >
-      <if test="picUrl != null" >
+    <set>
+      <if test="picUrl != null">
         pic_url = #{picUrl,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
+      <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="remarkEn != null">
+        remark_en = #{remarkEn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="valid != null" >
+      <if test="nameEn != null">
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
         valid = #{valid,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreate != null" >
+      <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModify != null" >
+      <if test="gmtModify != null">
         gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.PicLib" >
+  <update id="updateByPrimaryKey" parameterType="com.plus.server.model.PicLib">
     update t_pic_lib
     set pic_url = #{picUrl,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
+      remark_en = #{remarkEn,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
       valid = #{valid,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByIds">
+    update t_pic_lib set deleteFlag = #{deleteFlag,jdbcType=INTEGER} where id in  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>
 </mapper>

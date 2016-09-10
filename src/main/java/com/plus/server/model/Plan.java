@@ -5,7 +5,7 @@ import java.util.Date;
 public class Plan {
     private Long id;
 
-    private Integer planeId;
+    private String planeId;
 
     private String model;
 
@@ -37,11 +37,11 @@ public class Plan {
         this.id = id;
     }
 
-    public Integer getPlaneId() {
+    public String getPlaneId() {
         return planeId;
     }
 
-    public void setPlaneId(Integer planeId) {
+    public void setPlaneId(String planeId) {
         this.planeId = planeId;
     }
 

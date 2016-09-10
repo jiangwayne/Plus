@@ -3,25 +3,22 @@ package com.plus.server.model;
 import java.util.Date;
 
 public class PicLib {
-    /**  */
     private Long id;
 
-    /** 图片url */
     private String picUrl;
 
-    /** 图片说明 */
     private String remark;
 
-    /** 图片名 */
+    private String remarkEn;
+
     private String name;
 
-    /** 逻辑删除（1:有效数据,-1:已删除） */
+    private String nameEn;
+
     private Integer valid;
 
-    /** 创建时间 */
     private Date gmtCreate;
 
-    /** 修改时间 */
     private Date gmtModify;
 
     public Long getId() {
@@ -48,12 +45,28 @@ public class PicLib {
         this.remark = remark == null ? null : remark.trim();
     }
 
+    public String getRemarkEn() {
+        return remarkEn;
+    }
+
+    public void setRemarkEn(String remarkEn) {
+        this.remarkEn = remarkEn == null ? null : remarkEn.trim();
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn == null ? null : nameEn.trim();
     }
 
     public Integer getValid() {

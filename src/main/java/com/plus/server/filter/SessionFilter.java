@@ -23,7 +23,7 @@ public class SessionFilter implements Filter {
 	}
 	
 	private static final String[] openUrlArr = new String[] { "login", "getValidateCode", "getEmailValidateCode",
-			"register", "ftl/","static/","file/","/swagger" , "/picLibList"};
+			"register", "ftl/","static/","file/","/swagger","/picLibList"};
 
 	private boolean isOpenUrl(String url) {
 		for (String openUrl : openUrlArr) {
@@ -40,7 +40,7 @@ public class SessionFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String url = httpRequest.getRequestURL().toString();
 		if (!isOpenUrl(url)) {// 如果不是openUrl，则需要校验登录状态
-			if (!url.matches("^.*/login.*$") && url.matches("^.*/plus.*$")) {
+			if (!url.matches("^.*/login.*$") && !url.matches("^.*/index.*$") && !url.matches("^.*/api-docs.*")) {
 				if (httpRequest.getSession().getAttribute("user") == null) {
 					httpResponse.setStatus(401);
 				}

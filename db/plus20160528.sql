@@ -90,6 +90,8 @@ CREATE TABLE `t_order` (
   `status` int(11) DEFAULT NULL COMMENT '状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）',
   `boarding_ids` VARCHAR(512) COMMENT '登机人id，逗号分隔',
   `comment` VARCHAR(4000) COLLATE utf8_bin DEFAULT NULL COMMENT '备注，操作日志',
+  `start_date` datetime DEFAULT NULL COMMENT '出行日期',
+  `end_date` datetime DEFAULT NULL COMMENT '返程日期',
   `valid` int(11) DEFAULT NULL COMMENT '逻辑删除（1:有效数据,-1:已删除）',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modify` datetime DEFAULT NULL COMMENT '修改时间',

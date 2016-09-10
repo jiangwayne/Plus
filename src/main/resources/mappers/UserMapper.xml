@@ -50,7 +50,7 @@
       #{point,jdbcType=INTEGER}, #{mileage,jdbcType=INTEGER}, #{flyTime,jdbcType=INTEGER},
       #{flyCount,jdbcType=INTEGER}, #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
       #{gmtModify,jdbcType=TIMESTAMP},#{nickname,jdbcType=VARCHAR},#{gender,jdbcType=INTEGER},
-      #{habit,jdbcType=INTEGR})
+      #{habit,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.plus.server.model.User" >
     insert into t_user

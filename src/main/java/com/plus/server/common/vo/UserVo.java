@@ -33,6 +33,16 @@ public class UserVo {
 	@ApiModelProperty(" 成行次数(即订机票的次数) ")
 	private Integer flyCount;
 
+	@ApiModelProperty(" 昵称 ")
+	private String nickname;
+
+	@ApiModelProperty(" 性别（1:男,2:女) ")
+	private Integer gender;
+
+	@ApiModelProperty(" 1出差；2度假；3直飞；4家庭 ")
+	private Integer habit;
+
+
 	public String getPhone() {
 		return phone;
 	}
@@ -111,5 +121,29 @@ public class UserVo {
 
 	public void setFlyCount(Integer flyCount) {
 		this.flyCount = flyCount;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	public Integer getHabit() {
+		return habit;
+	}
+
+	public void setHabit(Integer habit) {
+		this.habit = habit;
 	}
 }

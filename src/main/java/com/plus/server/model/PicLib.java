@@ -15,6 +15,8 @@ public class PicLib {
     /** 图片名 */
     private String name;
 
+    private Integer type;
+
     /** 逻辑删除（1:有效数据,-1:已删除） */
     private Integer valid;
 
@@ -78,5 +80,13 @@ public class PicLib {
 
     public void setGmtModify(Date gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

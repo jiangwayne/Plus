@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS `t_product`;
 CREATE TABLE `t_product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(128) DEFAULT NULL COMMENT '产品编码',
-  `type` int(11) DEFAULT NULL COMMENT '类型（10-机票BB,11-机票LY,20-门票SE,21-门票SP）',
+  `type` int(11) DEFAULT NULL COMMENT '类型（10-机票BB,11-门票LY,20-门票SE,21-机票SP）',
   `name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '产品名称',
   `name_en` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '产品名称(英文)',
   `file_url` varchar(512) COLLATE utf8_bin DEFAULT NULL COMMENT '素材文件url',

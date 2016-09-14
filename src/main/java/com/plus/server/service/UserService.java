@@ -159,7 +159,18 @@ public class UserService {
 	}
 
 	public void setUserSetting(UserSetting userSetting) {
-		userSettingDao.updateByPrimaryKeySelective(userSetting);
+		UserSetting us = userSettingDao.selectByUserId(userSetting.getUserId());
+		if(us != null){
+			userSetting.setId(us.getId());
+			userSettingDao.updateByPrimaryKeySelective(userSetting);
+		}else {
+			userSetting.setValid(1);
+			userSetting.setGmtCreate(new Date());
+			userSetting.setGmtModify(new Date());
+			userSettingDao.insert(userSetting);
+		}
+
+
 	}
 
 

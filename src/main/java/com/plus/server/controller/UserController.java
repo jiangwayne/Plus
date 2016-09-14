@@ -99,6 +99,7 @@ public class UserController extends BaseController {
         User u = (User)httpSession.getAttribute("user");
         if(u == null){
             r.setMsg("用户不存在");
+            return r;
         }
         if(phone != null && !phone.equals("")){
             u.setPhone(phone);
@@ -109,6 +110,7 @@ public class UserController extends BaseController {
         if(oldpassword != null && !oldpassword.equals("")){
             if(!userService.login(phone,oldpassword) && !userService.login(email,oldpassword)){
                 r.setMsg("旧密码错误");
+                return r;
             }
         }
         if(nickname != null && !nickname.equals("")){
@@ -125,7 +127,7 @@ public class UserController extends BaseController {
         } else {
             userService.updateUser(u);
         }
-
+        r.setSuccess(true);
         return r;
     }
 
@@ -386,6 +388,7 @@ public class UserController extends BaseController {
             if(list != null && !list.isEmpty()) {
                 List<PicLibVo> PicLibVoList = BeanMapper.mapList(list, PicLibVo.class);
                 picLibListResp.setPicLibList(PicLibVoList);
+                picLibListResp.setSuccess(true);
             }
 
         }catch (Exception e){

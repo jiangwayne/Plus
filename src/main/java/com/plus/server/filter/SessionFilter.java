@@ -23,7 +23,7 @@ public class SessionFilter implements Filter {
 	}
 	
 	private static final String[] openUrlArr = new String[] { "login", "getValidateCode", "getEmailValidateCode",
-			"register", "ftl/","static/","file/","/swagger","/picLibList"};
+			"register", "ftl/","static/","file/","/swagger","/picLibList","/listHomePageProduct"};
 
 	private boolean isOpenUrl(String url) {
 		for (String openUrl : openUrlArr) {

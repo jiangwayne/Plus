@@ -16,13 +16,17 @@ import com.github.pagehelper.PageInfo;
 import com.plus.server.common.PageDefault;
 import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.OrderVo;
+import com.plus.server.common.vo.ProductSpecVo;
 import com.plus.server.common.vo.ProductVo;
 import com.plus.server.common.vo.resp.BaseResp;
 import com.plus.server.common.vo.resp.OrderListResp;
 import com.plus.server.common.vo.resp.OrderResp;
 import com.plus.server.model.Order;
+import com.plus.server.model.Product;
+import com.plus.server.model.ProductSpec;
 import com.plus.server.service.CommentService;
 import com.plus.server.service.OrderService;
+import com.plus.server.service.ProductService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -37,6 +41,8 @@ public class OrderController extends BaseController {
 	private OrderService orderService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
 	@ResponseBody
@@ -62,8 +68,8 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "订单查询")
-	public OrderListResp list(@ApiParam(required = true, value = "产品id") @RequestParam(required = true) Long productId,
-			@ApiParam(required = true, value = "状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）") @RequestParam(required = true) Integer status,
+	public OrderListResp list(@ApiParam(required = false, value = "产品id") @RequestParam(required = false) Long productId,
+			@ApiParam(required = false, value = "状态（20-待支付，31-即将出行，不传时查全部）") @RequestParam(required = false) Integer status,
 			@RequestParam(required = false) @ApiParam(required = false, value = "当前页码") Integer page,
 			@RequestParam(required = false) @ApiParam(required = false, value = "每页记录数") Integer pageSize) {
 		log.info("订单查询---productId={},status={}", productId, status);
@@ -77,16 +83,42 @@ public class OrderController extends BaseController {
 		}
 		Order param = new Order();
 		param.setUserId(userId);
+		param.setProductId(productId);
 		param.setStatus(status);
+		if(status != null && status == 31){
+			param.setStatus(30);
+			param.setNotYetTravel(true);
+		}
 		param.setValid(1);
 		PageInfo<Order> pageInfo = orderService.selectByModel(param,page,pageSize);
 		List<OrderVo> orderList = BeanMapper.mapList(pageInfo.getList(), OrderVo.class);
 		for(OrderVo vo : orderList){
 			fillDateStr(vo);
+			fillProductAndProductSpec(vo);
 		}
+		r.setPages(pageInfo.getPages());
+		r.setTotal(pageInfo.getTotal());
 		r.setOrderList(orderList);
 		r.setSuccess(true);
 		return r;
+	}
+	
+	private void fillProductAndProductSpec(OrderVo vo){
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
+		SimpleDateFormat f2 = new SimpleDateFormat("yyyy-MM-dd");
+		Product product = productService.selectById(vo.getProductId());
+		ProductSpec productSpec = productService.selectProductSpecById(vo.getProductSpecId());
+		if(product != null){
+			ProductVo pv = BeanMapper.copy(product, new ProductVo());
+			vo.setProduct(pv);
+		}
+		if(productSpec != null){
+			ProductSpecVo pv = BeanMapper.copy(productSpec, new ProductSpecVo());
+			vo.setProductSpec(pv);
+			if(pv.getStartDate() != null){
+				pv.setStartDateStr(f2.format(pv.getStartDate()));
+			}
+		}
 	}
 	private void fillDateStr(OrderVo vo){
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");

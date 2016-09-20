@@ -53,11 +53,11 @@ public class ProductController extends BaseController{
 			@ApiParam(required = false, value = "产品名称") @RequestParam(required = false) String name,
 			@ApiParam(required = false, value = "出发地点") @RequestParam(required = false) String addressStart,
 			@ApiParam(required = false, value = "目的地") @RequestParam(required = false) String addressEnd,
-			@ApiParam(required = false, value = "出行时间（yyyy-MM-dd）") @RequestParam(required = false) String travelDate,
+			@ApiParam(required = false, value = "出行时间（yyyy-MM-dd）") @RequestParam(required = false) String travelDateStr,
 			@ApiParam(required = false, value = "支付类型（1-直接支付，2-不直接支付（生成的是待确认订单））") @RequestParam(required = false) Integer payType,
 			@RequestParam(required = false) @ApiParam(required = false, value = "当前页码") Integer page,
 			@RequestParam(required = false) @ApiParam(required = false, value = "每页记录数") Integer pageSize) {
-		log.info("查询产品---type={},name={}", type, name);
+		log.info("查询产品---type={},name={},travelDateStr={}", type, name,travelDateStr);
 		ProductListResp r = new ProductListResp();
 		Product pro = new Product();
 		pro.setType(type);
@@ -67,6 +67,16 @@ public class ProductController extends BaseController{
 		pro.setAddressEnd(addressEnd);
 		pro.setPayType(payType);
 		pro.setValid(1);
+		if(travelDateStr != null && !"".equals(travelDateStr)){
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				pro.setTravelDateStart(f.parse(travelDateStr+" 00:00:00"));
+				pro.setTravelDateEnd(f.parse(travelDateStr+" 23:59:59"));
+			} catch (ParseException e) {
+				r.setMsg("日期格式错误");
+				return r;
+			}
+		}
 		try {
 			PageInfo<Product> pageInfo = productService.selectByModel(pro, page, pageSize);
 			if(pageInfo != null && pageInfo.getList() != null){

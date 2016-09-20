@@ -203,6 +203,11 @@
       <if test="userId != null" >
         and user_id = #{userId,jdbcType=BIGINT}
       </if>
+      <if test="notYetTravel == true" >
+        and exists (select 1 from t_product_spec where t_product_spec.id=t_order.product_spec_id
+        		<![CDATA[ and t_product_spec.start_date > STR_TO_DATE(DATE_FORMAT(NOW(), '%Y-%m-%d'),'%Y-%m-%d') ]]>
+        	)
+      </if>
       <if test="productId != null" >
         and product_id = #{productId,jdbcType=BIGINT}
       </if>

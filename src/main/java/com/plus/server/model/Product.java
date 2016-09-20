@@ -83,6 +83,26 @@ public class Product {
 	private String fengmianPic;//封面图片750*1334  1张
 	private String lunboPic;//轮播图片750*550 8张
 	
+	/***查询条件****/
+	private Date travelDateStart;//yyyy-MM-dd
+	private Date travelDateEnd;//yyyy-MM-dd
+
+	public Date getTravelDateStart() {
+		return travelDateStart;
+	}
+
+	public void setTravelDateStart(Date travelDateStart) {
+		this.travelDateStart = travelDateStart;
+	}
+
+	public Date getTravelDateEnd() {
+		return travelDateEnd;
+	}
+
+	public void setTravelDateEnd(Date travelDateEnd) {
+		this.travelDateEnd = travelDateEnd;
+	}
+
 	public String getPlaneId() {
 		return planeId;
 	}

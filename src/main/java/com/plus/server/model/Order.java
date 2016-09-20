@@ -40,6 +40,18 @@ public class Order {
 
 	/** 修改时间 */
 	private Date gmtModify;
+	
+	// -------------查询条件----------- */
+	/** 是否未到出行日期 */
+	private boolean notYetTravel;
+
+	public boolean getNotYetTravel() {
+		return notYetTravel;
+	}
+
+	public void setNotYetTravel(boolean notYetTravel) {
+		this.notYetTravel = notYetTravel;
+	}
 
 	public Long getId() {
 		return id;

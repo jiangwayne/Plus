@@ -66,18 +66,6 @@
 			</td>
 		</tr>
 		<tr>
-			<td>退改须知</td>
-			<td colspan=3>
-				<select name="orderAlterAgreementId" id="orderAlterAgreementId">
-				<#if orderAlterAgreementList??>
-					<#list orderAlterAgreementList as o>
-	                    <option value="${s.id?if_exists}" <#if s.orderAlterAgreementId = o.id>selected</#if>>${s.content?if_exists}</option>
-					</#list>
-				</#if>
-	            </select>
-            </td>
-		</tr>
-		<tr>
 		    <td >频道图片（684*304）</td>
 		    <td colspan=3>
 		    	<input type="hidden" id="pindaoPic" name="pindaoPic" value="${s.pindaoPic?if_exists}">
@@ -112,9 +100,9 @@
 					<tr>
 					<#if picLibList??>
 					<#list picLibList as pic>
-					<#if pic_index &gt; 0 && pic_index%5==0></tr><tr></#if>
+					<#if pic_index &gt; 0 && pic_index%11==0></tr><tr></#if>
 						<td>
-							<img width="40" height="40" src="${base_addr}/plus/file/downloadFile?fileName=${pic.picUrl?if_exists}">
+							<img width="40" height="40" src="${base_addr}/static/img/${pic.picUrl?if_exists}">
 							<br /><input <#if s.icon?contains(","+pic.id+",")>checked</#if> type="checkbox" onclick="clickCheckbox(this,${pic.id?if_exists})" name="picLibCheckbox" id="picLibCheckbox_${pic.id?if_exists}">
 						</td>
 					</#list>
@@ -129,6 +117,7 @@
 		</tr>
 	</table>
 	</form>
+	<a href="toSpec?productId=${s.id?if_exists}">编辑规格</a>
 </div>
 
 </body>
@@ -281,7 +270,8 @@
 	        dataType: 'json',
 	        success: function (data) {
 	        	if(data.success){
-	        		location.reload(true);
+	        		//location.reload(true);
+	        		location.href='${base_addr}/ftl/product/queryById?productId='+data.msg;
 	        	}
 	        },
 	        error: function (data) {

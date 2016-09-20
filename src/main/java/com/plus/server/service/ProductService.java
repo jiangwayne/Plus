@@ -139,5 +139,8 @@ public class ProductService {
 	public List<ProductSpec> selectProductSpecByModel(ProductSpec productSpec) {
 		return this.productSpecDAO.selectByModel(productSpec);
 	}
+	public ProductSpec selectProductSpecById(Long specId) {
+		return this.productSpecDAO.selectByPrimaryKey(specId);
+	}
 
 }

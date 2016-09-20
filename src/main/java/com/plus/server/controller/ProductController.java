@@ -53,6 +53,7 @@ public class ProductController extends BaseController{
 			@ApiParam(required = false, value = "产品名称") @RequestParam(required = false) String name,
 			@ApiParam(required = false, value = "出发地点") @RequestParam(required = false) String addressStart,
 			@ApiParam(required = false, value = "目的地") @RequestParam(required = false) String addressEnd,
+			@ApiParam(required = false, value = "出行时间（yyyy-MM-dd）") @RequestParam(required = false) String travelDate,
 			@ApiParam(required = false, value = "支付类型（1-直接支付，2-不直接支付（生成的是待确认订单））") @RequestParam(required = false) Integer payType,
 			@RequestParam(required = false) @ApiParam(required = false, value = "当前页码") Integer page,
 			@RequestParam(required = false) @ApiParam(required = false, value = "每页记录数") Integer pageSize) {

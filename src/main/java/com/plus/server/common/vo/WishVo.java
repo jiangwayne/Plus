@@ -40,7 +40,7 @@ public class WishVo {
 
     public String getTravelDateStr() {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd Hh:mm:ss");
-        if(this.travelDate != null && this.travelDate.equals("")){
+        if(this.travelDate != null && !this.travelDate.equals("")){
             return f.format(this.travelDate);
         }
         return "";

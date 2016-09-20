@@ -49,7 +49,7 @@ public class ProductController extends BaseController{
 	@ResponseBody
 	@ApiOperation(value = "查询产品列表")
 	public ProductListResp listProduct(
-			@ApiParam(required = false, value = "类型（10-机票BB,11-机票LY,20-门票SE,21-门票SP）") @RequestParam(required = false) Integer type,
+			@ApiParam(required = false, value = "类型（10-机票BB,11-门票LY,20-门票SE,21-机票SP）") @RequestParam(required = false) Integer type,
 			@ApiParam(required = false, value = "产品名称") @RequestParam(required = false) String name,
 			@ApiParam(required = false, value = "出发地点") @RequestParam(required = false) String addressStart,
 			@ApiParam(required = false, value = "目的地") @RequestParam(required = false) String addressEnd,

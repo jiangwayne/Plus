@@ -158,11 +158,11 @@ public class OrderService {
 	@Transactional(rollbackFor = Exception.class)
 	public void pay(Long userId, Long orderId, Integer money, Integer type,
 			String partnerOrderNo,String ip) throws Exception{
-		if(userId == null || orderId == null){
+		if(userId == null || orderId == null || money == null || type == null){
 			throw new Exception("失败");
 		}
 		Order order = this.orderDAO.selectByPrimaryKey(orderId);
-		if(order == null || order.getUserId() != userId || order.getPriceTotal() != money){
+		if(order == null || order.getUserId() != userId || order.getPriceTotal() != money.intValue()){
 			throw new Exception("失败");
 		}
 		Date now = new Date();

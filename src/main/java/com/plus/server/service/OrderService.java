@@ -1,5 +1,6 @@
 package com.plus.server.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,11 @@ import com.plus.server.dal.CommentDAO;
 import com.plus.server.dal.OrderDAO;
 import com.plus.server.dal.ProductDAO;
 import com.plus.server.dal.ProductSpecDAO;
+import com.plus.server.dal.TransactionDAO;
 import com.plus.server.model.Order;
 import com.plus.server.model.Product;
 import com.plus.server.model.ProductSpec;
+import com.plus.server.model.Transaction;
 
 @Service
 public class OrderService {
@@ -33,6 +36,8 @@ public class OrderService {
 	private ProductDAO productDAO;
 	@Autowired
 	private CommentDAO commentDAO;
+	@Autowired
+	private TransactionDAO transactionDAO;
 
 	/**
 	 * 创建订单
@@ -42,7 +47,7 @@ public class OrderService {
 	 * @param count
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public void createOrder(Long userId, Long productSpecId, Integer count, String boardingIds) throws Exception {
+	public Order createOrder(Long userId, Long productSpecId, Integer count, String boardingIds) throws Exception {
 		log.info("创建订单，userId={},productSpecId={},count={}", userId, productSpecId, count);
 		if (userId == null || productSpecId == null || count == null) {
 			throw new Exception("参数不能为空");
@@ -66,9 +71,10 @@ public class OrderService {
 			throw new Exception("您已有["+SysConfig.max_no_pay_order_count+"]笔订单等待付款");
 		}
 		Product pro = productDAO.selectByPrimaryKey(ps.getProductId());
+		Date now = new Date();
 		Order order = new Order();
 		order.setCount(count);
-		order.setGmtCreate(new Date());
+		order.setGmtCreate(now);
 		order.setPriceEach(ps.getPriceCurrent());
 		order.setPriceTotal(count * ps.getPriceCurrent());
 		order.setProductId(ps.getProductId());
@@ -84,6 +90,11 @@ public class OrderService {
 		order.setUserId(userId);
 		order.setValid(1);
 		this.orderDAO.insert(order);
+		Order updateOrder = new Order();
+		updateOrder.setId(order.getId());
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+		updateOrder.setOrderNo("NO"+f.format(now)+order.getId());
+		this.orderDAO.updateByPrimaryKeySelective(updateOrder);
 		// 修改 产品规格的库存
 		ProductSpec proSpecParam = new ProductSpec();
 		proSpecParam.setId(productSpecId);
@@ -94,6 +105,8 @@ public class OrderService {
 		proParam.setId(pro.getId());
 		proParam.setSaleCount(proParam.getSaleCount()==null?count:(proParam.getSaleCount()+ count));
 		productDAO.updateCommentCountSaleCountByPrimaryKey(proParam);
+		
+		return orderDAO.selectByPrimaryKey(order.getId());
 	}
 
 	/**
@@ -132,6 +145,46 @@ public class OrderService {
 
 	public Order selectById(Long id) {
 		return this.orderDAO.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 支付
+	 * @param userId
+	 * @param orderId
+	 * @param money
+	 * @param type
+	 * @param partnerOrderNo
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void pay(Long userId, Long orderId, Integer money, Integer type,
+			String partnerOrderNo,String ip) throws Exception{
+		if(userId == null || orderId == null){
+			throw new Exception("失败");
+		}
+		Order order = this.orderDAO.selectByPrimaryKey(orderId);
+		if(order == null || order.getUserId() != userId || order.getPriceTotal() != money){
+			throw new Exception("失败");
+		}
+		Date now = new Date();
+		Transaction tr = new Transaction();
+		
+		tr.setGmtCreate(now);
+		tr.setIp(ip);
+		tr.setPartnerOrderNo(partnerOrderNo);
+		tr.setPartnerType(type.toString());
+		tr.setTradeNo(orderId.toString());
+		tr.setTransAmount(money);
+		tr.setTransStatus(20);//交易状态：10-初始，20-成功，30-失败
+		tr.setUserId(userId.toString());
+		tr.setValid(1);
+		transactionDAO.insert(tr);
+		
+		Order updateOrder = new Order();
+		updateOrder.setId(orderId);
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+		updateOrder.setGmtModify(now);
+		updateOrder.setStatus(30);//状态（10-待确认，20-待付款，30-待评价，40-已评价，50-已取消）
+		this.orderDAO.updateByPrimaryKeySelective(updateOrder);
 	}
 
 }

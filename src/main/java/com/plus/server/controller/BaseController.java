@@ -72,4 +72,18 @@ public class BaseController {
 			return this.base_addr + "/plus/file/downloadFile?fileName=" + url;
 		}
 	}
+	
+	public String getRequestIp() {
+		String ip = httpRequest.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = httpRequest.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = httpRequest.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = httpRequest.getRemoteAddr();
+		}
+		return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+	}
 }

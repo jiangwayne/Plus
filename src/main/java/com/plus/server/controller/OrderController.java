@@ -18,7 +18,7 @@ import com.plus.server.common.util.BeanMapper;
 import com.plus.server.common.vo.OrderVo;
 import com.plus.server.common.vo.ProductSpecVo;
 import com.plus.server.common.vo.ProductVo;
-import com.plus.server.common.vo.resp.BaseResp;
+import com.plus.server.common.vo.resp.FtlCommonResp;
 import com.plus.server.common.vo.resp.OrderListResp;
 import com.plus.server.common.vo.resp.OrderResp;
 import com.plus.server.model.Order;
@@ -47,15 +47,41 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "创建订单")
-	public BaseResp createOrder(
+	public FtlCommonResp createOrder(
 			@ApiParam(required = true, value = "产品规格id") @RequestParam(required = true) Long productSpecId,
 			@ApiParam(required = true, value = "数量") @RequestParam(required = true) Integer count,
 			@ApiParam(required = false, value = "乘机人id(多个乘机人时用逗号分隔)") @RequestParam(required = false) String boardingIds) {
 		log.info("创建订单---productSpecId={},count={}", productSpecId, count);
-		BaseResp r = new BaseResp();
+		FtlCommonResp r = new FtlCommonResp();
 		Long userId = this.getCurrentUser().getId();
 		try {
-			orderService.createOrder(userId, productSpecId, count, boardingIds);
+			Order o = orderService.createOrder(userId, productSpecId, count, boardingIds);
+			OrderVo vo = BeanMapper.copy(o, new OrderVo());
+			fillDateStr(vo);
+			fillProductAndProductSpec(vo);
+			r.setData(vo);
+		} catch (Exception e) {
+			log.error("", e);
+			r.setMsg(e.getMessage());
+			return r;
+		}
+		r.setSuccess(true);
+		return r;
+	}
+	
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
+	@ResponseBody
+	@ApiOperation(value = "支付")
+	public FtlCommonResp pay(
+			@ApiParam(required = true, value = "订单ID(order对象的id字段)") @RequestParam(required = true) Long orderId,
+			@ApiParam(required = true, value = "金额") @RequestParam(required = true) Integer money,
+			@ApiParam(required = true, value = "渠道（1-支付宝，2-微信支付，3-ApplePay）") @RequestParam(required = true) Integer type,
+			@ApiParam(required = true, value = "订单编号（支付时，订单编号若由我们生成则填我们的订单编号（orderNo），若由对方生成则填对方的订单编号）") @RequestParam(required = true) String partnerOrderNo) {
+		log.info("支付---orderId={},money={},type={},partnerOrderNo={}", orderId, money, type, partnerOrderNo);
+		FtlCommonResp r = new FtlCommonResp();
+		Long userId = this.getCurrentUser().getId();
+		try {
+			orderService.pay(userId,orderId,money, type, partnerOrderNo,getRequestIp());
 		} catch (Exception e) {
 			log.error("", e);
 			r.setMsg(e.getMessage());

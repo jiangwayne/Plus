@@ -6,6 +6,9 @@ public class Order {
 	/**  */
 	private Long id;
 
+	/** 订单号 */
+	private String orderNo;
+
 	/** 用户id */
 	private Long userId;
 
@@ -40,7 +43,7 @@ public class Order {
 
 	/** 修改时间 */
 	private Date gmtModify;
-	
+
 	// -------------查询条件----------- */
 	/** 是否未到出行日期 */
 	private boolean notYetTravel;
@@ -155,5 +158,13 @@ public class Order {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 }

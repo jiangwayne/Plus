@@ -3,6 +3,7 @@
 <mapper namespace="com.plus.server.dal.OrderDAO" >
   <resultMap id="BaseResultMap" type="com.plus.server.model.Order" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="product_id" property="productId" jdbcType="BIGINT" />
     <result column="product_spec_id" property="productSpecId" jdbcType="BIGINT" />
@@ -17,7 +18,7 @@
     <result column="boarding_ids" property="boardingIds" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, product_id, product_spec_id, count, price_each, price_total,
+    id, order_no,user_id, product_id, product_spec_id, count, price_each, price_total,
     status, valid, gmt_create, gmt_modify,boarding_ids,comment
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -36,13 +37,13 @@
     delete from t_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.plus.server.model.Order" >
-    insert into t_order (id, user_id, product_id, 
+  <insert id="insert" parameterType="com.plus.server.model.Order" keyProperty="id" useGeneratedKeys="true">
+    insert into t_order (id,order_no, user_id, product_id, 
       product_spec_id, count, price_each, 
       price_total, status,
       valid, gmt_create,
       gmt_modify,boarding_ids,comment)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{orderNo}, #{userId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
       #{productSpecId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{priceEach,jdbcType=INTEGER}, 
       #{priceTotal,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{valid,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
@@ -54,6 +55,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
       </if>
       <if test="userId != null" >
         user_id,
@@ -95,6 +99,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
@@ -140,6 +147,9 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
       </if>
+      <if test="orderNo != null" >
+      	order_no = #{orderNo},
+      </if>
       <if test="productId != null" >
         product_id = #{productId,jdbcType=BIGINT},
       </if>
@@ -179,6 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.plus.server.model.Order" >
     update t_order
     set user_id = #{userId,jdbcType=BIGINT},
+      	order_no = #{orderNo},
       product_id = #{productId,jdbcType=BIGINT},
       product_spec_id = #{productSpecId,jdbcType=BIGINT},
       count = #{count,jdbcType=INTEGER},
@@ -199,6 +210,9 @@
     <where >
       <if test="id != null" >
         and id = #{id}
+      </if>
+      <if test="orderNo != null" >
+      	and order_no = #{orderNo}
       </if>
       <if test="userId != null" >
         and user_id = #{userId,jdbcType=BIGINT}

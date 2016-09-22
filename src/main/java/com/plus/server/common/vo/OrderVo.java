@@ -9,7 +9,8 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 public class OrderVo {
 	@ApiModelProperty(" id ")
 	private Long id;
-
+	@ApiModelProperty(" 订单号（显示用，调用后台时都用id） ")
+	private String orderNo;
 	@ApiModelProperty(" 用户id ")
 	private Long userId;
 
@@ -134,6 +135,14 @@ public class OrderVo {
 
 	public void setGmtCreateStr(String gmtCreateStr) {
 		this.gmtCreateStr = gmtCreateStr;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 }

@@ -74,6 +74,7 @@ DROP TABLE IF EXISTS `t_order`;
 
 CREATE TABLE `t_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_no` VARCHAR(32) COMMENT '订单号',
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
   `product_id` bigint(20) DEFAULT NULL COMMENT '产品id',
   `product_spec_id` bigint(20) DEFAULT NULL COMMENT '产品规格id',
